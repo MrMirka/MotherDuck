@@ -7,6 +7,7 @@ import { GUI } from './js/dat.gui.module.js';
 import { EffectComposer } from './js/postprocessing/EffectComposer.js';
 import { RenderPass } from './js/postprocessing/RenderPass.js';
 import { UnrealBloomPass } from './js/postprocessing/UnrealBloomPass.js';
+import { RectAreaLightHelper } from './js/RectAreaLightHelper.js';
 import { RectAreaLightUniformsLib } from './js/RectAreaLightUniformsLib.js';
 
 import { SSRPass } from './js/postprocessing/SSRPass.js';
@@ -16,9 +17,11 @@ import { ReflectorForSSRPass } from './js/objects/ReflectorForSSRPass.js';
 
 let scene, camera, renderer, control, duck;
 let orbitMesh1, orbitMesh2;
-let container1, conteiner2;
+let container1, conteiner2, conteiner3, conteiner4;
 let composer, bloomPass;
 let ssrPass, groundReflector;
+
+let ring, ringDisk;
 
 const selects = [];
 
@@ -51,39 +54,67 @@ init();
 
 function init(){
 	scene = new THREE.Scene();
+	let fog = new THREE.Fog(0x000000,300,700);
+	scene.fog = fog;
 	
 
 	container1 = new THREE.Object3D();
 	conteiner2 = new THREE.Object3D();
-	scene.add(container1, conteiner2);
+	conteiner3 = new THREE.Object3D();
+	
+	scene.add(container1, conteiner3);
 
+	RectAreaLightUniformsLib.init();
+	
+	addRec(0,0,0,0);
+	addRec(0,0,-150,Math.PI);
+	addRec(0,-75,-75,Math.PI/2);
+	addRec(0,75,-75,-Math.PI/2);
+	
+	conteiner3.rotation.set(0,-Math.PI/2,0);
+	conteiner3.position.set(-75,0,0);
 
+	container1.add(conteiner3);
 
 	
-	const immerMat = new THREE.MeshStandardMaterial({emissive: 0xffffff, emissiveIntensity: 1});
-
-	const innerOrbit1 = new THREE.TorusGeometry(44,0.2,32,200);
 	
-	let inerMesh1 = new THREE.Mesh(innerOrbit1, immerMat);
 	
-	const orbit1 = new THREE.TorusGeometry(45,1,32,200);
-	const orbitMat1 = new THREE.MeshPhysicalMaterial( physic);
-	orbitMesh1 = new THREE.Mesh(orbit1,orbitMat1);
-	//orbitMesh1.add(new THREE.DirectionalLight( 0xffffff, 0.8));
-	orbitMesh1.position.set(0,0,0)
-	selects.push(orbitMesh1);
-	container1.add(orbitMesh1, inerMesh1);
+	
+	const immerMat = new THREE.MeshStandardMaterial({emissive: 0xffffff, emissiveIntensity: 5, side: THREE.DoubleSide});
 
-	const innerOrbit2 = new THREE.TorusGeometry(46,0.2,32,200);
-	let inerMesh2 = new THREE.Mesh(innerOrbit2, immerMat);
+			/*
+			const innerOrbit1 = new THREE.TorusGeometry(44,0.2,32,200);
+			
+			let inerMesh1 = new THREE.Mesh(innerOrbit1, immerMat);
+			
+			const orbit1 = new THREE.TorusGeometry(45,1,32,200);
+			const orbitMat1 = new THREE.MeshPhysicalMaterial( physic);
+			orbitMesh1 = new THREE.Mesh(orbit1,orbitMat1);
+			//orbitMesh1.add(new THREE.DirectionalLight( 0xffffff, 0.8));
+			orbitMesh1.position.set(0,0,0)
+			selects.push(orbitMesh1);
+			//container1.add(orbitMesh1, inerMesh1);
 
-	const orbit2 = new THREE.TorusGeometry(47,1,32,200);
-	const orbitMat2 = new THREE.MeshPhysicalMaterial( physic);
-	orbitMesh2 = new THREE.Mesh(orbit2,orbitMat2);
-	//orbitMesh2.add(new THREE.DirectionalLight( 0xffffff, 0.6));
-	orbitMesh2.position.set(0,0,0)
-	selects.push(orbitMesh2);
-	conteiner2.add(orbitMesh2, inerMesh2);
+			const innerOrbit2 = new THREE.TorusGeometry(46,0.2,32,200);
+			let inerMesh2 = new THREE.Mesh(innerOrbit2, immerMat);
+
+			const orbit2 = new THREE.TorusGeometry(47,1,32,200);
+			const orbitMat2 = new THREE.MeshPhysicalMaterial( physic);
+			orbitMesh2 = new THREE.Mesh(orbit2,orbitMat2);
+			//orbitMesh2.add(new THREE.DirectionalLight( 0xffffff, 0.6));
+			orbitMesh2.position.set(0,0,0)
+			selects.push(orbitMesh2);
+			//conteiner2.add(orbitMesh2, inerMesh2);
+			*/
+
+	//RING EMMITION
+	let ringEmGeo = new THREE.CylinderGeometry(58.5,58.5,4,96,2,true);
+	ringDisk = new THREE.Mesh(ringEmGeo,immerMat);
+	ringDisk.rotation.x = Math.PI/2;
+
+	container1.add(ringDisk);
+
+	
 
 	camera = new THREE.PerspectiveCamera( 35, window.innerWidth / window.innerHeight, 1, 1500 );
 	camera.position.set( 0, 45, 100 );
@@ -128,44 +159,15 @@ function init(){
 		});
 		
 	});
-
-	//POSS
-	
-	const renderScene = new RenderPass( scene, camera );
-
-	bloomPass = new UnrealBloomPass( new THREE.Vector2( window.innerWidth, window.innerHeight ), 1.5, 0.4, 0.85 );
-	bloomPass.threshold = params2.bloomThreshold;
-	bloomPass.strength = params2.bloomStrength;
-	bloomPass.radius = params2.bloomRadius;
-
-	composer = new EffectComposer( renderer );
-	composer.addPass( renderScene );
-	composer.addPass( bloomPass );
-	
-
-	//composer = new EffectComposer( renderer );
-			ssrPass = new SSRPass( {
-				renderer,
-				scene,
-				camera,
-				width: innerWidth,
-				height: innerHeight,
-				groundReflector: params.groundReflector ? groundReflector : null,
-				selects: params.groundReflector ? selects : null
-			} );
-
-			composer.addPass( ssrPass );
-			composer.addPass( new ShaderPass( GammaCorrectionShader ) );
-
-
-
-
-
+	loader.load('ring.glb', function(gltf){
+		ring = gltf.scene.children[0];
+		ring.scale.set(1,1,1);
+		ring.position.set(0,0,0);
+		scene.add(ring);
+		container1.add(ring);
+	});
 
 	
-
-
-	//addUI();
 
 	animate();
 }
@@ -178,59 +180,31 @@ function animate(){
 }
 
 function render(){
-	const time = performance.now() * 0.001;
-	const timer = Date.now() * 0.0001;
+	const time = performance.now() * 0.01;
+	const timer = Date.now() * 0.00007;
 
 	
-	container1.rotation.x = timer * 7;
-	container1.rotation.z = timer * 4;
+	container1.rotation.x = Math.cos(timer) * 5  + Math.PI*2;
+	container1.rotation.y = Math.sin(timer) * 3 * Math.cos(Math.sin(time*0.1)) + Math.PI*2;
+	container1.rotation.z = Math.cos(timer) * 12 * Math.cos(Math.sin(time*0.1));
 
-	conteiner2.rotation.z = timer * 7;
-	conteiner2.rotation.y = timer * 4;
-	
 
-	
-	
+
+	//camera.updateProjectionMatrix();
 	
 
-	
-	
-
-	composer.render();
-	//renderer.render(scene, camera);
+	renderer.render(scene, camera);
 }
 
-/*
-function addUI(){
+
+
+function addRec(x,y,z,r){
+	const rectLight = new THREE.RectAreaLight( 0xffffff, 7, 20, 150 );
+	rectLight.power = 2000;
+	rectLight.position.set(x, y, z );
+	rectLight.rotation.set(r, 0,0 );
+	scene.add( rectLight );
+	//scene.add( new RectAreaLightHelper( rectLight ) );
+	conteiner3.add(rectLight);
 	
-	const gui = new GUI();
-	
-
-	gui.add( params, 'exposure', 0.1, 2 ).onChange( function ( value ) {
-
-		renderer.toneMappingExposure = Math.pow( value, 4.0 );
-
-	} );
-
-	gui.add( params, 'bloomThreshold', 0.0, 1.0 ).onChange( function ( value ) {
-
-		bloomPass.threshold = Number( value );
-
-	} );
-
-	gui.add( params, 'bloomStrength', 0.0, 3.0 ).onChange( function ( value ) {
-
-		bloomPass.strength = Number( value );
-
-	} );
-
-	gui.add( params, 'bloomRadius', 0.0, 1.0 ).step( 0.01 ).onChange( function ( value ) {
-
-		bloomPass.radius = Number( value );
-
-	} );
-	
-
 }
-*/
-
