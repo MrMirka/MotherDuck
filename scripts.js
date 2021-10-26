@@ -15,6 +15,8 @@ import { ShaderPass } from './js/postprocessing/ShaderPass.js';
 import { GammaCorrectionShader } from './js/shaders/GammaCorrectionShader.js';
 import { ReflectorForSSRPass } from './js/objects/ReflectorForSSRPass.js';
 
+import { FlakesTexture } from './js/FlakesTexture.js';
+
 let scene, camera, renderer, control, duck;
 let orbitMesh1, orbitMesh2;
 let container1, conteiner2, conteiner3, conteiner4;
@@ -22,6 +24,7 @@ let composer, bloomPass;
 let ssrPass, groundReflector;
 
 let ring, ringDisk;
+let stats;
 
 const selects = [];
 
@@ -120,12 +123,12 @@ function init(){
 	camera.position.set( 0, 45, 100 );
 	camera.lookAt(0,0,0);
 
-	renderer = new THREE.WebGLRenderer( { alpha:false, antialias: false } );
+	renderer = new THREE.WebGLRenderer( { alpha:true, antialias: false } );
 	renderer.setPixelRatio( window.devicePixelRatio );
 	renderer.outputEncoding = THREE.sRGBEncoding;
 	renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 	renderer.toneMapping = THREE.ACESFilmicToneMapping;
-	renderer.toneMappingExposure = 0.22;
+	renderer.toneMappingExposure = .3;
 	renderer.setSize( window.innerWidth, window.innerHeight );
 	document.body.appendChild( renderer.domElement );
 
@@ -135,22 +138,27 @@ function init(){
 	
 	
 	let loader = new GLTFLoader();
-	loader.load('motherduck.glb', function(gltf) {
+	loader.load('motherduck3.glb', function(gltf) {
 		duck = gltf.scene.children[0];
 		duck.scale.set(1,1,1);
 		duck.position.set(0,-15,0);
 		gltf.scene.traverse( function( node ) {
 			if ( node.material ) {
+				
+				
 				node.material.envMapIntensity = 0.6;
 				node.material.reflectivity = 1;
 				node.material.projection = 'normal';
+				node.material.transparent = false;
+				
+				
 			}
 		});
 		selects.push(duck);
 		scene.add(duck);
 
 		const hdri = new RGBELoader();
-		hdri.load( './img/hdri_3.hdr', function ( texture ) {
+		hdri.load( './img/ballroom_2k.pic', function ( texture ) {
 			texture.mapping = THREE.EquirectangularReflectionMapping;
 			texture.wrapS = THREE.RepeatWrapping;
 			texture.wrapP = THREE.RepeatWrapping;
@@ -159,16 +167,81 @@ function init(){
 		});
 		
 	});
+
+	//RING
+	
 	loader.load('ring.glb', function(gltf){
 		ring = gltf.scene.children[0];
 		ring.scale.set(1,1,1);
 		ring.position.set(0,0,0);
+
+		gltf.scene.traverse( function( node ) {
+			if ( node.material ) {
+				console.log(node.material);
+				let texture = new THREE.CanvasTexture(new FlakesTexture());
+				texture.wrapS = THREE.RepeatWrapping;
+				texture.wrapT = THREE.RepeatWrapping;
+				texture.repeat.x = 21;
+				texture.repeat.y = 21;
+				node.material.normalMap = texture;
+				node.material.normalScale= new THREE.Vector2(2.1, 2.1);
+				node.material.envMapIntensity = 0.6;
+				node.material.reflectivity = 1;
+				node.material.projection = 'normal';
+				let roughness_map = new THREE.TextureLoader().load('./img/uh4sbhzc_2K_Roughness.jpg');
+				roughness_map.wrapS = THREE.RepeatWrapping;
+				roughness_map.wrapT = THREE.RepeatWrapping;
+				roughness_map.repeat.x = 1;
+				roughness_map.repeat.y = 3;
+				node.material.roughnessMap = roughness_map;
+				//node.material.roughnessMap.needsUpdate = true;
+			}
+			
+		});
 		scene.add(ring);
 		container1.add(ring);
 	});
 
+	//RING LOGO
+	loader.load('ring_logo.glb', function(gltf){
+		ring = gltf.scene.children[0];
+		ring.scale.set(1,1,1);
+		ring.position.set(0,0,0);
+
+		gltf.scene.traverse( function( node ) {
+			if ( node.material ) {
+				let loader = new THREE.TextureLoader();
+				node.material.transparent = true;
+				node.material.metalness = 1;
+				node.material.roughness = 0.12;
+				
+				loader.load('./img/logo_map.png', texture => {
+
+					node.material.alphaMap = texture;
+					//node.material.alphaMap.magFilter = THREE.NearestFilter;
+					node.material.alphaMap.wrapT = THREE.RepeatWrapping;
+					node.material.alphaMap.wrapS = THREE.RepeatWrapping;
+					node.material.alphaMap.repeat.x = 1;
+					node.material.alphaMap.repeat.y = 1;
+					node.material.alphaMap.flipY=false;
+				});
+				node.material.envMapIntensity = 0.6;
+				node.material.reflectivity = 1;
+				node.material.projection = 'normal';
+			}
+			
+		});
+		scene.add(ring);
+		container1.add(ring);
+	});
+
+	//------
+
 	
 
+	
+	stats = new Stats();
+	document.body.appendChild( stats.dom );
 	animate();
 }
 
@@ -183,10 +256,16 @@ function render(){
 	const time = performance.now() * 0.01;
 	const timer = Date.now() * 0.00007;
 
+	stats.update();
 	
-	container1.rotation.x = Math.cos(timer) * 5  + Math.PI*2;
-	container1.rotation.y = Math.sin(timer) * 3 * Math.cos(Math.sin(time*0.1)) + Math.PI*2;
-	container1.rotation.z = Math.cos(timer) * 12 * Math.cos(Math.sin(time*0.1));
+	//container1.rotation.x = Math.cos(timer) * 5  + Math.PI*2;
+	//container1.rotation.y = Math.sin(timer) * 3 * Math.cos(Math.sin(time*0.1)) + Math.PI*2;
+	//container1.rotation.z = Math.cos(timer) * 12 * Math.cos(Math.sin(time*0.1));
+
+	container1.rotation.x = Math.sin(timer) * 1.5 + Math.PI*2;
+	container1.rotation.y = Math.sin(timer) * 2.5 + Math.PI*2;
+	container1.rotation.z += 0.0013;
+	
 
 
 
