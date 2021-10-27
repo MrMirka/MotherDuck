@@ -12,7 +12,9 @@ import { RectAreaLightUniformsLib } from './js/RectAreaLightUniformsLib.js';
 
 import { SSRPass } from './js/postprocessing/SSRPass.js';
 import { ShaderPass } from './js/postprocessing/ShaderPass.js';
+
 import { GammaCorrectionShader } from './js/shaders/GammaCorrectionShader.js';
+import { FXAAShader } from './js/shaders/FXAAShader.js';
 import { ReflectorForSSRPass } from './js/objects/ReflectorForSSRPass.js';
 
 import { FlakesTexture } from './js/FlakesTexture.js';
@@ -20,45 +22,40 @@ import { FlakesTexture } from './js/FlakesTexture.js';
 let scene, camera, renderer, control, duck;
 let orbitMesh1, orbitMesh2;
 let container1, conteiner2, conteiner3, conteiner4;
-let composer, bloomPass;
-let ssrPass, groundReflector;
+let composer, bloomPass, sun;
+
+//BLOOM
+let renderScene,bloomComposer,finalComposer;
 
 let ring, ringDisk;
 let stats;
+let fog;
+let tex;
 
-const selects = [];
 
-let rectLight;
+const ENTIRE_SCENE = 0, BLOOM_SCENE = 1;
 
-const params2 = {
-	exposure: 1,
-	bloomStrength: 1.5,
-	bloomThreshold: 0,
-	bloomRadius: 0
-};
+const bloomLayer = new THREE.Layers();
+bloomLayer.set( BLOOM_SCENE );
 
 const params = {
-	enableSSR: true,
-	autoRotate: true,
-	otherMeshes: true,
-	groundReflector: true
+	exposure: 1,
+	bloomStrength: 50,
+	bloomThreshold: 1,
+	bloomRadius: 12,
+	scene: "Scene with Glow"
 };
+const materials = {};
 
-const physic = {
-	clearcoat: 1.0,
-	clearcoatRoughness:1,
-	metalness: 0.1,
-	roughness:1,
-	color: 0x181818
-};
+const darkMaterial = new THREE.MeshBasicMaterial( { color: "black" } );
 
-
+let gui = new GUI();
 init();
 
 function init(){
 	scene = new THREE.Scene();
-	let fog = new THREE.Fog(0x000000,300,700);
-	scene.fog = fog;
+	fog = new THREE.Fog(0x000000,300,700);
+	//scene.fog = fog;
 	
 
 	container1 = new THREE.Object3D();
@@ -70,121 +67,154 @@ function init(){
 	RectAreaLightUniformsLib.init();
 	
 	addRec(0,0,0,0);
-	addRec(0,0,-150,Math.PI);
-	addRec(0,-75,-75,Math.PI/2);
-	addRec(0,75,-75,-Math.PI/2);
+	addRec(0,0,-80,Math.PI);
+	addRec(0,-40,-40,Math.PI/2);
+	addRec(0,40,-40,-Math.PI/2);
 	
 	conteiner3.rotation.set(0,-Math.PI/2,0);
-	conteiner3.position.set(-75,0,0);
-
+	conteiner3.position.set(-40,0,0);
 	container1.add(conteiner3);
 
 	
 	
 	
-	
-	const immerMat = new THREE.MeshStandardMaterial({emissive: 0xffffff, emissiveIntensity: 5, side: THREE.DoubleSide});
-
-			/*
-			const innerOrbit1 = new THREE.TorusGeometry(44,0.2,32,200);
-			
-			let inerMesh1 = new THREE.Mesh(innerOrbit1, immerMat);
-			
-			const orbit1 = new THREE.TorusGeometry(45,1,32,200);
-			const orbitMat1 = new THREE.MeshPhysicalMaterial( physic);
-			orbitMesh1 = new THREE.Mesh(orbit1,orbitMat1);
-			//orbitMesh1.add(new THREE.DirectionalLight( 0xffffff, 0.8));
-			orbitMesh1.position.set(0,0,0)
-			selects.push(orbitMesh1);
-			//container1.add(orbitMesh1, inerMesh1);
-
-			const innerOrbit2 = new THREE.TorusGeometry(46,0.2,32,200);
-			let inerMesh2 = new THREE.Mesh(innerOrbit2, immerMat);
-
-			const orbit2 = new THREE.TorusGeometry(47,1,32,200);
-			const orbitMat2 = new THREE.MeshPhysicalMaterial( physic);
-			orbitMesh2 = new THREE.Mesh(orbit2,orbitMat2);
-			//orbitMesh2.add(new THREE.DirectionalLight( 0xffffff, 0.6));
-			orbitMesh2.position.set(0,0,0)
-			selects.push(orbitMesh2);
-			//conteiner2.add(orbitMesh2, inerMesh2);
-			*/
-
 	//RING EMMITION
-	let ringEmGeo = new THREE.CylinderGeometry(58.5,58.5,4,96,2,true);
+	const immerMat = new THREE.MeshStandardMaterial({emissive: 0x74DFE1, emissiveIntensity: 5.01, side: THREE.DoubleSide});	
+	let ringEmGeo = new THREE.CylinderGeometry(58.67,58.67,4,165,2,true);
 	ringDisk = new THREE.Mesh(ringEmGeo,immerMat);
 	ringDisk.rotation.x = Math.PI/2;
-
+	ringDisk.layers.enable(1);
 	container1.add(ringDisk);
 
 	
 
-	camera = new THREE.PerspectiveCamera( 35, window.innerWidth / window.innerHeight, 1, 1500 );
+	
+
+	camera = new THREE.PerspectiveCamera(35, window.innerWidth / window.innerHeight, 1, 1500 );
 	camera.position.set( 0, 45, 100 );
 	camera.lookAt(0,0,0);
+	camera.layers.enable(BLOOM_SCENE);
+
+	const container = document.getElementById( 'canvas' );
+
 
 	renderer = new THREE.WebGLRenderer( { alpha:true, antialias: false } );
 	renderer.setPixelRatio( window.devicePixelRatio );
-	renderer.outputEncoding = THREE.sRGBEncoding;
+	//renderer.outputEncoding = THREE.sRGBEncoding;
 	renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 	renderer.toneMapping = THREE.ACESFilmicToneMapping;
-	renderer.toneMappingExposure = .3;
+	renderer.toneMappingExposure = 0.6;
 	renderer.setSize( window.innerWidth, window.innerHeight );
-	document.body.appendChild( renderer.domElement );
+	//document.body.appendChild( renderer.domElement );
+	container.appendChild( renderer.domElement );
 
 	control = new OrbitControls(camera, renderer.domElement);
 	control.update();
+
+	//COMPOSE
+	
+	renderScene = new RenderPass( scene, camera );
+
+	bloomPass = new UnrealBloomPass( new THREE.Vector2( window.innerWidth, window.innerHeight ), 1.5, 0.4, 0.85 );
+	bloomPass.threshold = params.bloomThreshold;
+	bloomPass.strength = params.bloomStrength;
+	bloomPass.radius = params.bloomRadius;
+
+	bloomComposer = new EffectComposer( renderer );
+	bloomComposer.renderToScreen = false;
+	bloomComposer.addPass( renderScene );
+	bloomComposer.addPass( bloomPass );
+
+	const finalPass = new ShaderPass(
+		new THREE.ShaderMaterial( {
+			uniforms: {
+				baseTexture: { value: null },
+				bloomTexture: { value: bloomComposer.renderTarget2.texture }
+			},
+			vertexShader: document.getElementById( 'vertexshader' ).textContent,
+			fragmentShader: document.getElementById( 'fragmentshader' ).textContent,
+			defines: {}
+		} ), "baseTexture"
+	);
+	finalPass.needsSwap = true;
+
+	finalComposer = new EffectComposer( renderer );
+	finalComposer.addPass( renderScene );
+	finalComposer.addPass( finalPass );
+
+
+
+
+	//------------------------------------
 
 	
 	
 	let loader = new GLTFLoader();
 	loader.load('motherduck3.glb', function(gltf) {
 		duck = gltf.scene.children[0];
-		duck.scale.set(1,1,1);
-		duck.position.set(0,-15,0);
+		duck.scale.set(1.3,1.3,1.3);
+		duck.position.set(0,-30,0);
 		gltf.scene.traverse( function( node ) {
 			if ( node.material ) {
-				
-				
-				node.material.envMapIntensity = 0.6;
+				node.material.envMapIntensity = 1;
 				node.material.reflectivity = 1;
 				node.material.projection = 'normal';
 				node.material.transparent = false;
+				node.material.normalScale= new THREE.Vector2(1, 1);
+				//node.material.metalness = 1;
+				node.material.roughness = 0.7;
+				//node.material.roughnessMap = null;
 				
-				
+				console.log(node.material);
 			}
 		});
-		selects.push(duck);
+		//LIGTH
+		sun = new THREE.DirectionalLight(0xffffff,15.2);
+		sun.target = duck;
+		scene.add(sun);
+		gui.add(sun.position, 'x', -500,500,15);
+		gui.add(sun.position, 'y', -500,500,15);
+		gui.add(sun.position, 'z', -500,500,15);
+		gui.add(sun, 'intensity', 0,30,0.1);
+
+		gui.add(fog, 'near', 0, 700, 10);
+		gui.add(fog, 'far', 0, 700, 10);
+
+
+		gui.add(camera, 'fov', 15,100,1);
+		
+
 		scene.add(duck);
 
 		const hdri = new RGBELoader();
 		hdri.load( './img/ballroom_2k.pic', function ( texture ) {
-			texture.mapping = THREE.EquirectangularReflectionMapping;
-			texture.wrapS = THREE.RepeatWrapping;
-			texture.wrapP = THREE.RepeatWrapping;
-			scene.environment = texture;
+			tex = texture;
+			tex.mapping = THREE.EquirectangularRefractionMapping;
+			tex.wrapS = THREE.RepeatWrapping;
+			tex.wrapP = THREE.RepeatWrapping;
+			tex.repeat.set( 1, 1 );
+			tex.magFilter = THREE.NearestFilter;
+			scene.environment = tex;
 			renderer.render( scene, camera );
 		});
 		
 	});
 
 	//RING
-	
-	loader.load('ring.glb', function(gltf){
+	loader.load('ring3.glb', function(gltf){
 		ring = gltf.scene.children[0];
 		ring.scale.set(1,1,1);
 		ring.position.set(0,0,0);
 
 		gltf.scene.traverse( function( node ) {
 			if ( node.material ) {
-				console.log(node.material);
 				let texture = new THREE.CanvasTexture(new FlakesTexture());
 				texture.wrapS = THREE.RepeatWrapping;
 				texture.wrapT = THREE.RepeatWrapping;
 				texture.repeat.x = 21;
 				texture.repeat.y = 21;
 				node.material.normalMap = texture;
-				node.material.normalScale= new THREE.Vector2(2.1, 2.1);
+				node.material.normalScale= new THREE.Vector2(0.5, 0.5);
 				node.material.envMapIntensity = 0.6;
 				node.material.reflectivity = 1;
 				node.material.projection = 'normal';
@@ -193,8 +223,8 @@ function init(){
 				roughness_map.wrapT = THREE.RepeatWrapping;
 				roughness_map.repeat.x = 1;
 				roughness_map.repeat.y = 3;
+				node.material.metalness = 1;
 				node.material.roughnessMap = roughness_map;
-				//node.material.roughnessMap.needsUpdate = true;
 			}
 			
 		});
@@ -203,7 +233,7 @@ function init(){
 	});
 
 	//RING LOGO
-	loader.load('ring_logo.glb', function(gltf){
+	loader.load('ring_logo2.glb', function(gltf){
 		ring = gltf.scene.children[0];
 		ring.scale.set(1,1,1);
 		ring.position.set(0,0,0);
@@ -215,10 +245,8 @@ function init(){
 				node.material.metalness = 1;
 				node.material.roughness = 0.12;
 				
-				loader.load('./img/logo_map.png', texture => {
-
+				loader.load('./img/logo_map2.jpg', texture => {
 					node.material.alphaMap = texture;
-					//node.material.alphaMap.magFilter = THREE.NearestFilter;
 					node.material.alphaMap.wrapT = THREE.RepeatWrapping;
 					node.material.alphaMap.wrapS = THREE.RepeatWrapping;
 					node.material.alphaMap.repeat.x = 1;
@@ -238,10 +266,13 @@ function init(){
 	//------
 
 	
-
+	
 	
 	stats = new Stats();
 	document.body.appendChild( stats.dom );
+
+	scene.traverse( disposeMaterial );
+
 	animate();
 }
 
@@ -258,19 +289,30 @@ function render(){
 
 	stats.update();
 	
-	//container1.rotation.x = Math.cos(timer) * 5  + Math.PI*2;
-	//container1.rotation.y = Math.sin(timer) * 3 * Math.cos(Math.sin(time*0.1)) + Math.PI*2;
-	//container1.rotation.z = Math.cos(timer) * 12 * Math.cos(Math.sin(time*0.1));
-
+	
+	
 	container1.rotation.x = Math.sin(timer) * 1.5 + Math.PI*2;
 	container1.rotation.y = Math.sin(timer) * 2.5 + Math.PI*2;
 	container1.rotation.z += 0.0013;
+
+	
+
+	
+	
+
+	
+	/*
+	scene.traverse( darkenNonBloomed );
+	bloomComposer.render();
+	scene.traverse( restoreMaterial );
+
+	finalComposer.render();
+	*/
 	
 
 
-
-	//camera.updateProjectionMatrix();
 	
+
 
 	renderer.render(scene, camera);
 }
@@ -278,12 +320,49 @@ function render(){
 
 
 function addRec(x,y,z,r){
-	const rectLight = new THREE.RectAreaLight( 0xffffff, 7, 20, 150 );
+	const rectLight = new THREE.RectAreaLight( 0xffffff, 7, 20, 80 );
 	rectLight.power = 2000;
 	rectLight.position.set(x, y, z );
 	rectLight.rotation.set(r, 0,0 );
-	scene.add( rectLight );
-	//scene.add( new RectAreaLightHelper( rectLight ) );
-	conteiner3.add(rectLight);
+	//const rectLightHelper = new RectAreaLightHelper( rectLight );
+	//rectLight.add( rectLightHelper );
+	//scene.add( rectLight );
+	//conteiner3.add(rectLight);
 	
 }
+
+function darkenNonBloomed( obj ) {
+
+	if ( obj.isMesh && bloomLayer.test( obj.layers ) === false ) {
+
+		materials[ obj.uuid ] = obj.material;
+		obj.material = darkMaterial;
+
+	}
+
+}
+
+function restoreMaterial( obj ) {
+
+	if ( materials[ obj.uuid ] ) {
+
+		obj.material = materials[ obj.uuid ];
+		delete materials[ obj.uuid ];
+
+	}
+
+}
+
+function disposeMaterial( obj ) {
+
+	if ( obj.material ) {
+
+		obj.material.dispose();
+
+	}
+
+}
+
+
+
+
