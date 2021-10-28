@@ -1,53 +1,35 @@
-import * as THREE from './build/three.module.js';
-import { OrbitControls } from './js/OrbitControls.js';
-import { RGBELoader } from './js/RGBELoader.js';
-import { GLTFLoader } from './js/GLTFLoader.js';
-import Stats from './js/stats.module.js';
-import { GUI } from './js/dat.gui.module.js';
-import { EffectComposer } from './js/postprocessing/EffectComposer.js';
-import { RenderPass } from './js/postprocessing/RenderPass.js';
-import { UnrealBloomPass } from './js/postprocessing/UnrealBloomPass.js';
-import { RectAreaLightHelper } from './js/RectAreaLightHelper.js';
-import { RectAreaLightUniformsLib } from './js/RectAreaLightUniformsLib.js';
+import * as THREE from '/build/three.module.js';
+import { OrbitControls } from '/js/OrbitControls.js';
+import { RGBELoader } from '/js/RGBELoader.js';
+import { GLTFLoader } from '/js/GLTFLoader.js';
+import Stats from '/js/stats.module.js';
+import { GUI } from '/js/dat.gui.module.js';
+import { EffectComposer } from '/js/postprocessing/EffectComposer.js';
+import { RenderPass } from '/js/postprocessing/RenderPass.js';
+import { UnrealBloomPass } from '/js/postprocessing/UnrealBloomPass.js';
+import { RectAreaLightHelper } from '/js/RectAreaLightHelper.js';
+import { RectAreaLightUniformsLib } from '/js/RectAreaLightUniformsLib.js';
 
-import { SSRPass } from './js/postprocessing/SSRPass.js';
-import { ShaderPass } from './js/postprocessing/ShaderPass.js';
+import { SSRPass } from '/js/postprocessing/SSRPass.js';
+import { ShaderPass } from '/js/postprocessing/ShaderPass.js';
 
-import { GammaCorrectionShader } from './js/shaders/GammaCorrectionShader.js';
-import { FXAAShader } from './js/shaders/FXAAShader.js';
-import { ReflectorForSSRPass } from './js/objects/ReflectorForSSRPass.js';
+import { GammaCorrectionShader } from '/js/shaders/GammaCorrectionShader.js';
+import { FXAAShader } from '/js/shaders/FXAAShader.js';
+import { ReflectorForSSRPass } from '/js/objects/ReflectorForSSRPass.js';
 
-import { FlakesTexture } from './js/FlakesTexture.js';
+import { FlakesTexture } from '/js/FlakesTexture.js';
 
 let scene, camera, renderer, control, duck;
 let orbitMesh1, orbitMesh2;
 let container1, conteiner2, conteiner3, conteiner4;
 let composer, bloomPass, sun;
 
-//BLOOM
-let renderScene,bloomComposer,finalComposer;
+
 
 let ring, ringDisk;
 let stats;
 let fog;
 let tex;
-
-
-const ENTIRE_SCENE = 0, BLOOM_SCENE = 1;
-
-const bloomLayer = new THREE.Layers();
-bloomLayer.set( BLOOM_SCENE );
-
-const params = {
-	exposure: 1,
-	bloomStrength: 50,
-	bloomThreshold: 1,
-	bloomRadius: 12,
-	scene: "Scene with Glow"
-};
-const materials = {};
-
-const darkMaterial = new THREE.MeshBasicMaterial( { color: "black" } );
 
 let gui = new GUI();
 init();
@@ -74,6 +56,7 @@ function init(){
 	conteiner3.rotation.set(0,-Math.PI/2,0);
 	conteiner3.position.set(-40,0,0);
 	container1.add(conteiner3);
+	container1.position.y=20;
 
 	
 	
@@ -91,10 +74,9 @@ function init(){
 	
 
 	camera = new THREE.PerspectiveCamera(35, window.innerWidth / window.innerHeight, 1, 1500 );
-	camera.position.set( 0, 45, 100 );
+	camera.position.set( 115, 120, 250 );
 	camera.lookAt(0,0,0);
-	camera.layers.enable(BLOOM_SCENE);
-
+	
 	const container = document.getElementById( 'canvas' );
 
 
@@ -108,52 +90,16 @@ function init(){
 	//document.body.appendChild( renderer.domElement );
 	container.appendChild( renderer.domElement );
 
-	control = new OrbitControls(camera, renderer.domElement);
-	control.update();
-
-	//COMPOSE
-	
-	renderScene = new RenderPass( scene, camera );
-
-	bloomPass = new UnrealBloomPass( new THREE.Vector2( window.innerWidth, window.innerHeight ), 1.5, 0.4, 0.85 );
-	bloomPass.threshold = params.bloomThreshold;
-	bloomPass.strength = params.bloomStrength;
-	bloomPass.radius = params.bloomRadius;
-
-	bloomComposer = new EffectComposer( renderer );
-	bloomComposer.renderToScreen = false;
-	bloomComposer.addPass( renderScene );
-	bloomComposer.addPass( bloomPass );
-
-	const finalPass = new ShaderPass(
-		new THREE.ShaderMaterial( {
-			uniforms: {
-				baseTexture: { value: null },
-				bloomTexture: { value: bloomComposer.renderTarget2.texture }
-			},
-			vertexShader: document.getElementById( 'vertexshader' ).textContent,
-			fragmentShader: document.getElementById( 'fragmentshader' ).textContent,
-			defines: {}
-		} ), "baseTexture"
-	);
-	finalPass.needsSwap = true;
-
-	finalComposer = new EffectComposer( renderer );
-	finalComposer.addPass( renderScene );
-	finalComposer.addPass( finalPass );
+	//control = new OrbitControls(camera, renderer.domElement);
+	//control.update();
 
 
-
-
-	//------------------------------------
-
-	
 	
 	let loader = new GLTFLoader();
 	loader.load('motherduck3.glb', function(gltf) {
 		duck = gltf.scene.children[0];
 		duck.scale.set(1.3,1.3,1.3);
-		duck.position.set(0,-30,0);
+		duck.position.set(0,0,0);
 		gltf.scene.traverse( function( node ) {
 			if ( node.material ) {
 				node.material.envMapIntensity = 1;
@@ -181,13 +127,15 @@ function init(){
 		gui.add(fog, 'far', 0, 700, 10);
 
 
-		gui.add(camera, 'fov', 15,100,1);
+		gui.add(camera.position, 'x', -500,500,0.4);
+		gui.add(camera.position, 'y', -500,500,0.4);
+		gui.add(camera.position, 'z', -500,500,0.4);
 		
 
 		scene.add(duck);
 
 		const hdri = new RGBELoader();
-		hdri.load( './img/ballroom_2k.pic', function ( texture ) {
+		hdri.load( '/img/ballroom_2k.pic', function ( texture ) {
 			tex = texture;
 			tex.mapping = THREE.EquirectangularRefractionMapping;
 			tex.wrapS = THREE.RepeatWrapping;
@@ -218,12 +166,13 @@ function init(){
 				node.material.envMapIntensity = 0.6;
 				node.material.reflectivity = 1;
 				node.material.projection = 'normal';
-				let roughness_map = new THREE.TextureLoader().load('./img/uh4sbhzc_2K_Roughness.jpg');
+				let roughness_map = new THREE.TextureLoader().load('/img/uh4sbhzc_2K_Roughness.jpg');
 				roughness_map.wrapS = THREE.RepeatWrapping;
 				roughness_map.wrapT = THREE.RepeatWrapping;
 				roughness_map.repeat.x = 1;
 				roughness_map.repeat.y = 3;
-				node.material.metalness = 1;
+				node.material.metalness = 0.5;
+				node.material.roughness = 1;
 				node.material.roughnessMap = roughness_map;
 			}
 			
@@ -245,7 +194,7 @@ function init(){
 				node.material.metalness = 1;
 				node.material.roughness = 0.12;
 				
-				loader.load('./img/logo_map2.jpg', texture => {
+				loader.load('/img/logo_map2.jpg', texture => {
 					node.material.alphaMap = texture;
 					node.material.alphaMap.wrapT = THREE.RepeatWrapping;
 					node.material.alphaMap.wrapS = THREE.RepeatWrapping;
@@ -271,14 +220,14 @@ function init(){
 	stats = new Stats();
 	document.body.appendChild( stats.dom );
 
-	scene.traverse( disposeMaterial );
+
 
 	animate();
 }
 
 function animate(){
 	render();
-	control.update();
+	//control.update();
 	requestAnimationFrame(animate);
 	
 }
@@ -286,7 +235,7 @@ function animate(){
 function render(){
 	const time = performance.now() * 0.01;
 	const timer = Date.now() * 0.00007;
-
+	camera.updateProjectionMatrix();
 	stats.update();
 	
 	
@@ -294,25 +243,6 @@ function render(){
 	container1.rotation.x = Math.sin(timer) * 1.5 + Math.PI*2;
 	container1.rotation.y = Math.sin(timer) * 2.5 + Math.PI*2;
 	container1.rotation.z += 0.0013;
-
-	
-
-	
-	
-
-	
-	/*
-	scene.traverse( darkenNonBloomed );
-	bloomComposer.render();
-	scene.traverse( restoreMaterial );
-
-	finalComposer.render();
-	*/
-	
-
-
-	
-
 
 	renderer.render(scene, camera);
 }
@@ -331,37 +261,6 @@ function addRec(x,y,z,r){
 	
 }
 
-function darkenNonBloomed( obj ) {
-
-	if ( obj.isMesh && bloomLayer.test( obj.layers ) === false ) {
-
-		materials[ obj.uuid ] = obj.material;
-		obj.material = darkMaterial;
-
-	}
-
-}
-
-function restoreMaterial( obj ) {
-
-	if ( materials[ obj.uuid ] ) {
-
-		obj.material = materials[ obj.uuid ];
-		delete materials[ obj.uuid ];
-
-	}
-
-}
-
-function disposeMaterial( obj ) {
-
-	if ( obj.material ) {
-
-		obj.material.dispose();
-
-	}
-
-}
 
 
 
