@@ -264,7 +264,7 @@ function addRec(x,y,z,r){
 	//const rectLightHelper = new RectAreaLightHelper( rectLight );
 	//rectLight.add( rectLightHelper );
 	//scene.add( rectLight );
-	conteiner3.add(rectLight);
+	//conteiner3.add(rectLight);
 	
 }
 
