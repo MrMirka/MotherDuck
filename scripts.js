@@ -190,7 +190,7 @@ function init(){
 				node.material.normalMap = texture;
 				node.material.normalScale= new THREE.Vector2(0.5, 0.5);
 				node.material.envMapIntensity = 0.6;
-				node.material.reflectivity = 1;
+				node.material.reflectivity = 0;
 				node.material.projection = 'normal';
 				let roughness_map = new THREE.TextureLoader().load('./img/ring_dust.jpg');
 				roughness_map.wrapS = THREE.RepeatWrapping;
@@ -262,6 +262,11 @@ function render(){
 	
 	timer = Date.now() * 0.00007;
 	stats.update();
+
+	if (sun != undefined) {
+		sun.position.x = Math.sin(timer*10)*100;
+		sun.position.z = Math.cos(timer*10)*100;
+	}
 	
 	container1.rotation.x = Math.sin(timer) * 1.5 + Math.PI*2;
 	container1.rotation.y = Math.sin(timer) * 2.5 + Math.PI*2;
@@ -282,11 +287,11 @@ function addRec(x,y,z,r){
 	//scene.add( rectLight );
 	if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
 		console.log('isMobile');
-		conteiner3.add(rectLight);
+		//conteiner3.add(rectLight);
 
 	}else{
 		console.log('isDesctop');
-		conteiner3.add(rectLight);
+		//conteiner3.add(rectLight);
 	}
 	
 	
