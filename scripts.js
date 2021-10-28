@@ -46,9 +46,9 @@ function init(){
 	RectAreaLightUniformsLib.init();
 	
 	addRec(0,0,0,0);
-	addRec(0,0,-80,Math.PI);
-	addRec(0,-40,-40,Math.PI/2);
-	addRec(0,40,-40,-Math.PI/2);
+	//addRec(0,0,-80,Math.PI);
+	//addRec(0,-40,-40,Math.PI/2);
+	//addRec(0,40,-40,-Math.PI/2);
 	
 	conteiner3.rotation.set(0,-Math.PI/2,0);
 	conteiner3.position.set(-40,0,0);
@@ -282,6 +282,8 @@ function addRec(x,y,z,r){
 	//scene.add( rectLight );
 	if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
 		console.log('isMobile');
+		conteiner3.add(rectLight);
+
 	}else{
 		console.log('isDesctop');
 		conteiner3.add(rectLight);
