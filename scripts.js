@@ -274,8 +274,8 @@ function init(){
 	
 	
 	
-	//stats = new Stats();
-	//document.body.appendChild( stats.dom );
+	stats = new Stats();
+	document.body.appendChild( stats.dom );
 
 
 
@@ -293,7 +293,7 @@ function render(){
 
 	
 	timer = Date.now() * 0.00007;
-	//stats.update();
+	stats.update();
 
 	if( isMobile ) {
 		if (sun != undefined) {
