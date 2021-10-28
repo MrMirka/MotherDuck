@@ -93,10 +93,10 @@ function init(){
 
 	renderer = new THREE.WebGLRenderer( { alpha:true, antialias: false } );
 	renderer.setPixelRatio( window.devicePixelRatio );
-	//renderer.outputEncoding = THREE.sRGBEncoding;
+	renderer.outputEncoding = THREE.sRGBEncoding;
 	//renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 	renderer.toneMapping = THREE.ACESFilmicToneMapping;
-	renderer.toneMappingExposure = 0.8;
+	renderer.toneMappingExposure = 0.3;
 	renderer.setSize( window.innerWidth, window.innerHeight );
 	//document.body.appendChild( renderer.domElement );
 	container.appendChild( renderer.domElement );
