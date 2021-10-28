@@ -279,8 +279,6 @@ function render(){
 	container1.rotation.y = Math.sin(timer) * 2.5 + Math.PI*2;
 	container1.rotation.z += 0.0013;
 
-	camera.position.x += 0.05;
-	camera.position.z += 0.05;
 	renderer.render(scene, camera);
 }
 
