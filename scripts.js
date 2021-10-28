@@ -93,10 +93,10 @@ function init(){
 
 	renderer = new THREE.WebGLRenderer( { alpha:true, antialias: false } );
 	renderer.setPixelRatio( window.devicePixelRatio );
-	renderer.outputEncoding = THREE.sRGBEncoding;
+	//renderer.outputEncoding = THREE.sRGBEncoding;
 	//renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 	renderer.toneMapping = THREE.ACESFilmicToneMapping;
-	renderer.toneMappingExposure = 0.3;
+	renderer.toneMappingExposure = 0.8;
 	renderer.setSize( window.innerWidth, window.innerHeight );
 	//document.body.appendChild( renderer.domElement );
 	container.appendChild( renderer.domElement );
@@ -139,7 +139,7 @@ function init(){
 			if ( node.material ) {
 
 						const hdri = new RGBELoader();
-				hdri.load( './img/ballroom_1k_2.hdr', function ( texture ) {
+				hdri.load( './img/new_room.hdr', function ( texture ) {
 					tex = texture;
 					tex.mapping = THREE.EquirectangularRefractionMapping;
 					tex.wrapS = THREE.RepeatWrapping;
@@ -153,7 +153,7 @@ function init(){
 						node.material.projection = 'normal';
 						node.material.transparent = false;
 						node.material.normalScale= new THREE.Vector2(1, 1);
-						node.material.roughness = 0.55;	
+						node.material.roughness = 0.76;	
 					renderer.render( scene, camera );
 				});
 
