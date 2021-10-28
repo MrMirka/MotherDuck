@@ -101,7 +101,7 @@ function init(){
 	});
 	let mm = new THREE.Mesh(ball, mat);
 	mm.position.set(0,20,0);
-	scene.add(mm);
+	//scene.add(mm);
 	//=======
 
 
@@ -142,7 +142,7 @@ function init(){
 		*/
 		
 
-		//scene.add(duck);
+		scene.add(duck);
 
 		const hdri = new RGBELoader();
 		hdri.load( './img/ballroom_1k.hdr', function ( texture ) {
@@ -264,7 +264,13 @@ function addRec(x,y,z,r){
 	//const rectLightHelper = new RectAreaLightHelper( rectLight );
 	//rectLight.add( rectLightHelper );
 	//scene.add( rectLight );
-	//conteiner3.add(rectLight);
+	if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+		console.log('isMobile');
+	}else{
+		console.log('isDesctop');
+		conteiner3.add(rectLight);
+	}
+	
 	
 }
 
