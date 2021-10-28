@@ -28,7 +28,7 @@ let stats;
 let fog;
 let tex;
 
-let gui = new GUI();
+//let gui = new GUI();
 init();
 
 function init(){
@@ -113,12 +113,27 @@ function init(){
 		duck.position.set(0,0,0);
 		gltf.scene.traverse( function( node ) {
 			if ( node.material ) {
-				node.material.envMapIntensity = 1;
-				node.material.reflectivity = 1;
-				node.material.projection = 'normal';
-				node.material.transparent = false;
-				node.material.normalScale= new THREE.Vector2(1, 1);
-				node.material.roughness = 0.7;	
+
+						const hdri = new RGBELoader();
+				hdri.load( './img/ballroom_1k.hdr', function ( texture ) {
+					tex = texture;
+					tex.mapping = THREE.EquirectangularRefractionMapping;
+					tex.wrapS = THREE.RepeatWrapping;
+					tex.wrapP = THREE.RepeatWrapping;
+					tex.repeat.set( 1, 1 );
+					tex.magFilter = THREE.NearestFilter;
+					//scene.environment = tex;
+						node.material.envMapIntensity = 1;
+						node.material.envMap = tex;
+						node.material.reflectivity = 1;
+						node.material.projection = 'normal';
+						node.material.transparent = false;
+						node.material.normalScale= new THREE.Vector2(1, 1);
+						node.material.roughness = 0.7;	
+					renderer.render( scene, camera );
+				});
+
+				
 			}
 		});
 		//LIGTH
@@ -143,7 +158,7 @@ function init(){
 		
 
 		scene.add(duck);
-
+		/*
 		const hdri = new RGBELoader();
 		hdri.load( './img/ballroom_1k.hdr', function ( texture ) {
 			tex = texture;
@@ -155,6 +170,7 @@ function init(){
 			scene.environment = tex;
 			renderer.render( scene, camera );
 		});
+		*/
 		
 	});
 
