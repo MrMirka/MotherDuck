@@ -100,8 +100,8 @@ function init(){
 	//document.body.appendChild( renderer.domElement );
 	container.appendChild( renderer.domElement );
 
-	//control = new OrbitControls(camera, renderer.domElement);
-	//control.update();
+	control = new OrbitControls(camera, renderer.domElement);
+	control.update();
 
 
 	//FAKE
@@ -289,9 +289,9 @@ function render(){
 
 	renderer.render(scene, camera);
 
-	camera.position.x += ( mouseX - camera.position.x ) * .0005;
+	//camera.position.x += ( mouseX - camera.position.x ) * .0005;
 	//camera.position.y += ( - mouseY - camera.position.y ) * .0005;
-	camera.lookAt( 0,0,0 );
+	//camera.lookAt( 0,0,0 );
 }
 
 
