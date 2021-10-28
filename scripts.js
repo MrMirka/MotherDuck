@@ -131,7 +131,7 @@ function init(){
 
 	
 	let loader = new GLTFLoader();
-	loader.load('motherduck_anim1k.glb', function(gltf) {
+	loader.load('motherduck_anim1k_2.glb', function(gltf) {
 		duck = gltf.scene.children[0];
 		duck.scale.set(1.3,1.3,1.3);
 		duck.position.set(0,0,0);
