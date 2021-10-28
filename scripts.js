@@ -27,6 +27,7 @@ let ring, ringDisk ;
 let stats;
 let fog;
 let tex;
+let isMobile = false;
 
 //let gui = new GUI();
 init();
@@ -45,10 +46,14 @@ function init(){
 
 	RectAreaLightUniformsLib.init();
 	
-	addRec(0,0,0,0);
-	//addRec(0,0,-80,Math.PI);
-	//addRec(0,-40,-40,Math.PI/2);
-	//addRec(0,40,-40,-Math.PI/2);
+	if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+		isMobile = true;
+	}else{
+		addRec(0,0,0,0);
+		addRec(0,0,-80,Math.PI);
+		addRec(0,-40,-40,Math.PI/2);
+		addRec(0,40,-40,-Math.PI/2);
+	}
 	
 	conteiner3.rotation.set(0,-Math.PI/2,0);
 	conteiner3.position.set(-40,0,0);
@@ -263,10 +268,12 @@ function render(){
 	timer = Date.now() * 0.00007;
 	stats.update();
 
-	if (sun != undefined) {
-		sun.position.x = Math.sin(timer*10)*100;
-		sun.position.z = Math.cos(timer*10)*100;
-	}
+	if( isMobile ) {
+		if (sun != undefined) {
+			sun.position.x = Math.sin(timer*10)*100;
+			sun.position.z = Math.cos(timer*10)*100;
+		}
+}	
 	
 	container1.rotation.x = Math.sin(timer) * 1.5 + Math.PI*2;
 	container1.rotation.y = Math.sin(timer) * 2.5 + Math.PI*2;
@@ -278,21 +285,16 @@ function render(){
 
 
 function addRec(x,y,z,r){
-	const rectLight = new THREE.RectAreaLight( 0xffffff, 0.8, 2, 80 );
+	const rectLight = new THREE.RectAreaLight( 0xffffff, 5, 7, 80 );
 	//rectLight.power = 2000;
 	rectLight.position.set(x, y, z );
 	rectLight.rotation.set(r, 0,0 );
 	//const rectLightHelper = new RectAreaLightHelper( rectLight );
 	//rectLight.add( rectLightHelper );
 	//scene.add( rectLight );
-	if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
-		console.log('isMobile');
-		//conteiner3.add(rectLight);
-
-	}else{
-		console.log('isDesctop');
-		//conteiner3.add(rectLight);
-	}
+	
+		conteiner3.add(rectLight);
+	
 	
 	
 }
