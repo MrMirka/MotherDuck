@@ -96,7 +96,7 @@ function init(){
 	//renderer.outputEncoding = THREE.sRGBEncoding;
 	//renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 	renderer.toneMapping = THREE.ACESFilmicToneMapping;
-	renderer.toneMappingExposure = 0.6;
+	renderer.toneMappingExposure = 0.8;
 	renderer.setSize( window.innerWidth, window.innerHeight );
 	//document.body.appendChild( renderer.domElement );
 	container.appendChild( renderer.domElement );
@@ -153,7 +153,7 @@ function init(){
 						node.material.projection = 'normal';
 						node.material.transparent = false;
 						node.material.normalScale= new THREE.Vector2(1, 1);
-						node.material.roughness = 0.7;	
+						node.material.roughness = 0.66;	
 					renderer.render( scene, camera );
 				});
 
