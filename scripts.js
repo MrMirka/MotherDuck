@@ -230,9 +230,9 @@ function animate(){
 }
 
 function render(){
-	const time = performance.now() * 0.01;
+	
 	const timer = Date.now() * 0.00007;
-	camera.updateProjectionMatrix();
+	//camera.updateProjectionMatrix();
 	stats.update();
 	
 	
@@ -248,7 +248,7 @@ function render(){
 
 function addRec(x,y,z,r){
 	const rectLight = new THREE.RectAreaLight( 0xffffff, 3, 2, 80 );
-	rectLight.power = 2000;
+	//rectLight.power = 2000;
 	rectLight.position.set(x, y, z );
 	rectLight.rotation.set(r, 0,0 );
 	//const rectLightHelper = new RectAreaLightHelper( rectLight );
