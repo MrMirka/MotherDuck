@@ -128,7 +128,7 @@ function init(){
 		*/
 		
 
-		scene.add(duck);
+		//scene.add(duck);
 
 		const hdri = new RGBELoader();
 		hdri.load( './img/ballroom_1k.hdr', function ( texture ) {
