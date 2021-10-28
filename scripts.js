@@ -79,7 +79,7 @@ function init(){
 	renderer = new THREE.WebGLRenderer( { alpha:true, antialias: false } );
 	renderer.setPixelRatio( window.devicePixelRatio );
 	//renderer.outputEncoding = THREE.sRGBEncoding;
-	renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+	//renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 	renderer.toneMapping = THREE.ACESFilmicToneMapping;
 	renderer.toneMappingExposure = 0.6;
 	renderer.setSize( window.innerWidth, window.innerHeight );
