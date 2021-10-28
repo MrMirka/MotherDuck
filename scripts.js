@@ -91,6 +91,20 @@ function init(){
 	//control.update();
 
 
+	//FAKE
+	let ball = new THREE.SphereGeometry(22, 32,16);
+	let mat = new THREE.MeshStandardMaterial({
+		color: 0x1d1d1d,
+		metalness: 1,
+		roughness:0.2,
+		envMapIntensity: 1
+	});
+	let mm = new THREE.Mesh(ball, mat);
+	mm.position.set(0,20,0);
+	scene.add(mm);
+	//=======
+
+
 	
 	let loader = new GLTFLoader();
 	loader.load('motherduck3.glb', function(gltf) {
@@ -173,7 +187,7 @@ function init(){
 			}
 			
 		});
-		scene.add(ring);
+		//scene.add(ring);
 		container1.add(ring);
 	});
 
@@ -243,14 +257,14 @@ function render(){
 
 
 function addRec(x,y,z,r){
-	const rectLight = new THREE.RectAreaLight( 0xffffff, 1, 2, 80 );
+	const rectLight = new THREE.RectAreaLight( 0xffffff, 5, 2, 80 );
 	//rectLight.power = 2000;
 	rectLight.position.set(x, y, z );
 	rectLight.rotation.set(r, 0,0 );
 	//const rectLightHelper = new RectAreaLightHelper( rectLight );
 	//rectLight.add( rectLightHelper );
 	//scene.add( rectLight );
-	//conteiner3.add(rectLight);
+	conteiner3.add(rectLight);
 	
 }
 
