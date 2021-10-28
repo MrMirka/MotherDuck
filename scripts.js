@@ -139,7 +139,7 @@ function init(){
 			if ( node.material ) {
 
 						const hdri = new RGBELoader();
-				hdri.load( './img/ballroom_1k.hdr', function ( texture ) {
+				hdri.load( './img/ballroom_1k_2.hdr', function ( texture ) {
 					tex = texture;
 					tex.mapping = THREE.EquirectangularRefractionMapping;
 					tex.wrapS = THREE.RepeatWrapping;
@@ -147,7 +147,7 @@ function init(){
 					tex.repeat.set( 1, 1 );
 					tex.magFilter = THREE.NearestFilter;
 					//scene.environment = tex;
-						node.material.envMapIntensity = 1.4;
+						node.material.envMapIntensity = 1.3;
 						node.material.envMap = tex;
 						node.material.reflectivity = 1;
 						node.material.projection = 'normal';
