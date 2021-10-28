@@ -134,7 +134,7 @@ function init(){
 	loader.load('motherduck_anim1k.glb', function(gltf) {
 		duck = gltf.scene.children[0];
 		duck.scale.set(1.3,1.3,1.3);
-		duck.position.set(0,-3,0);
+		duck.position.set(0,0,0);
 		gltf.scene.traverse( function( node ) {
 			if ( node.material ) {
 
@@ -181,14 +181,11 @@ function init(){
 		*/
 
 		
-		mixer = new THREE.AnimationMixer( duck );
-		clip = gltf.animations[ 0 ];
-		mixer.clipAction( clip.optimize() ).play();
 		
 		
 		conteiner4.add(container1);
 		conteiner4.add(duck);
-		conteiner4.position.set(0,-60,0);
+		conteiner4.position.set(0,-50,0);
 		//conteiner4.rotation.set(-Math.PI/23,-Math.PI/23,Math.PI/25);
 
 		//scene.add(duck);
@@ -335,8 +332,6 @@ function addRec(x,y,z,r){
 }
 
 function onDocumentMouseMove( event ) {
-	mixer.clipAction( clip.optimize() ).play();
-
 	mouseX = ( event.clientX - windowHalfX ) * 10;
 	mouseY = ( event.clientY - windowHalfY ) * 10;
 
