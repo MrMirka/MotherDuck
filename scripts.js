@@ -118,6 +118,7 @@ function init(){
 		});
 		//LIGTH
 		sun = new THREE.DirectionalLight(0xffffff,15.2);
+		sun.position.set(-60,70,15);
 		sun.target = duck;
 		scene.add(sun);
 		gui.add(sun.position, 'x', -500,500,15);
