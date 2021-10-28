@@ -3,6 +3,7 @@ body {
     height: 100%;
     margin: 0;
     background-image: url('./img/background_moba.png');
+    background-size: cover;
     /*
     background: rgb(31,31,31);
     background: radial-gradient(circle, rgba(31,31,31,1) 0%, rgba(13,13,13,1) 77%);
