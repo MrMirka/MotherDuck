@@ -49,8 +49,9 @@ function init(){
 	container1 = new THREE.Object3D();
 	conteiner2 = new THREE.Object3D();
 	conteiner3 = new THREE.Object3D();
+	conteiner4 = new THREE.Object3D();
 	
-	scene.add(container1, conteiner3);
+	scene.add(container1, conteiner3, conteiner4);
 
 	RectAreaLightUniformsLib.init();
 	
@@ -84,7 +85,7 @@ function init(){
 	
 
 	camera = new THREE.PerspectiveCamera(35, window.innerWidth / window.innerHeight, 1, 1500 );
-	camera.position.set( 115, 120, 250 );
+	camera.position.set( 115, 120, 180 );
 	camera.lookAt(0,0,0);
 	
 	const container = document.getElementById( 'canvas' );
@@ -131,7 +132,7 @@ function init(){
 	loader.load('motherduck3.glb', function(gltf) {
 		duck = gltf.scene.children[0];
 		duck.scale.set(1.3,1.3,1.3);
-		duck.position.set(0,0,0);
+		duck.position.set(0,-3,0);
 		gltf.scene.traverse( function( node ) {
 			if ( node.material ) {
 
@@ -177,8 +178,12 @@ function init(){
 		gui.add(camera.position, 'z', -500,500,0.4);
 		*/
 		
+		conteiner4.add(container1);
+		conteiner4.add(duck);
+		conteiner4.position.set(0,-60,0);
+		//conteiner4.rotation.set(-Math.PI/23,-Math.PI/23,Math.PI/25);
 
-		scene.add(duck);
+		//scene.add(duck);
 		/*
 		const hdri = new RGBELoader();
 		hdri.load( './img/ballroom_1k.hdr', function ( texture ) {
@@ -281,8 +286,6 @@ function animate(){
 
 function render(){
 
-	console.log('polar '+control.getPolarAngle());
-	console.log('azimut '+control.getAzimuthalAngle());
 	
 	timer = Date.now() * 0.00007;
 	stats.update();
@@ -297,6 +300,7 @@ function render(){
 	container1.rotation.x = Math.sin(timer) * 1.5 + Math.PI*2;
 	container1.rotation.y = Math.sin(timer) * 2.5 + Math.PI*2;
 	container1.rotation.z += 0.0013;
+	
 
 	renderer.render(scene, camera);
 
@@ -316,7 +320,7 @@ function addRec(x,y,z,r){
 	//rectLight.add( rectLightHelper );
 	//scene.add( rectLight );
 	
-		conteiner3.add(rectLight);
+	conteiner3.add(rectLight);
 	
 	
 	
