@@ -132,7 +132,7 @@ function init(){
 		scene.add(duck);
 
 		const hdri = new RGBELoader();
-		hdri.load( './img/ballroom_2k.pic', function ( texture ) {
+		hdri.load( './img/ballroom_1k.hdr', function ( texture ) {
 			tex = texture;
 			tex.mapping = THREE.EquirectangularRefractionMapping;
 			tex.wrapS = THREE.RepeatWrapping;
@@ -163,7 +163,7 @@ function init(){
 				node.material.envMapIntensity = 0.6;
 				node.material.reflectivity = 1;
 				node.material.projection = 'normal';
-				let roughness_map = new THREE.TextureLoader().load('./img/uh4sbhzc_2K_Roughness.jpg');
+				let roughness_map = new THREE.TextureLoader().load('./img/ring_dust.jpg');
 				roughness_map.wrapS = THREE.RepeatWrapping;
 				roughness_map.wrapT = THREE.RepeatWrapping;
 				roughness_map.repeat.x = 1;
@@ -247,7 +247,7 @@ function render(){
 
 
 function addRec(x,y,z,r){
-	const rectLight = new THREE.RectAreaLight( 0xffffff, 7, 20, 80 );
+	const rectLight = new THREE.RectAreaLight( 0xffffff, 3, 2, 80 );
 	rectLight.power = 2000;
 	rectLight.position.set(x, y, z );
 	rectLight.rotation.set(r, 0,0 );
