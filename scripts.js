@@ -101,6 +101,14 @@ function init(){
 	container.appendChild( renderer.domElement );
 
 	control = new OrbitControls(camera, renderer.domElement);
+	control.enableDamping = true;
+	control.enablePan = false;
+	control.enableZoom = false;
+	control.minAzimuthAngle = -0.48642900576659637;
+	control.maxAzimuthAngle = 0.9530985059023817;
+	control.maxPolarAngle = 1.1936065021656286;
+	control.minPolarAngle = 1.1936065021656286;
+	
 	control.update();
 
 
@@ -266,12 +274,15 @@ function init(){
 
 function animate(){
 	render();
-	//control.update();
+	control.update();
 	requestAnimationFrame(animate);
 	
 }
 
 function render(){
+
+	console.log('polar '+control.getPolarAngle());
+	console.log('azimut '+control.getAzimuthalAngle());
 	
 	timer = Date.now() * 0.00007;
 	stats.update();
