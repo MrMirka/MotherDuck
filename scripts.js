@@ -185,7 +185,7 @@ function init(){
 		
 		conteiner4.add(container1);
 		conteiner4.add(duck);
-		conteiner4.position.set(0,-50,0);
+		conteiner4.position.set(0,-45,0);
 		//conteiner4.rotation.set(-Math.PI/23,-Math.PI/23,Math.PI/25);
 
 		//scene.add(duck);
