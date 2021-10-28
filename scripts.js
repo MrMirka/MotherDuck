@@ -3,7 +3,7 @@ import { OrbitControls } from './js/OrbitControls.js';
 import { RGBELoader } from './js/RGBELoader.js';
 import { GLTFLoader } from './js/GLTFLoader.js';
 import Stats from './js/stats.module.js';
-import { GUI } from '.js/dat.gui.module.js';
+import { GUI } from './js/dat.gui.module.js';
 import { EffectComposer } from './js/postprocessing/EffectComposer.js';
 import { RenderPass } from './js/postprocessing/RenderPass.js';
 import { UnrealBloomPass } from './js/postprocessing/UnrealBloomPass.js';
