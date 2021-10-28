@@ -19,6 +19,7 @@ let scene, camera, renderer, control, duck;
 let orbitMesh1, orbitMesh2;
 let container1, conteiner2, conteiner3, conteiner4;
 let sun;
+let timer;
 
 
 
@@ -227,11 +228,8 @@ function animate(){
 
 function render(){
 	
-	const timer = Date.now() * 0.00007;
-	//camera.updateProjectionMatrix();
+	timer = Date.now() * 0.00007;
 	stats.update();
-	
-	
 	
 	container1.rotation.x = Math.sin(timer) * 1.5 + Math.PI*2;
 	container1.rotation.y = Math.sin(timer) * 2.5 + Math.PI*2;
