@@ -29,6 +29,14 @@ let fog;
 let tex;
 let isMobile = false;
 
+
+let mouseX = 0, mouseY = 0;
+
+let windowHalfX = window.innerWidth / 2;
+let windowHalfY = window.innerHeight / 2;
+//document.addEventListener( 'mousemove', onDocumentMouseMove );
+document.addEventListener( "touchmove", onDocumentMouseMove, false );
+
 //let gui = new GUI();
 init();
 
@@ -280,6 +288,10 @@ function render(){
 	container1.rotation.z += 0.0013;
 
 	renderer.render(scene, camera);
+
+	camera.position.x += ( mouseX - camera.position.x ) * .0005;
+	//camera.position.y += ( - mouseY - camera.position.y ) * .0005;
+	camera.lookAt( 0,0,0 );
 }
 
 
@@ -299,6 +311,12 @@ function addRec(x,y,z,r){
 	
 }
 
+function onDocumentMouseMove( event ) {
+
+	mouseX = ( event.clientX - windowHalfX ) * 10;
+	mouseY = ( event.clientY - windowHalfY ) * 10;
+
+}
 
 
 
