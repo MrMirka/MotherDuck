@@ -147,13 +147,13 @@ function init(){
 					tex.repeat.set( 1, 1 );
 					tex.magFilter = THREE.NearestFilter;
 					//scene.environment = tex;
-						node.material.envMapIntensity = 1.3;
+						node.material.envMapIntensity = 1.4;
 						node.material.envMap = tex;
 						node.material.reflectivity = 1;
 						node.material.projection = 'normal';
 						node.material.transparent = false;
 						node.material.normalScale= new THREE.Vector2(1, 1);
-						node.material.roughness = 0.66;	
+						node.material.roughness = 0.55;	
 					renderer.render( scene, camera );
 				});
 
