@@ -273,7 +273,7 @@ function render(){
 
 
 function addRec(x,y,z,r){
-	const rectLight = new THREE.RectAreaLight( 0xffffff, 5, 2, 80 );
+	const rectLight = new THREE.RectAreaLight( 0xffffff, 0.8, 2, 80 );
 	//rectLight.power = 2000;
 	rectLight.position.set(x, y, z );
 	rectLight.rotation.set(r, 0,0 );
