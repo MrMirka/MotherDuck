@@ -112,6 +112,7 @@ function init(){
 		sun.position.set(-60,70,15);
 		sun.target = duck;
 		scene.add(sun);
+		/*
 		gui.add(sun.position, 'x', -500,500,15);
 		gui.add(sun.position, 'y', -500,500,15);
 		gui.add(sun.position, 'z', -500,500,15);
@@ -124,6 +125,7 @@ function init(){
 		gui.add(camera.position, 'x', -500,500,0.4);
 		gui.add(camera.position, 'y', -500,500,0.4);
 		gui.add(camera.position, 'z', -500,500,0.4);
+		*/
 		
 
 		scene.add(duck);
@@ -247,7 +249,7 @@ function addRec(x,y,z,r){
 	rectLight.rotation.set(r, 0,0 );
 	//const rectLightHelper = new RectAreaLightHelper( rectLight );
 	//rectLight.add( rectLightHelper );
-	scene.add( rectLight );
+	//scene.add( rectLight );
 	conteiner3.add(rectLight);
 	
 }
