@@ -103,11 +103,7 @@ function init(){
 				node.material.projection = 'normal';
 				node.material.transparent = false;
 				node.material.normalScale= new THREE.Vector2(1, 1);
-				//node.material.metalness = 1;
-				node.material.roughness = 0.7;
-				//node.material.roughnessMap = null;
-				
-				console.log(node.material);
+				node.material.roughness = 0.7;	
 			}
 		});
 		//LIGTH
@@ -247,7 +243,7 @@ function render(){
 
 
 function addRec(x,y,z,r){
-	const rectLight = new THREE.RectAreaLight( 0xffffff, 3, 2, 80 );
+	const rectLight = new THREE.RectAreaLight( 0xffffff, 1, 2, 80 );
 	//rectLight.power = 2000;
 	rectLight.position.set(x, y, z );
 	rectLight.rotation.set(r, 0,0 );
