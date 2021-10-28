@@ -21,7 +21,7 @@ let container1, conteiner2, conteiner3, conteiner4;
 let sun;
 let timer;
 
-
+let mixer,clip;
 
 let ring, ringDisk ;
 let stats;
@@ -34,8 +34,8 @@ let mouseX = 0, mouseY = 0;
 
 let windowHalfX = window.innerWidth / 2;
 let windowHalfY = window.innerHeight / 2;
-//document.addEventListener( 'mousemove', onDocumentMouseMove );
-document.addEventListener( "touchmove", onDocumentMouseMove, false );
+document.addEventListener( 'mousemove', onDocumentMouseMove );
+//document.addEventListener( "touchmove", onDocumentMouseMove, false );
 
 //let gui = new GUI();
 init();
@@ -103,12 +103,14 @@ function init(){
 
 	control = new OrbitControls(camera, renderer.domElement);
 	control.enableDamping = true;
+	
 	control.enablePan = false;
 	control.enableZoom = false;
 	control.minAzimuthAngle = -0.48642900576659637;
 	control.maxAzimuthAngle = 0.9530985059023817;
 	control.maxPolarAngle = 1.1936065021656286;
 	control.minPolarAngle = 1.1936065021656286;
+	
 	
 	control.update();
 
@@ -129,7 +131,7 @@ function init(){
 
 	
 	let loader = new GLTFLoader();
-	loader.load('motherduck3.glb', function(gltf) {
+	loader.load('motherduck_anim1k.glb', function(gltf) {
 		duck = gltf.scene.children[0];
 		duck.scale.set(1.3,1.3,1.3);
 		duck.position.set(0,-3,0);
@@ -177,6 +179,12 @@ function init(){
 		gui.add(camera.position, 'y', -500,500,0.4);
 		gui.add(camera.position, 'z', -500,500,0.4);
 		*/
+
+		
+		mixer = new THREE.AnimationMixer( duck );
+		clip = gltf.animations[ 0 ];
+		mixer.clipAction( clip.optimize() ).play();
+		
 		
 		conteiner4.add(container1);
 		conteiner4.add(duck);
@@ -327,6 +335,7 @@ function addRec(x,y,z,r){
 }
 
 function onDocumentMouseMove( event ) {
+	mixer.clipAction( clip.optimize() ).play();
 
 	mouseX = ( event.clientX - windowHalfX ) * 10;
 	mouseY = ( event.clientY - windowHalfY ) * 10;
