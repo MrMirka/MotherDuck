@@ -1,31 +1,30 @@
-import * as THREE from '../build/three.module.js';
+import * as THREE from './build/three.module.js';
+import { OrbitControls } from './js/OrbitControls.js';
+import { RGBELoader } from './js/RGBELoader.js';
+import { GLTFLoader } from './js/GLTFLoader.js';
+import Stats from './js/stats.module.js';
+import { GUI } from '.js/dat.gui.module.js';
+import { EffectComposer } from './js/postprocessing/EffectComposer.js';
+import { RenderPass } from './js/postprocessing/RenderPass.js';
+import { UnrealBloomPass } from './js/postprocessing/UnrealBloomPass.js';
+import { RectAreaLightHelper } from './js/RectAreaLightHelper.js';
+import { RectAreaLightUniformsLib } from './js/RectAreaLightUniformsLib.js';
 
-import { OrbitControls } from '../js/OrbitControls.js';
-import { RGBELoader } from '../js/RGBELoader.js';
-import { GLTFLoader } from '../js/GLTFLoader.js';
-import Stats from '../js/stats.module.js';
-import { GUI } from '..js/dat.gui.module.js';
-import { EffectComposer } from '../js/postprocessing/EffectComposer.js';
-import { RenderPass } from '../js/postprocessing/RenderPass.js';
-import { UnrealBloomPass } from '../js/postprocessing/UnrealBloomPass.js';
-import { RectAreaLightHelper } from '../js/RectAreaLightHelper.js';
-import { RectAreaLightUniformsLib } from '../js/RectAreaLightUniformsLib.js';
+import { SSRPass } from './js/postprocessing/SSRPass.js';
+import { ShaderPass } from './js/postprocessing/ShaderPass.js';
 
-import { SSRPass } from '../js/postprocessing/SSRPass.js';
-import { ShaderPass } from '../js/postprocessing/ShaderPass.js';
+import { GammaCorrectionShader } from './js/shaders/GammaCorrectionShader.js';
+import { FXAAShader } from './js/shaders/FXAAShader.js';
+import { ReflectorForSSRPass } from './js/objects/ReflectorForSSRPass.js';
 
-import { GammaCorrectionShader } from '../js/shaders/GammaCorrectionShader.js';
-import { FXAAShader } from '../js/shaders/FXAAShader.js';
-import { ReflectorForSSRPass } from '../js/objects/ReflectorForSSRPass.js';
-
-import { FlakesTexture } from '../js/FlakesTexture.js';
+import { FlakesTexture } from './js/FlakesTexture.js';
 
 
 
 let scene, camera, renderer, control, duck;
 let orbitMesh1, orbitMesh2;
 let container1, conteiner2, conteiner3, conteiner4;
-let composer, bloomPass, sun;
+let sun;
 
 
 
@@ -138,7 +137,7 @@ function init(){
 		scene.add(duck);
 
 		const hdri = new RGBELoader();
-		hdri.load( '/img/ballroom_2k.pic', function ( texture ) {
+		hdri.load( './img/ballroom_2k.pic', function ( texture ) {
 			tex = texture;
 			tex.mapping = THREE.EquirectangularRefractionMapping;
 			tex.wrapS = THREE.RepeatWrapping;
@@ -169,7 +168,7 @@ function init(){
 				node.material.envMapIntensity = 0.6;
 				node.material.reflectivity = 1;
 				node.material.projection = 'normal';
-				let roughness_map = new THREE.TextureLoader().load('/img/uh4sbhzc_2K_Roughness.jpg');
+				let roughness_map = new THREE.TextureLoader().load('./img/uh4sbhzc_2K_Roughness.jpg');
 				roughness_map.wrapS = THREE.RepeatWrapping;
 				roughness_map.wrapT = THREE.RepeatWrapping;
 				roughness_map.repeat.x = 1;
@@ -197,7 +196,7 @@ function init(){
 				node.material.metalness = 1;
 				node.material.roughness = 0.12;
 				
-				loader.load('/img/logo_map2.jpg', texture => {
+				loader.load('./img/logo_map2.jpg', texture => {
 					node.material.alphaMap = texture;
 					node.material.alphaMap.wrapT = THREE.RepeatWrapping;
 					node.material.alphaMap.wrapS = THREE.RepeatWrapping;
