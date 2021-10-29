@@ -164,6 +164,9 @@ function init(){
 					node.material.transparent = false;
 					node.material.normalScale= new THREE.Vector2(1, 1);
 					node.material.roughness = 0.76;	
+					if(isMobile){
+						node.material.roughness = 0.46;	
+					}
 					renderer.render( scene, camera );
 				});
 
