@@ -42,6 +42,8 @@ window.addEventListener('mouseup', barkClose);
 
 window.addEventListener("touchend", barkClose, false);
 window.addEventListener("touchstart", barkOpen, false);
+
+
 init();
 
 function init(){
@@ -306,10 +308,10 @@ function render(){
 
 	//FORSE
 	
-	if(isTouch && touchDelta>=1){
+	if(isTouch && touchDelta >= 1){
 		touchDelta+=0.015;
 		//console.log(touchDelta);
-	}else if(!isTouch && touchDelta>1){
+	}else if(!isTouch && touchDelta >1 ){
 		touchDelta-=0.015;
 		//touchDelta=1;
 		//console.log(touchDelta);
@@ -320,9 +322,13 @@ function render(){
 	}
 	//---------------
 
-	
+	/*
 	container1.rotation.x = Math.sin(timer) * 1.5 * touchDelta + Math.PI*2;
-	container1.rotation.y = Math.sin(timer) * 3.5 * touchDelta + Math.PI*2;
+	container1.rotation.y = Math.cos(timer) * 3.5 * touchDelta + Math.PI*2;
+	container1.rotation.z += 0.0011;
+	*/
+	container1.rotation.x+=0.001*(touchDelta*2);
+	container1.rotation.y+=0.002*(touchDelta*2);
 	container1.rotation.z += 0.0011;
 	
 	if(sun!=undefined)
