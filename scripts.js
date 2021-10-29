@@ -310,9 +310,11 @@ function render(){
 	
 	if(isTouch && touchDelta >= 1){
 		touchDelta+=0.095;
+		camera.fov-=touchDelta*0.011;
 		//console.log(touchDelta);
 	}else if(!isTouch && touchDelta >1 ){
 		touchDelta-=0.095;
+		camera.fov+=touchDelta*0.011;
 		//touchDelta=1;
 		//console.log(touchDelta);
 	}else if(touchDelta<1){
@@ -331,6 +333,9 @@ function render(){
 	container1.rotation.y+=0.0004*(touchDelta*5);
 	container1.rotation.z += 0.0011;
 	
+	
+	camera.updateProjectionMatrix();
+
 	if(sun!=undefined)
 	sun.position.z = Math.sin(timer*6.1) / Math.PI + Math.cos(timer);
 	
