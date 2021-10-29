@@ -232,7 +232,7 @@ function init(){
 				node.material.metalness = 0.5;
 				node.material.roughness = 1;
 				if(isMobile){
-					node.material.roughness = 0.66;	
+					node.material.roughness = 0.26;	
 				}
 				node.material.roughnessMap = roughness_map;
 			}
