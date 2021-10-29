@@ -301,7 +301,7 @@ function render(){
 	}
 
 	
-	timer = Date.now() * 0.00007;
+	timer = Date.now() * 0.00003;
 	//stats.update();
 
 	if( !isMobile ) {
@@ -312,22 +312,17 @@ function render(){
 	}	
 	
 	container1.rotation.x = Math.sin(timer) * 1.5 + Math.PI*2;
-	container1.rotation.y = Math.sin(timer) * 2.5 + Math.PI*2;
-	container1.rotation.z += 0.0013;
+	container1.rotation.y = Math.cos(timer) * 2.5 + Math.PI*2;
+	container1.rotation.z += 0.0011;
 	
 
 	renderer.render(scene, camera);
-
-	//camera.position.x += ( mouseX - camera.position.x ) * .0005;
-	//camera.position.y += ( - mouseY - camera.position.y ) * .0005;
-	//camera.lookAt( 0,0,0 );
 }
 
 
 
 function addRec(x,y,z,r){
 	const rectLight = new THREE.RectAreaLight( 0xffffff, 5, 7, 80 );
-	//rectLight.power = 2000;
 	rectLight.position.set(x, y, z );
 	rectLight.rotation.set(r, 0,0 );
 	//const rectLightHelper = new RectAreaLightHelper( rectLight );
