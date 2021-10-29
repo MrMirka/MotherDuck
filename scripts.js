@@ -53,7 +53,7 @@ function init(){
 	scene.fog = fog;
 
 	
-	let gui = new GUI();
+	//let gui = new GUI();
 	/*
 	gui.add(scene.fog, 'near',0,500,10);
 	gui.add(scene.fog, 'far',0,500,10);
