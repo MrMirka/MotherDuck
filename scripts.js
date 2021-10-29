@@ -309,10 +309,10 @@ function render(){
 	//FORSE
 	
 	if(isTouch && touchDelta >= 1){
-		touchDelta+=0.015;
+		touchDelta+=0.095;
 		//console.log(touchDelta);
 	}else if(!isTouch && touchDelta >1 ){
-		touchDelta-=0.015;
+		touchDelta-=0.095;
 		//touchDelta=1;
 		//console.log(touchDelta);
 	}else if(touchDelta<1){
@@ -327,8 +327,8 @@ function render(){
 	container1.rotation.y = Math.cos(timer) * 3.5 * touchDelta + Math.PI*2;
 	container1.rotation.z += 0.0011;
 	*/
-	container1.rotation.x+=0.001*(touchDelta*2);
-	container1.rotation.y+=0.002*(touchDelta*2);
+	container1.rotation.x+=0.0005*(touchDelta*5);
+	container1.rotation.y+=0.0007*(touchDelta*5);
 	container1.rotation.z += 0.0011;
 	
 	if(sun!=undefined)
