@@ -343,8 +343,13 @@ function barkOpen(){
 function barkClose(){
 	if(bark!=undefined){ 
 		//bark.reset();
-		bark.paused = true;
+		window.setTimeout(stopBark, 500);
+		//bark.paused = true;
 	}
+}
+
+function stopBark(){
+	bark.paused = true
 }
 
 
