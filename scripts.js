@@ -30,6 +30,9 @@ let tex;
 let isMobile = false;
 let clock = new THREE.Clock();
 
+let touchDelta = 1;
+let isTouch = false;
+
 
 
 
@@ -47,9 +50,9 @@ function init(){
 	fog = new THREE.FogExp2(0x000000, 0.0011);
 	scene.fog = fog;
 
-	/*
-	let gui = new GUI();
 	
+	let gui = new GUI();
+	/*
 	gui.add(scene.fog, 'near',0,500,10);
 	gui.add(scene.fog, 'far',0,500,10);
 	*/
@@ -65,12 +68,12 @@ function init(){
 	RectAreaLightUniformsLib.init();
 	
 	if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
-		isMobile = true;
+		//isMobile = true;
 	}else{
-		addRec(0,0,0,0);
-		addRec(0,0,-80,Math.PI);
-		addRec(0,-40,-40,Math.PI/2);
-		addRec(0,40,-40,-Math.PI/2);
+		//addRec(0,0,0,0);
+		//addRec(0,0,-80,Math.PI);
+	//	addRec(0,-40,-40,Math.PI/2);
+		//addRec(0,40,-40,-Math.PI/2);
 	}
 	
 	conteiner3.rotation.set(0,-Math.PI/2,0);
@@ -180,8 +183,15 @@ function init(){
 		//bark.play();
 		//LIGTH
 		sun = new THREE.DirectionalLight(0xffffff,15.2);
-		sun.position.set(-60,70,15);
+		sun.position.set(-38,50,19);
 		sun.target = duck;
+		gui.add(sun.position, 'x',-50,50,1);
+		gui.add(sun.position, 'y',-50,50,1);
+		gui.add(sun.position, 'z',-50,50,1);
+
+		
+		const helper = new THREE.DirectionalLightHelper( sun, 5 );
+		scene.add( helper );
 
 		scene.add(sun);
 		
@@ -198,18 +208,18 @@ function init(){
 		ring.scale.set(1,1,1);
 		ring.position.set(0,0,0);
 
-		if( isMobile ) {
-			let pot = new THREE.DirectionalLight(0xffffff,17.2);
-			let pot2 = new THREE.DirectionalLight(0xffffff,7.2);
-			pot.position.set(0,2,0);
-			pot2.position.set(7,-2,4);
-			pot.target = ring;
-			pot2.target = ring;
-			ring.add(pot,pot2);
-		}
-		
-		
+		if( !isMobile ) {
 
+			let pot = new THREE.PointLight(0xffffff,17.2);
+			let pot2 = new THREE.PointLight(0xffffff,7.2);
+			pot.position.set(-44,-13,-9);
+			pot2.position.set(21,50,16);
+			ring.add(pot,pot2);
+
+			
+		}
+
+		
 		gltf.scene.traverse( function( node ) {
 			if ( node.material ) {
 				let texture = new THREE.CanvasTexture(new FlakesTexture());
@@ -227,11 +237,8 @@ function init(){
 				roughness_map.wrapT = THREE.RepeatWrapping;
 				roughness_map.repeat.x = 1;
 				roughness_map.repeat.y = 3;
-				node.material.metalness = 0.5;
+				node.material.metalness = 0.3;
 				node.material.roughness = 1;
-				if(isMobile){
-					node.material.roughness = 0.86;	
-				}
 				node.material.roughnessMap = roughness_map;
 			}
 			
@@ -293,6 +300,7 @@ function animate(){
 
 function render(){
 
+
 	let mixerUpdateDelta = clock.getDelta();
 	if(mixer!=undefined) {
 	mixer.update( mixerUpdateDelta );
@@ -300,7 +308,23 @@ function render(){
 
 	
 	timer = Date.now() * 0.00003;
+	
 	//stats.update();
+
+	//FORSE
+	
+	if(isTouch && touchDelta>=1){
+		touchDelta+=0.005;
+		console.log(touchDelta);
+	}else if(!isTouch && touchDelta>1){
+		touchDelta-=0.005;
+		console.log(touchDelta);
+	}else if(touchDelta<1){
+		touchDelta=1;
+		isTouch=false;
+		console.log(touchDelta);
+	}
+	//---------------
 
 	if( !isMobile ) {
 		if (sun != undefined) {
@@ -309,9 +333,11 @@ function render(){
 		}
 	}	
 	
-	container1.rotation.x = Math.sin(timer) * 1.5 + Math.PI*2;
-	container1.rotation.y = Math.cos(timer) * 2.5 + Math.PI*2;
+	container1.rotation.x = Math.sin(timer) * 1.5 * touchDelta + Math.PI*2;
+	container1.rotation.y = Math.sin(timer) * 3.5 * touchDelta + Math.PI*2;
 	container1.rotation.z += 0.0011;
+	if(sun!=undefined)
+	sun.position.z = Math.sin(timer*6.1) / Math.PI + Math.cos(timer);
 	
 
 	renderer.render(scene, camera);
@@ -338,10 +364,13 @@ function barkOpen(){
 		bark.timeScale = 1;
 		bark.paused = false;
 		bark.play();
+		isTouch = true;
+		
 	}
 }
 function barkClose(){
 	if(bark!=undefined){ 
+		isTouch = false;
 		//bark.reset();
 		window.setTimeout(stopBark, 500);
 		//bark.paused = true;
@@ -351,6 +380,7 @@ function barkClose(){
 function stopBark(){
 	bark.timeScale = 0.4;
 	bark.paused = true;
+	
 }
 
 
