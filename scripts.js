@@ -167,8 +167,6 @@ function init(){
 					
 					renderer.render( scene, camera );
 				});
-
-				
 			}
 		});
 		//ANIMATIONS
@@ -232,7 +230,7 @@ function init(){
 				node.material.metalness = 0.5;
 				node.material.roughness = 1;
 				if(isMobile){
-					node.material.roughness = 0.56;	
+					node.material.roughness = 0.86;	
 				}
 				node.material.roughnessMap = roughness_map;
 			}
