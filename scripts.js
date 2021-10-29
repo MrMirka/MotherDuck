@@ -168,6 +168,7 @@ function init(){
 		sun = new THREE.DirectionalLight(0xffffff,15.2);
 		sun.position.set(-60,70,15);
 		sun.target = duck;
+
 		scene.add(sun);
 		
 		conteiner4.add(container1);
@@ -182,6 +183,15 @@ function init(){
 		ring = gltf.scene.children[0];
 		ring.scale.set(1,1,1);
 		ring.position.set(0,0,0);
+
+		if( !isMobile ) {
+			let pot = new THREE.DirectionalLight(0xffffff,7.2);
+			pot.position.set(0,2,0);
+			pot.target = ring;
+			ring.add(pot);
+		}
+		
+		
 
 		gltf.scene.traverse( function( node ) {
 			if ( node.material ) {
@@ -265,19 +275,19 @@ function render(){
 
 	let mixerUpdateDelta = clock.getDelta();
 	if(mixer!=undefined) {
-		mixer.update( mixerUpdateDelta );
+	mixer.update( mixerUpdateDelta );
 	}
 
 	
 	timer = Date.now() * 0.00007;
 	stats.update();
 
-	if( isMobile ) {
+	if( !isMobile ) {
 		if (sun != undefined) {
-			sun.position.x = Math.sin(timer*10)*100;
-			sun.position.z = Math.cos(timer*10)*100;
+			//sun.position.x = Math.sin(timer*10)*100;
+			//sun.position.z = Math.cos(timer*10)*100;
 		}
-}	
+	}	
 	
 	container1.rotation.x = Math.sin(timer) * 1.5 + Math.PI*2;
 	container1.rotation.y = Math.sin(timer) * 2.5 + Math.PI*2;
