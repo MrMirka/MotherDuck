@@ -37,14 +37,15 @@ let clock = new THREE.Clock();
 window.addEventListener('mousedown', barkOpen);
 window.addEventListener('mouseup', barkClose);
 
-window.addEventListener("touchcancel", barkClose, false);
-window.addEventListener("touchmove", barkOpen, false);
+window.addEventListener("touchend", barkClose, false);
+window.addEventListener("touchstart", barkOpen, false);
 init();
 
 function init(){
 	scene = new THREE.Scene();
 	//fog = new THREE.Fog(0x000000,260,298);
-	//scene.fog = fog;
+	fog = new THREE.FogExp2(0x000000, 0.0011);
+	scene.fog = fog;
 
 	/*
 	let gui = new GUI();
