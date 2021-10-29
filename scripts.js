@@ -21,7 +21,7 @@ let container1, conteiner2, conteiner3, conteiner4;
 let sun;
 let timer;
 
-let mixer,clip;
+let mixer,bark;
 
 let ring, ringDisk ;
 let stats;
@@ -34,12 +34,17 @@ let clock = new THREE.Clock();
 
 
 //let gui = new GUI();
+window.addEventListener('mousedown', barkOpen);
+window.addEventListener('mouseup', barkClose);
+
+window.addEventListener("touchcancel", barkClose, false);
+window.addEventListener("touchmove", barkOpen, false);
 init();
 
 function init(){
 	scene = new THREE.Scene();
-	fog = new THREE.Fog(0x000000,260,298);
-	scene.fog = fog;
+	//fog = new THREE.Fog(0x000000,260,298);
+	//scene.fog = fog;
 
 	/*
 	let gui = new GUI();
@@ -167,10 +172,10 @@ function init(){
 		//ANIMATIONS
 		const animations = gltf.animations;
 		mixer = new THREE.AnimationMixer( gltf.scene );
-		let bark = mixer.clipAction(animations[0]);
+		bark = mixer.clipAction(animations[0]);
 		bark.enabled = true;
 		bark.setEffectiveTimeScale( 1 );
-		bark.play();
+		//bark.play();
 		//LIGTH
 		sun = new THREE.DirectionalLight(0xffffff,15.2);
 		sun.position.set(-60,70,15);
@@ -326,6 +331,19 @@ function addRec(x,y,z,r){
 	
 	
 	
+}
+
+function barkOpen(){
+	if(bark!=undefined) {
+		bark.paused = false;
+		bark.play();
+	}
+}
+function barkClose(){
+	if(bark!=undefined){ 
+		//bark.reset();
+		bark.paused = true;
+	}
 }
 
 
