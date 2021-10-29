@@ -38,8 +38,15 @@ init();
 
 function init(){
 	scene = new THREE.Scene();
-	fog = new THREE.Fog(0x000000,300,700);
-	//scene.fog = fog;
+	fog = new THREE.Fog(0x000000,260,298);
+	scene.fog = fog;
+
+	/*
+	let gui = new GUI();
+	
+	gui.add(scene.fog, 'near',0,500,10);
+	gui.add(scene.fog, 'far',0,500,10);
+	*/
 	
 
 	container1 = new THREE.Object3D();
@@ -185,10 +192,13 @@ function init(){
 		ring.position.set(0,0,0);
 
 		if( isMobile ) {
-			let pot = new THREE.DirectionalLight(0xffffff,7.2);
+			let pot = new THREE.DirectionalLight(0xffffff,17.2);
+			let pot2 = new THREE.DirectionalLight(0xffffff,7.2);
 			pot.position.set(0,2,0);
+			pot2.position.set(7,-2,4);
 			pot.target = ring;
-			ring.add(pot);
+			pot2.target = ring;
+			ring.add(pot,pot2);
 		}
 		
 		
