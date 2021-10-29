@@ -175,7 +175,9 @@ function init(){
 		mixer = new THREE.AnimationMixer( gltf.scene );
 		bark = mixer.clipAction(animations[0]);
 		bark.enabled = true;
-		bark.setEffectiveTimeScale( 1 );
+		bark.fadeIn = 1;
+		bark.fadeOut = 0.2;
+		//bark.setEffectiveTimeScale( 1 );
 		//bark.play();
 		//LIGTH
 		sun = new THREE.DirectionalLight(0xffffff,15.2);
@@ -272,8 +274,8 @@ function init(){
 	
 	
 	
-	stats = new Stats();
-	document.body.appendChild( stats.dom );
+	//stats = new Stats();
+	//document.body.appendChild( stats.dom );
 
 
 
@@ -296,7 +298,7 @@ function render(){
 
 	
 	timer = Date.now() * 0.00007;
-	stats.update();
+	//stats.update();
 
 	if( !isMobile ) {
 		if (sun != undefined) {
@@ -336,6 +338,7 @@ function addRec(x,y,z,r){
 
 function barkOpen(){
 	if(bark!=undefined) {
+		bark.timeScale = 1;
 		bark.paused = false;
 		bark.play();
 	}
@@ -349,7 +352,8 @@ function barkClose(){
 }
 
 function stopBark(){
-	bark.paused = true
+	bark.timeScale = 0.4;
+	bark.paused = true;
 }
 
 
