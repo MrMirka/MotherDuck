@@ -184,7 +184,7 @@ function init(){
 		ring.scale.set(1,1,1);
 		ring.position.set(0,0,0);
 
-		if( !isMobile ) {
+		if( isMobile ) {
 			let pot = new THREE.DirectionalLight(0xffffff,7.2);
 			pot.position.set(0,2,0);
 			pot.target = ring;
