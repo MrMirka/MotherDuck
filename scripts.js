@@ -327,8 +327,8 @@ function render(){
 	container1.rotation.y = Math.cos(timer) * 3.5 * touchDelta + Math.PI*2;
 	container1.rotation.z += 0.0011;
 	*/
-	container1.rotation.x+=0.0005*(touchDelta*5);
-	container1.rotation.y+=0.0007*(touchDelta*5);
+	container1.rotation.x+=0.0002*(touchDelta*5);
+	container1.rotation.y+=0.0004*(touchDelta*5);
 	container1.rotation.z += 0.0011;
 	
 	if(sun!=undefined)
