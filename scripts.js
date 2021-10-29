@@ -164,9 +164,7 @@ function init(){
 					node.material.transparent = false;
 					node.material.normalScale= new THREE.Vector2(1, 1);
 					node.material.roughness = 0.76;	
-					if(isMobile){
-						node.material.roughness = 0.46;	
-					}
+					
 					renderer.render( scene, camera );
 				});
 
@@ -233,6 +231,9 @@ function init(){
 				roughness_map.repeat.y = 3;
 				node.material.metalness = 0.5;
 				node.material.roughness = 1;
+				if(isMobile){
+					node.material.roughness = 0.66;	
+				}
 				node.material.roughnessMap = roughness_map;
 			}
 			
