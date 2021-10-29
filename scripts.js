@@ -28,6 +28,7 @@ let stats;
 let fog;
 let tex;
 let isMobile = false;
+let clock = new THREE.Clock();
 
 
 
@@ -156,48 +157,23 @@ function init(){
 				
 			}
 		});
+		//ANIMATIONS
+		const animations = gltf.animations;
+		mixer = new THREE.AnimationMixer( gltf.scene );
+		let bark = mixer.clipAction(animations[0]);
+		bark.enabled = true;
+		bark.setEffectiveTimeScale( 1 );
+		bark.play();
 		//LIGTH
 		sun = new THREE.DirectionalLight(0xffffff,15.2);
 		sun.position.set(-60,70,15);
 		sun.target = duck;
 		scene.add(sun);
-		/*
-		gui.add(sun.position, 'x', -500,500,15);
-		gui.add(sun.position, 'y', -500,500,15);
-		gui.add(sun.position, 'z', -500,500,15);
-		gui.add(sun, 'intensity', 0,30,0.1);
-
-		gui.add(fog, 'near', 0, 700, 10);
-		gui.add(fog, 'far', 0, 700, 10);
-
-
-		gui.add(camera.position, 'x', -500,500,0.4);
-		gui.add(camera.position, 'y', -500,500,0.4);
-		gui.add(camera.position, 'z', -500,500,0.4);
-		*/
-
-		
-		
 		
 		conteiner4.add(container1);
 		conteiner4.add(duck);
 		conteiner4.position.set(0,-45,0);
-		//conteiner4.rotation.set(-Math.PI/23,-Math.PI/23,Math.PI/25);
-
-		//scene.add(duck);
-		/*
-		const hdri = new RGBELoader();
-		hdri.load( './img/ballroom_1k.hdr', function ( texture ) {
-			tex = texture;
-			tex.mapping = THREE.EquirectangularRefractionMapping;
-			tex.wrapS = THREE.RepeatWrapping;
-			tex.wrapP = THREE.RepeatWrapping;
-			tex.repeat.set( 1, 1 );
-			tex.magFilter = THREE.NearestFilter;
-			scene.environment = tex;
-			renderer.render( scene, camera );
-		});
-		*/
+	
 		
 	});
 
@@ -286,6 +262,11 @@ function animate(){
 }
 
 function render(){
+
+	let mixerUpdateDelta = clock.getDelta();
+	if(mixer!=undefined) {
+		mixer.update( mixerUpdateDelta );
+	}
 
 	
 	timer = Date.now() * 0.00007;
