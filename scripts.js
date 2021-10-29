@@ -91,10 +91,10 @@ function init(){
 	renderer.setPixelRatio( window.devicePixelRatio );
 	renderer.outputEncoding = THREE.GammaEncoding;
 	//renderer.outputEncoding = THREE.sRGBEncoding;
-	renderer.gammaFactor = 1.23;
+	renderer.gammaFactor = 1.7;
 	//renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 	renderer.toneMapping = THREE.ACESFilmicToneMapping;
-	renderer.toneMappingExposure = 0.8;
+	renderer.toneMappingExposure = 0.3;
 	renderer.setSize( window.innerWidth, window.innerHeight );
 	//document.body.appendChild( renderer.domElement );
 	container.appendChild( renderer.domElement );
@@ -144,7 +144,7 @@ function init(){
 					tex.format = THREE.RGBFormat;
 					tex.repeat.set( 1, 1 );
 					//tex.magFilter = THREE.NearestFilter;
-					node.material.envMapIntensity = 1;
+					node.material.envMapIntensity = 2.2;
 					node.material.envMap = tex;
 					node.material.reflectivity = 0.4;
 					node.material.projection = 'normal';
