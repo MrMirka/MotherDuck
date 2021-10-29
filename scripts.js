@@ -30,12 +30,7 @@ let tex;
 let isMobile = false;
 
 
-let mouseX = 0, mouseY = 0;
 
-let windowHalfX = window.innerWidth / 2;
-let windowHalfY = window.innerHeight / 2;
-document.addEventListener( 'mousemove', onDocumentMouseMove );
-//document.addEventListener( "touchmove", onDocumentMouseMove, false );
 
 //let gui = new GUI();
 init();
@@ -93,7 +88,9 @@ function init(){
 
 	renderer = new THREE.WebGLRenderer( { alpha:true, antialias: false } );
 	renderer.setPixelRatio( window.devicePixelRatio );
+	renderer.outputEncoding = THREE.GammaEncoding;
 	//renderer.outputEncoding = THREE.sRGBEncoding;
+	renderer.gammaFactor = 1.23;
 	//renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 	renderer.toneMapping = THREE.ACESFilmicToneMapping;
 	renderer.toneMappingExposure = 0.8;
@@ -137,23 +134,22 @@ function init(){
 		duck.position.set(0,0,0);
 		gltf.scene.traverse( function( node ) {
 			if ( node.material ) {
-
-						const hdri = new RGBELoader();
+				const hdri = new RGBELoader();
 				hdri.load( './img/room2.hdr', function ( texture ) {
 					tex = texture;
 					tex.mapping = THREE.EquirectangularRefractionMapping;
 					tex.wrapS = THREE.RepeatWrapping;
 					tex.wrapP = THREE.RepeatWrapping;
+					tex.format = THREE.RGBFormat;
 					tex.repeat.set( 1, 1 );
-					tex.magFilter = THREE.NearestFilter;
-					//scene.environment = tex;
-						node.material.envMapIntensity = 1;
-						node.material.envMap = tex;
-						node.material.reflectivity = 1;
-						node.material.projection = 'normal';
-						node.material.transparent = false;
-						node.material.normalScale= new THREE.Vector2(1, 1);
-						node.material.roughness = 0.76;	
+					//tex.magFilter = THREE.NearestFilter;
+					node.material.envMapIntensity = 1;
+					node.material.envMap = tex;
+					node.material.reflectivity = 0.4;
+					node.material.projection = 'normal';
+					node.material.transparent = false;
+					node.material.normalScale= new THREE.Vector2(1, 1);
+					node.material.roughness = 0.76;	
 					renderer.render( scene, camera );
 				});
 
@@ -331,11 +327,6 @@ function addRec(x,y,z,r){
 	
 }
 
-function onDocumentMouseMove( event ) {
-	mouseX = ( event.clientX - windowHalfX ) * 10;
-	mouseY = ( event.clientY - windowHalfY ) * 10;
-
-}
 
 
 
