@@ -309,11 +309,11 @@ function render(){
 	//FORSE
 	
 	if(isTouch && touchDelta >= 1){
-		touchDelta+=0.095;
+		touchDelta+=0.135;
 		camera.fov-=touchDelta*0.011;
 		//console.log(touchDelta);
 	}else if(!isTouch && touchDelta >1 ){
-		touchDelta-=0.095;
+		touchDelta-=0.135;
 		camera.fov+=touchDelta*0.011;
 		//touchDelta=1;
 		//console.log(touchDelta);
@@ -329,8 +329,8 @@ function render(){
 	container1.rotation.y = Math.cos(timer) * 3.5 * touchDelta + Math.PI*2;
 	container1.rotation.z += 0.0011;
 	*/
-	container1.rotation.x+=0.0002*(touchDelta*5);
-	container1.rotation.y+=0.0004*(touchDelta*5);
+	container1.rotation.x+=0.0002*(touchDelta*15);
+	container1.rotation.y+=0.0004*(touchDelta*15);
 	container1.rotation.z += 0.0011;
 	
 	
