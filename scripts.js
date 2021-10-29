@@ -310,11 +310,11 @@ function render(){
 	
 	if(isTouch && touchDelta >= 1){
 		touchDelta+=0.135;
-		camera.fov-=touchDelta*0.011;
+		camera.fov-=touchDelta*0.003;
 		//console.log(touchDelta);
 	}else if(!isTouch && touchDelta >1 ){
 		touchDelta-=0.135;
-		camera.fov+=touchDelta*0.011;
+		camera.fov+=touchDelta*0.003;
 		//touchDelta=1;
 		//console.log(touchDelta);
 	}else if(touchDelta<1){
