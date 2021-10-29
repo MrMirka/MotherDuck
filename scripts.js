@@ -181,18 +181,11 @@ function init(){
 		bark.fadeOut = 0.2;
 		//bark.setEffectiveTimeScale( 1 );
 		//bark.play();
+
 		//LIGTH
 		sun = new THREE.DirectionalLight(0xffffff,15.2);
 		sun.position.set(-38,50,19);
 		sun.target = duck;
-		gui.add(sun.position, 'x',-50,50,1);
-		gui.add(sun.position, 'y',-50,50,1);
-		gui.add(sun.position, 'z',-50,50,1);
-
-		
-		const helper = new THREE.DirectionalLightHelper( sun, 5 );
-		scene.add( helper );
-
 		scene.add(sun);
 		
 		conteiner4.add(container1);
@@ -315,23 +308,17 @@ function render(){
 	
 	if(isTouch && touchDelta>=1){
 		touchDelta+=0.005;
-		console.log(touchDelta);
+		//console.log(touchDelta);
 	}else if(!isTouch && touchDelta>1){
 		touchDelta-=0.005;
-		console.log(touchDelta);
+		//console.log(touchDelta);
 	}else if(touchDelta<1){
 		touchDelta=1;
 		isTouch=false;
-		console.log(touchDelta);
+		//console.log(touchDelta);
 	}
 	//---------------
 
-	if( !isMobile ) {
-		if (sun != undefined) {
-			//sun.position.x = Math.sin(timer*10)*100;
-			//sun.position.z = Math.cos(timer*10)*100;
-		}
-	}	
 	
 	container1.rotation.x = Math.sin(timer) * 1.5 * touchDelta + Math.PI*2;
 	container1.rotation.y = Math.sin(timer) * 3.5 * touchDelta + Math.PI*2;
