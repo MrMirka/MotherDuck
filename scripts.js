@@ -169,6 +169,7 @@ function init(){
 	composer.addPass( renderScene );
 	composer.addPass( bloomPass );
 
+	/*
 	const gui = new GUI();
 
 				gui.add( params, 'exposure', 0.1, 2 ).onChange( function ( value ) {
@@ -194,6 +195,7 @@ function init(){
 					bloomPass.radius = Number( value );
 
 				} );
+	*/			
 
 
 
@@ -328,8 +330,8 @@ function init(){
 	
 
 	
-	//stats = new Stats();
-	//document.body.appendChild( stats.dom );
+	stats = new Stats();
+	document.body.appendChild( stats.dom );
 
 
 
@@ -354,7 +356,7 @@ function render(){
 	
 	timer = Date.now() * 0.00003;
 	
-	//stats.update();
+	stats.update();
 
 	//FORSE
 	if(isTouch && touchDelta >= 1){
