@@ -56,7 +56,7 @@ window.addEventListener('mouseup', barkClose);
 window.addEventListener("touchend", barkClose, false);
 window.addEventListener("touchstart", barkOpen, false);
 
-console.log('vertion 0.7')
+console.log('vertion 0.8')
 init();
 
 function init(){
@@ -450,6 +450,7 @@ function addRec(x,y,z,r){
 }
 
 function barkOpen(){
+	isTouch = true;
 	if(bark!=undefined && !bark.isRunning()) {
 		bark.play();
 		//bark.timeScale = 1;
