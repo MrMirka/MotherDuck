@@ -237,7 +237,7 @@ function init(){
 		bark.fadeOut = 0.2;
 		//bark.setEffectiveTimeScale( 1 );
 		//bark.play();
-		console.log(animations[0]);
+		
 
 		//LIGTH
 		sun = new THREE.DirectionalLight(0xffffff,15.2);
