@@ -13,10 +13,13 @@ import { RectAreaLightUniformsLib } from './js/RectAreaLightUniformsLib.js';
 
 import { FlakesTexture } from './js/FlakesTexture.js';
 
+import { EffectComposer } from './js/postprocessing/EffectComposer.js';
+import { RenderPass } from './js/postprocessing/RenderPass.js';
+import { UnrealBloomPass } from './js/postprocessing/UnrealBloomPass.js';
+
 
 
 let scene, camera, renderer, control, duck;
-let orbitMesh1, orbitMesh2;
 let container1, conteiner2, conteiner3, conteiner4;
 let sun;
 let timer;
@@ -32,6 +35,16 @@ let clock = new THREE.Clock();
 
 let touchDelta = 1;
 let isTouch = false;
+
+//COMPOSER
+let composer;
+
+const params = {
+	exposure: 0.8,
+	bloomStrength: 1.3,
+	bloomThreshold: 0,
+	bloomRadius: 0.65
+};
 
 
 
@@ -49,7 +62,6 @@ init();
 function init(){
 	scene = new THREE.Scene();
 	fog = new THREE.Fog(0x000000,235,325);
-	//fog = new THREE.FogExp2(0x000000, 0.0030);
 	scene.fog = fog;
 
 	
@@ -144,6 +156,45 @@ function init(){
 	mm.position.set(0,20,0);
 	//scene.add(mm);
 	//=======
+
+	//COMPOSER
+	const renderScene = new RenderPass( scene, camera );
+
+	const bloomPass = new UnrealBloomPass( new THREE.Vector2( window.innerWidth, window.innerHeight ), 1.5, 0.4, 0.85 );
+	bloomPass.threshold = params.bloomThreshold;
+	bloomPass.strength = params.bloomStrength;
+	bloomPass.radius = params.bloomRadius;
+
+	composer = new EffectComposer( renderer );
+	composer.addPass( renderScene );
+	composer.addPass( bloomPass );
+
+	const gui = new GUI();
+
+				gui.add( params, 'exposure', 0.1, 2 ).onChange( function ( value ) {
+
+					renderer.toneMappingExposure = Math.pow( value, 4.0 );
+
+				} );
+
+				gui.add( params, 'bloomThreshold', 0.0, 1.0 ).onChange( function ( value ) {
+
+					bloomPass.threshold = Number( value );
+
+				} );
+
+				gui.add( params, 'bloomStrength', 0.0, 3.0 ).onChange( function ( value ) {
+
+					bloomPass.strength = Number( value );
+
+				} );
+
+				gui.add( params, 'bloomRadius', 0.0, 1.0 ).step( 0.01 ).onChange( function ( value ) {
+
+					bloomPass.radius = Number( value );
+
+				} );
+
 
 
 	
@@ -342,7 +393,7 @@ function render(){
 	if(sun!=undefined)
 	sun.position.z = Math.sin(timer*6.1) / Math.PI + Math.cos(timer);
 	
-
+	//composer.render();
 	renderer.render(scene, camera);
 }
 
