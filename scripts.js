@@ -270,7 +270,7 @@ function init(){
 			let pHelper2 = new THREE.PointLightHelper(pot2,hSize);
 			//scene.add(pHelper, pHelper2);
 
-			/*OLD
+			/*OLD 
 			pot.position.set(-44,-13,-9);
 			pot2.position.set(21,50,16);
 			*/
