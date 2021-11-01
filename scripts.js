@@ -278,8 +278,8 @@ function init(){
 	
 	
 	
-	//stats = new Stats();
-	//document.body.appendChild( stats.dom );
+	stats = new Stats();
+	document.body.appendChild( stats.dom );
 
 
 
@@ -304,7 +304,7 @@ function render(){
 	
 	timer = Date.now() * 0.00003;
 	
-	//stats.update();
+	stats.update();
 
 	//FORSE
 	
@@ -326,7 +326,7 @@ function render(){
 	}
 	//---------------
 
-	console.log(CubicInOut(0,touchDelta,1,0.5));
+	//console.log(CubicInOut(0,touchDelta,1,0.5));
 	
 
 	/*
