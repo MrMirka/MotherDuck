@@ -6,13 +6,7 @@ import Stats from './js/stats.module.js';
 import { GUI } from './js/dat.gui.module.js';
 import { RectAreaLightHelper } from './js/RectAreaLightHelper.js';
 import { RectAreaLightUniformsLib } from './js/RectAreaLightUniformsLib.js';
-
-
-
-
-
 import { FlakesTexture } from './js/FlakesTexture.js';
-
 import { EffectComposer } from './js/postprocessing/EffectComposer.js';
 import { RenderPass } from './js/postprocessing/RenderPass.js';
 import { UnrealBloomPass } from './js/postprocessing/UnrealBloomPass.js';
@@ -23,20 +17,15 @@ let scene, camera, renderer, control, duck;
 let container1, conteiner2, conteiner3, conteiner4;
 let sun;
 let timer;
-
 let mixer,bark;
-
 let ring, ringDisk ;
 let stats;
 let fog;
 let tex;
 let isMobile = false;
 let clock = new THREE.Clock();
-
 let touchDelta = 1;
 let isTouch = false;
-
-//COMPOSER
 let composer; 
 
 const params = {
@@ -48,39 +37,35 @@ const params = {
 
 
 
-
-
 window.addEventListener('mousedown', barkOpen);
 window.addEventListener('mouseup', barkClose);
 
 window.addEventListener("touchend", barkClose, false);
 window.addEventListener("touchstart", barkOpen, false);
 
-console.log('vertion 0.9')
+
+
+console.log('vertion 0.9.1');
+
+
 init();
+
 
 function init(){
 	scene = new THREE.Scene();
 	fog = new THREE.Fog(0x000000,235,325);
 	scene.fog = fog;
-
-	
-	//let gui = new GUI();
-	
-	//gui.add(scene.fog, 'near',0,300,5);
-	//gui.add(scene.fog, 'far',0,400,5);
 	
 	
-	
-
 	container1 = new THREE.Object3D();
 	conteiner2 = new THREE.Object3D();
 	conteiner3 = new THREE.Object3D();
 	conteiner4 = new THREE.Object3D();
-	
 	scene.add(container1, conteiner3, conteiner4,conteiner2);
 
-	RectAreaLightUniformsLib.init();
+
+	RectAreaLightUniformsLib.init(); //Rectangle area ligth init
+
 	
 	if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
 		isMobile = true;
@@ -91,13 +76,12 @@ function init(){
 		addRec(0,40,-40,-Math.PI/2);
 	}
 	
+
 	conteiner3.rotation.set(0,-Math.PI/2,0);
 	conteiner3.position.set(-40,0,0);
 	container1.add(conteiner3);
-	container1.position.y=20;
+	container1.position.y=20; 
 
-	
-	
 	
 	//RING EMMITION
 	const immerMat = new THREE.MeshStandardMaterial({emissive: 0x74DFE1, emissiveIntensity: 5.01, side: THREE.DoubleSide});	
@@ -108,9 +92,6 @@ function init(){
 	container1.add(ringDisk);
 
 	
-
-	
-
 	camera = new THREE.PerspectiveCamera(35, window.innerWidth / window.innerHeight, 1, 1500 );
 	camera.position.set( 115, 120, 180 );
 	camera.lookAt(0,0,0);
@@ -130,9 +111,9 @@ function init(){
 	//document.body.appendChild( renderer.domElement );
 	container.appendChild( renderer.domElement );
 
+
 	control = new OrbitControls(camera, renderer.domElement);
 	control.enableDamping = true;
-	
 	control.enablePan = false;
 	control.enableZoom = false;
 	control.minAzimuthAngle = -0.48642900576659637;
@@ -140,22 +121,8 @@ function init(){
 	control.maxPolarAngle = 1.1936065021656286;
 	control.minPolarAngle = 1.1936065021656286;
 	
-	
 	control.update();
 
-
-	//FAKE
-	let ball = new THREE.SphereGeometry(22, 32,16);
-	let mat = new THREE.MeshStandardMaterial({
-		color: 0x1d1d1d,
-		metalness: 1,
-		roughness:0.2,
-		envMapIntensity: 1
-	});
-	let mm = new THREE.Mesh(ball, mat);
-	mm.position.set(0,20,0);
-	//scene.add(mm);
-	//=======
 
 	//COMPOSER
 	const renderScene = new RenderPass( scene, camera );
@@ -215,7 +182,6 @@ function init(){
 					tex.wrapP = THREE.RepeatWrapping;
 					tex.format = THREE.RGBFormat;
 					tex.repeat.set( 1, 1 );
-					//tex.magFilter = THREE.NearestFilter;
 					node.material.envMapIntensity = 2.2;
 					node.material.envMap = tex;
 					node.material.reflectivity = 0.4;
@@ -228,6 +194,8 @@ function init(){
 				});
 			}
 		});
+
+
 		//ANIMATIONS
 		const animations = gltf.animations;
 		mixer = new THREE.AnimationMixer( gltf.scene );
@@ -252,16 +220,14 @@ function init(){
 		
 	});
 
+
 	//RING
 	loader.load('ring3.glb', function(gltf){
 		ring = gltf.scene.children[0];
 		ring.scale.set(1,1,1);
 		ring.position.set(0,0,0);
-
 		if( isMobile ) {
-
 			let hSize = 5;
-			
 
 			let pot = new THREE.PointLight(0xffffff,17.2);
 			let pot2 = new THREE.PointLight(0xffffff,7.2);
@@ -280,10 +246,6 @@ function init(){
 
 			conteiner2.add(pot, pot2);
 			//ring.add(pot,pot2);
-			
-			
-
-			
 		}
 
 		
@@ -299,6 +261,7 @@ function init(){
 				node.material.envMapIntensity = 0.6;
 				node.material.reflectivity = 0;
 				node.material.projection = 'normal';
+
 				let roughness_map = new THREE.TextureLoader().load('./img/ring_dust.jpg');
 				roughness_map.wrapS = THREE.RepeatWrapping;
 				roughness_map.wrapT = THREE.RepeatWrapping;
@@ -308,7 +271,6 @@ function init(){
 				node.material.roughness = 1;
 				node.material.roughnessMap = roughness_map;
 			}
-			
 		});
 		//scene.add(ring);
 		container1.add(ring);
@@ -319,7 +281,6 @@ function init(){
 		ring = gltf.scene.children[0];
 		ring.scale.set(1,1,1);
 		ring.position.set(0,0,0);
-
 		gltf.scene.traverse( function( node ) {
 			if ( node.material ) {
 				let loader = new THREE.TextureLoader();
@@ -338,81 +299,64 @@ function init(){
 				node.material.envMapIntensity = 0.6;
 				node.material.reflectivity = 1;
 				node.material.projection = 'normal';
-			}
-			
+			}	
 		});
 		scene.add(ring);
 		container1.add(ring);
 	});
 
 	
-
-	
 	//stats = new Stats();
 	//document.body.appendChild( stats.dom );
-
 
 
 	animate();
 }
 
+
 function animate(){
 	render();
 	control.update();
-	requestAnimationFrame(animate);
-	
+	requestAnimationFrame(animate);	
 }
 
+
 function render(){
-
-
 	let mixerUpdateDelta = clock.getDelta();
 	if(mixer!=undefined) {
-	mixer.update( mixerUpdateDelta );
+		mixer.update( mixerUpdateDelta );
 	}
 
-	
+
 	timer = Date.now() * 0.00003;
 	
+
 	//stats.update();
+
 
 	//FORSE
 	if(isTouch && touchDelta >= 1){
-		
 		touchDelta+=8.535;
 		if(touchDelta>27) touchDelta=27;
-		//camera.fov-=touchDelta*0.003;
 	}else if(!isTouch && touchDelta >1 ){
 		touchDelta-=0.535;
-		//camera.fov+=touchDelta*0.003;
-		//touchDelta=1;
 	}else if(touchDelta<1){
 		touchDelta=1;
 		isTouch=false;
 	}
 
 
-	
-	/*
-	container1.rotation.x = Math.sin(timer) * 1.5 * touchDelta + Math.PI*2;
-	container1.rotation.y = Math.cos(timer) * 3.5 * touchDelta + Math.PI*2;
-	container1.rotation.z += 0.0011;
-	*/
-
-	/*container1.rotation.x+=0.0002*(touchDelta*15);
-	container1.rotation.y+=0.0004*(touchDelta*15);*/
-
 	container1.rotation.x+=0.0002*(CubicInOut(0,touchDelta,1,0.5)*15);
 	container1.rotation.y+=0.0004*(CubicInOut(0,touchDelta,1,0.5)*15);
 	container1.rotation.z += 0.0011;
 
-
-	conteiner2.rotation.x = Math.sin(timer) * 8.5  + Math.PI*2;
-	conteiner2.rotation.y = Math.cos(timer) * 13.5  + Math.PI*2;
-	conteiner2.rotation.z += 0.0011;
+	if(isMobile){
+		conteiner2.rotation.x = Math.sin(timer) * 8.5  + Math.PI*2;
+		conteiner2.rotation.y = Math.cos(timer) * 13.5  + Math.PI*2;
+		conteiner2.rotation.z += 0.0011;
+	}
 
 	
-
 	if(duck != undefined){
 		duck.position.x = Math.cos(timer*50.01);
 		duck.position.y = Math.sin(timer*50.01);
@@ -420,11 +364,11 @@ function render(){
 
 		duck.rotation.z = Math.sin(timer * 100.06) * .008 + Math.PI*1.999;
 		duck.rotation.x = Math.sin(timer * 100.06) * .008 + Math.PI*1.999;
-		
 	}
 	
 	
 	camera.updateProjectionMatrix();
+
 
 	if(sun!=undefined)
 	sun.position.z = Math.sin(timer*6.1) / Math.PI + Math.cos(timer);
@@ -434,7 +378,6 @@ function render(){
 }
 
 
-
 function addRec(x,y,z,r){
 	const rectLight = new THREE.RectAreaLight( 0xffffff, 5, 7, 80 );
 	rectLight.position.set(x, y, z );
@@ -442,12 +385,9 @@ function addRec(x,y,z,r){
 	//const rectLightHelper = new RectAreaLightHelper( rectLight );
 	//rectLight.add( rectLightHelper );
 	//scene.add( rectLight );
-	
 	conteiner3.add(rectLight);
-	
-	
-	
 }
+
 
 function barkOpen(){
 	isTouch = true;
@@ -458,29 +398,27 @@ function barkOpen(){
 		
 		//isTouch = true;
 		bark.reset();
-	
 		bark.loop = THREE.LoopRepeat;
-	
-		
 	}
 }
+
+
 function barkClose(){
 	if(bark!=undefined){ 
 		isTouch = false;
 		//bark.loop = THREE.LoopOnce;
-		
 		window.setTimeout(stopBark, 500);
 		
 	}
 }
 
+
 function stopBark(){
 	//bark.timeScale = 0.4;
 	//bark.paused = true;
-
-	bark.loop = THREE.LoopOnce;
-	
+	bark.loop = THREE.LoopOnce;	
 }
+
 
 function CubicInOut(t, b, c, d){
 	if ((t /= d / 2) < 1) return c / 2 * t * t * t + b;
