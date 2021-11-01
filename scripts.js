@@ -315,9 +315,9 @@ function render(){
 		//console.log(touchDelta);
 	}else if(!isTouch && touchDelta >1 ){
 		touchDelta-=1.535;
-		camera.fov+=touchDelta*0.003;
+		//camera.fov+=touchDelta*0.003;
 		//touchDelta=1;
-		//console.log(touchDelta);
+		console.log(touchDelta);
 	}else if(touchDelta<1){
 		touchDelta=1;
 		isTouch=false;
@@ -325,15 +325,15 @@ function render(){
 	}
 	//---------------
 
-	console.log(touchDelta);
+	
 
 	/*
 	container1.rotation.x = Math.sin(timer) * 1.5 * touchDelta + Math.PI*2;
 	container1.rotation.y = Math.cos(timer) * 3.5 * touchDelta + Math.PI*2;
 	container1.rotation.z += 0.0011;
 	*/
-	container1.rotation.x+=0.0002*(touchDelta*15);
-	container1.rotation.y+=0.0004*(touchDelta*15);
+	container1.rotation.x+=0.0002*(touchDelta*45);
+	container1.rotation.y+=0.0004*(touchDelta*45);
 	container1.rotation.z += 0.0011;
 	
 	
