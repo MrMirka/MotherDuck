@@ -83,12 +83,12 @@ function init(){
 	RectAreaLightUniformsLib.init();
 	
 	if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
-		//isMobile = true;
+		isMobile = true;
 	}else{
-		//addRec(0,0,0,0);
-		//addRec(0,0,-80,Math.PI);
-	//	addRec(0,-40,-40,Math.PI/2);
-		//addRec(0,40,-40,-Math.PI/2);
+		addRec(0,0,0,0);
+		addRec(0,0,-80,Math.PI);
+		addRec(0,-40,-40,Math.PI/2);
+		addRec(0,40,-40,-Math.PI/2);
 	}
 	
 	conteiner3.rotation.set(0,-Math.PI/2,0);
@@ -258,7 +258,7 @@ function init(){
 		ring.scale.set(1,1,1);
 		ring.position.set(0,0,0);
 
-		if( !isMobile ) {
+		if( isMobile ) {
 
 			let hSize = 5;
 			
@@ -456,7 +456,7 @@ function barkOpen(){
 		//bark.timeScale = 1;
 	//	bark.paused = false;
 		
-		isTouch = true;
+		//isTouch = true;
 		bark.reset();
 	
 		bark.loop = THREE.LoopRepeat;
