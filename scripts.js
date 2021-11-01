@@ -393,8 +393,8 @@ function render(){
 	if(sun!=undefined)
 	sun.position.z = Math.sin(timer*6.1) / Math.PI + Math.cos(timer);
 	
-	//composer.render();
-	renderer.render(scene, camera);
+	composer.render();
+	//renderer.render(scene, camera);
 }
 
 
