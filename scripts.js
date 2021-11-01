@@ -56,7 +56,7 @@ window.addEventListener('mouseup', barkClose);
 window.addEventListener("touchend", barkClose, false);
 window.addEventListener("touchstart", barkOpen, false);
 
-console.log('vertion 0.1')
+console.log('vertion 0.2')
 init();
 
 function init(){
@@ -330,8 +330,8 @@ function init(){
 	
 
 	
-	//stats = new Stats();
-	//document.body.appendChild( stats.dom );
+	stats = new Stats();
+	document.body.appendChild( stats.dom );
 
 
 
@@ -356,7 +356,7 @@ function render(){
 	
 	timer = Date.now() * 0.00003;
 	
-	//stats.update();
+	stats.update();
 
 	//FORSE
 	if(isTouch && touchDelta >= 1){
@@ -388,6 +388,12 @@ function render(){
 	container1.rotation.y+=0.0004*(CubicInOut(0,touchDelta,1,0.5)*15);
 
 	container1.rotation.z += 0.0011;
+
+	if(duck != undefined){
+		duck.position.x = Math.cos(timer*50.01);
+		duck.position.y = Math.sin(timer*50.01);
+		duck.position.x = Math.sin(timer*20.01);
+	}
 	
 	
 	camera.updateProjectionMatrix();
