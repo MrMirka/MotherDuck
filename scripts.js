@@ -362,7 +362,7 @@ function render(){
 		duck.position.y = Math.sin(timer*50.01);
 		duck.position.x = Math.sin(timer*20.01);
 
-		duck.rotation.z = Math.sin(timer * 100.06) * .008 + Math.PI*1.999;
+		duck.rotation.z = Math.sin(timer * 100.06) * .008 * CubicInOut(0,touchDelta*0.5,1,0.5) + Math.PI*1.999;
 		duck.rotation.x = Math.sin(timer * 100.06) * .008 + Math.PI*1.999;
 	}
 	
