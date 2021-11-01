@@ -36,7 +36,7 @@ let isTouch = false;
 
 
 
-//let gui = new GUI();
+
 window.addEventListener('mousedown', barkOpen);
 window.addEventListener('mouseup', barkClose);
 
@@ -48,16 +48,17 @@ init();
 
 function init(){
 	scene = new THREE.Scene();
-	//fog = new THREE.Fog(0x000000,260,298);
-	fog = new THREE.FogExp2(0x000000, 0.0011);
+	fog = new THREE.Fog(0x000000,235,325);
+	//fog = new THREE.FogExp2(0x000000, 0.0030);
 	scene.fog = fog;
 
 	
 	//let gui = new GUI();
-	/*
-	gui.add(scene.fog, 'near',0,500,10);
-	gui.add(scene.fog, 'far',0,500,10);
-	*/
+	
+	//gui.add(scene.fog, 'near',0,300,5);
+	//gui.add(scene.fog, 'far',0,400,5);
+	
+	
 	
 
 	container1 = new THREE.Object3D();
@@ -273,13 +274,11 @@ function init(){
 		container1.add(ring);
 	});
 
-	//------
+	
 
 	
-	
-	
-	stats = new Stats();
-	document.body.appendChild( stats.dom );
+	//stats = new Stats();
+	//document.body.appendChild( stats.dom );
 
 
 
@@ -304,31 +303,25 @@ function render(){
 	
 	timer = Date.now() * 0.00003;
 	
-	stats.update();
+	//stats.update();
 
 	//FORSE
-	
 	if(isTouch && touchDelta >= 1){
 		
 		touchDelta+=8.535;
 		if(touchDelta>27) touchDelta=27;
 		//camera.fov-=touchDelta*0.003;
-		//console.log(touchDelta);
 	}else if(!isTouch && touchDelta >1 ){
 		touchDelta-=0.535;
 		//camera.fov+=touchDelta*0.003;
 		//touchDelta=1;
-		//console.log(touchDelta);
 	}else if(touchDelta<1){
 		touchDelta=1;
 		isTouch=false;
-		//console.log(touchDelta);
 	}
-	//---------------
 
-	//console.log(CubicInOut(0,touchDelta,1,0.5));
+
 	
-
 	/*
 	container1.rotation.x = Math.sin(timer) * 1.5 * touchDelta + Math.PI*2;
 	container1.rotation.y = Math.cos(timer) * 3.5 * touchDelta + Math.PI*2;
