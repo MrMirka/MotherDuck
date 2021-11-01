@@ -56,7 +56,7 @@ window.addEventListener('mouseup', barkClose);
 window.addEventListener("touchend", barkClose, false);
 window.addEventListener("touchstart", barkOpen, false);
 
-console.log('vertion 0.6')
+console.log('vertion 0.7')
 init();
 
 function init(){
@@ -260,13 +260,26 @@ function init(){
 
 		if( !isMobile ) {
 
+			let hSize = 5;
+			
+
 			let pot = new THREE.PointLight(0xffffff,17.2);
 			let pot2 = new THREE.PointLight(0xffffff,7.2);
 
-			
+			let pHelper = new THREE.PointLightHelper(pot,hSize);
+			let pHelper2 = new THREE.PointLightHelper(pot2,hSize);
+			//scene.add(pHelper, pHelper2);
+
+			/*OLD
 			pot.position.set(-44,-13,-9);
 			pot2.position.set(21,50,16);
-			ring.add(pot,pot2);
+			*/
+
+			pot.position.set(-47,-33,-9);
+			pot2.position.set(47,0,0);
+
+			conteiner2.add(pot, pot2);
+			//ring.add(pot,pot2);
 			
 			
 
@@ -391,10 +404,14 @@ function render(){
 
 	container1.rotation.x+=0.0002*(CubicInOut(0,touchDelta,1,0.5)*15);
 	container1.rotation.y+=0.0004*(CubicInOut(0,touchDelta,1,0.5)*15);
-
-
-
 	container1.rotation.z += 0.0011;
+
+
+	conteiner2.rotation.x = Math.sin(timer) * 8.5  + Math.PI*2;
+	conteiner2.rotation.y = Math.cos(timer) * 13.5  + Math.PI*2;
+	conteiner2.rotation.z += 0.0011;
+
+	
 
 	if(duck != undefined){
 		duck.position.x = Math.cos(timer*50.01);
@@ -433,7 +450,7 @@ function addRec(x,y,z,r){
 }
 
 function barkOpen(){
-	if(bark!=undefined) {
+	if(bark!=undefined && !bark.isRunning()) {
 		bark.play();
 		//bark.timeScale = 1;
 	//	bark.paused = false;
