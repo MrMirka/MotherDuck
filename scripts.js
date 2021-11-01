@@ -56,7 +56,7 @@ window.addEventListener('mouseup', barkClose);
 window.addEventListener("touchend", barkClose, false);
 window.addEventListener("touchstart", barkOpen, false);
 
-console.log('vertion 0.8')
+console.log('vertion 0.9')
 init();
 
 function init(){
