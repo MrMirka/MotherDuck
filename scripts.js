@@ -309,8 +309,9 @@ function render(){
 	//FORSE
 	
 	if(isTouch && touchDelta >= 1){
+		if(touchDelta>20) touchDelta=20;
 		touchDelta+=1.535;
-		camera.fov-=touchDelta*0.003;
+		//camera.fov-=touchDelta*0.003;
 		//console.log(touchDelta);
 	}else if(!isTouch && touchDelta >1 ){
 		touchDelta-=1.535;
@@ -323,6 +324,8 @@ function render(){
 		//console.log(touchDelta);
 	}
 	//---------------
+
+	console.log(touchDelta);
 
 	/*
 	container1.rotation.x = Math.sin(timer) * 1.5 * touchDelta + Math.PI*2;
