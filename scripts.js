@@ -222,7 +222,7 @@ function init(){
 					node.material.projection = 'normal';
 					node.material.transparent = false;
 					node.material.normalScale= new THREE.Vector2(1, 1);
-					node.material.roughness = 0.76;	
+					node.material.roughness = 0.8;	
 					
 					renderer.render( scene, camera );
 				});
