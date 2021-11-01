@@ -56,7 +56,7 @@ window.addEventListener('mouseup', barkClose);
 window.addEventListener("touchend", barkClose, false);
 window.addEventListener("touchstart", barkOpen, false);
 
-console.log('vertion 0.4')
+console.log('vertion 0.5')
 init();
 
 function init(){
@@ -237,6 +237,7 @@ function init(){
 		bark.fadeOut = 0.2;
 		//bark.setEffectiveTimeScale( 1 );
 		//bark.play();
+		console.log(animations[0]);
 
 		//LIGTH
 		sun = new THREE.DirectionalLight(0xffffff,15.2);
@@ -427,19 +428,25 @@ function addRec(x,y,z,r){
 
 function barkOpen(){
 	if(bark!=undefined) {
-		bark.timeScale = 1;
-		bark.paused = false;
 		bark.play();
+		//bark.timeScale = 1;
+	//	bark.paused = false;
+		
 		isTouch = true;
+		bark.reset();
+	
+		bark.loop = THREE.LoopRepeat;
+	
 		
 	}
 }
 function barkClose(){
 	if(bark!=undefined){ 
 		isTouch = false;
-		//bark.reset();
-		window.setTimeout(stopBark, 500);
-		//bark.paused = true;
+		bark.loop = THREE.LoopOnce;
+		
+		//window.setTimeout(stopBark, 500);
+		
 	}
 }
 
