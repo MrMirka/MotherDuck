@@ -56,7 +56,7 @@ window.addEventListener('mouseup', barkClose);
 window.addEventListener("touchend", barkClose, false);
 window.addEventListener("touchstart", barkOpen, false);
 
-console.log('vertion 0.2')
+console.log('vertion 0.3')
 init();
 
 function init(){
@@ -393,6 +393,10 @@ function render(){
 		duck.position.x = Math.cos(timer*50.01);
 		duck.position.y = Math.sin(timer*50.01);
 		duck.position.x = Math.sin(timer*20.01);
+
+		duck.rotation.z = Math.sin(timer * 100.06) * .008 + Math.PI*1.999;
+		duck.rotation.x = Math.sin(timer * 100.06) * .008 + Math.PI*1.999;
+		
 	}
 	
 	
