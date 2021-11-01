@@ -330,8 +330,8 @@ function init(){
 	
 
 	
-	stats = new Stats();
-	document.body.appendChild( stats.dom );
+	//stats = new Stats();
+	//document.body.appendChild( stats.dom );
 
 
 
@@ -356,7 +356,7 @@ function render(){
 	
 	timer = Date.now() * 0.00003;
 	
-	stats.update();
+	//stats.update();
 
 	//FORSE
 	if(isTouch && touchDelta >= 1){
