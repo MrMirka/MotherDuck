@@ -78,7 +78,7 @@ function init(){
 	conteiner3 = new THREE.Object3D();
 	conteiner4 = new THREE.Object3D();
 	
-	scene.add(container1, conteiner3, conteiner4);
+	scene.add(container1, conteiner3, conteiner4,conteiner2);
 
 	RectAreaLightUniformsLib.init();
 	
@@ -262,9 +262,13 @@ function init(){
 
 			let pot = new THREE.PointLight(0xffffff,17.2);
 			let pot2 = new THREE.PointLight(0xffffff,7.2);
+
+			
 			pot.position.set(-44,-13,-9);
 			pot2.position.set(21,50,16);
 			ring.add(pot,pot2);
+			
+			
 
 			
 		}
@@ -388,6 +392,8 @@ function render(){
 	container1.rotation.x+=0.0002*(CubicInOut(0,touchDelta,1,0.5)*15);
 	container1.rotation.y+=0.0004*(CubicInOut(0,touchDelta,1,0.5)*15);
 
+
+
 	container1.rotation.z += 0.0011;
 
 	if(duck != undefined){
@@ -443,16 +449,18 @@ function barkOpen(){
 function barkClose(){
 	if(bark!=undefined){ 
 		isTouch = false;
-		bark.loop = THREE.LoopOnce;
+		//bark.loop = THREE.LoopOnce;
 		
-		//window.setTimeout(stopBark, 500);
+		window.setTimeout(stopBark, 500);
 		
 	}
 }
 
 function stopBark(){
-	bark.timeScale = 0.4;
-	bark.paused = true;
+	//bark.timeScale = 0.4;
+	//bark.paused = true;
+
+	bark.loop = THREE.LoopOnce;
 	
 }
 
