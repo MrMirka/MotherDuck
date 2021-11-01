@@ -37,7 +37,7 @@ let touchDelta = 1;
 let isTouch = false;
 
 //COMPOSER
-let composer;
+let composer; 
 
 const params = {
 	exposure: 0.8,
