@@ -318,7 +318,7 @@ function render(){
 		touchDelta-=0.535;
 		//camera.fov+=touchDelta*0.003;
 		//touchDelta=1;
-		console.log(touchDelta);
+		//console.log(touchDelta);
 	}else if(touchDelta<1){
 		touchDelta=1;
 		isTouch=false;
@@ -326,6 +326,7 @@ function render(){
 	}
 	//---------------
 
+	console.log(CubicInOut(0,touchDelta,1,0.5));
 	
 
 	/*
@@ -333,8 +334,13 @@ function render(){
 	container1.rotation.y = Math.cos(timer) * 3.5 * touchDelta + Math.PI*2;
 	container1.rotation.z += 0.0011;
 	*/
-	container1.rotation.x+=0.0002*(touchDelta*15);
-	container1.rotation.y+=0.0004*(touchDelta*15);
+
+	/*container1.rotation.x+=0.0002*(touchDelta*15);
+	container1.rotation.y+=0.0004*(touchDelta*15);*/
+
+	container1.rotation.x+=0.0002*(CubicInOut(0,touchDelta,1,0.5)*15);
+	container1.rotation.y+=0.0004*(CubicInOut(0,touchDelta,1,0.5)*15);
+
 	container1.rotation.z += 0.0011;
 	
 	
@@ -385,6 +391,11 @@ function stopBark(){
 	bark.timeScale = 0.4;
 	bark.paused = true;
 	
+}
+
+function CubicInOut(t, b, c, d){
+	if ((t /= d / 2) < 1) return c / 2 * t * t * t + b;
+	return c / 2 * ((t -= 2) * t * t + 2) + b;
 }
 
 
