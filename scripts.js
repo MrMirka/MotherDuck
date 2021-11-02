@@ -51,7 +51,7 @@ window.addEventListener("touchstart", barkOpen, false);
 
 
 
-console.log('vertion 0.12.6');
+console.log('vertion 0.12.7');
 
 
 init();
@@ -74,11 +74,7 @@ function init(){
 
 	
 	if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
-		//isMobile = true;
-		addRec(0,0,0,0);
-		addRec(0,0,-80,Math.PI);
-		addRec(0,-40,-40,Math.PI/2);
-		addRec(0,40,-40,-Math.PI/2);
+		isMobile = true;
 	}else{
 		addRec(0,0,0,0);
 		addRec(0,0,-80,Math.PI);
@@ -163,9 +159,9 @@ function init(){
 			if ( node.material ) {
 				const hdri = new RGBELoader();
 				const cubeloader = new THREE.CubeTextureLoader();
-				//hdri.load( './img/global_env_s.hdr', function ( texture ) { //load hdri for model
-				cubeloader.load( ['./img/cubemap/px.jpg', './img/cubemap/nx.jpg', './img/cubemap/py.jpg', './img/cubemap/ny.jpg', './img/cubemap/pz.jpg','./img/cubemap/nz.jpg'], function ( texture ) { //load hdri for model
-					texture.mapping = THREE.CubeReflectionMapping;
+				hdri.load( './img/global_env_s.hdr', function ( texture ) { //load hdri for model
+				//cubeloader.load( ['./img/cubemap/px.jpg', './img/cubemap/nx.jpg', './img/cubemap/py.jpg', './img/cubemap/ny.jpg', './img/cubemap/pz.jpg','./img/cubemap/nz.jpg'], function ( texture ) { //load hdri for model
+					texture.mapping = THREE.EquirectangularReflectionMapping;
 					texture.wrapS = THREE.RepeatWrapping;
 					texture.wrapP = THREE.RepeatWrapping;
 					texture.repeat.set( 1, 1 );
@@ -177,7 +173,7 @@ function init(){
 					node.material.roughness = 0.8;	
 					node.material.needsUpdate = false;
 
-					
+					/*
 					mat.envMapIntensity = 1.2;
 					mat.envMap = texture;
 					mat.roughness = 0.14;
@@ -185,6 +181,7 @@ function init(){
 					let mesh = new THREE.Mesh(geo,mat);
 					mesh.position.set(0,-20,0);
 					scene.add(mesh);
+					*/
 					
 				});
 			}
@@ -208,7 +205,7 @@ function init(){
 		scene.add(sun);
 		
 		conteiner4.add(container1);
-		//conteiner4.add(duck);
+		conteiner4.add(duck);
 		conteiner4.position.set(0,-45,0);	
 	});
 
