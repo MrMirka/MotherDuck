@@ -51,7 +51,7 @@ window.addEventListener("touchstart", barkOpen, false);
 
 
 
-console.log('vertion 0.11.0');
+console.log('vertion 0.11.1');
 
 
 init();
@@ -143,6 +143,36 @@ function init(){
 	composer.addPass( renderScene );
 	composer.addPass( bloomPass );
 
+
+	//FAKE
+	let loader2 = new GLTFLoader();
+	loader2.load('ball.glb', function(gltf) {
+		let ball = gltf.scene.children[0];
+		ball.scale.set(1.3,1.3,1.3);
+		ball.position.set(0,-30,0);
+		gltf.scene.traverse( function( node ) {
+			if ( node.material ) {
+				const hdri = new RGBELoader();
+				hdri.load( './img/global_env.hdr', function ( texture ) { //load hdri for model
+					texture.mapping = THREE.EquirectangularRefractionMapping;
+					texture.wrapS = THREE.RepeatWrapping;
+					texture.wrapP = THREE.RepeatWrapping;
+					texture.format = THREE.RGBFormat;
+					texture.repeat.set( 1, 1 );
+					node.material.envMapIntensity = 2.2;
+					node.material.envMap = texture;
+					node.material.reflectivity = 0.4;
+					node.material.projection = 'normal';
+					node.material.transparent = false;
+					node.material.normalScale= new THREE.Vector2(1, 1);
+					node.material.roughness = 0.8;	
+					renderer.render( scene, camera );
+				});
+			}
+		});
+		scene.add(ball);
+	});
+
 	
 	//Load DUCK 3d model
 	let loader = new GLTFLoader();
@@ -189,7 +219,7 @@ function init(){
 		scene.add(sun);
 		
 		conteiner4.add(container1);
-		conteiner4.add(duck);
+		//conteiner4.add(duck);
 		conteiner4.position.set(0,-45,0);	
 	});
 
