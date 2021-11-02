@@ -25,6 +25,7 @@ let tex;
 let isMobile = false;
 let clock = new THREE.Clock();
 let touchDelta = 1;
+let rotateDelta = 1;
 let isTouch = false;
 let composer; 
 
@@ -337,7 +338,7 @@ function render(){
 	//FORSE
 	if(isTouch && touchDelta >= 1){
 		touchDelta+=8.535;
-		if(touchDelta>27) touchDelta=27;
+		if(touchDelta>27) {touchDelta=27;}
 	}else if(!isTouch && touchDelta >1 ){
 		touchDelta-=0.535;
 	}else if(touchDelta<1){
@@ -345,6 +346,20 @@ function render(){
 		isTouch=false;
 	}
 
+	if(isTouch && rotateDelta >= 1){
+		rotateDelta+=1.535;
+		if(rotateDelta>27) {rotateDelta=27;}
+	}else if(!isTouch && rotateDelta >1 ){
+		rotateDelta-=0.235;
+	}else if(rotateDelta<1){
+		rotateDelta=1;
+		isTouch=false;
+	}
+
+	
+
+	
+	console.log(rotateDelta);
 
 	container1.rotation.x+=0.0002*(CubicInOut(0,touchDelta,1,0.5)*15);
 	container1.rotation.y+=0.0004*(CubicInOut(0,touchDelta,1,0.5)*15);
@@ -362,7 +377,7 @@ function render(){
 		duck.position.y = Math.sin(timer*50.01);
 		duck.position.x = Math.sin(timer*20.01);
 
-		duck.rotation.z = Math.sin(timer * 100.06) * .008 * CubicInOut(0,touchDelta*0.5,1,0.5) + Math.PI*1.999;
+		duck.rotation.z = Math.sin(timer * 100.06) * .008 * CubicInOut(0,rotateDelta*0.5,1,0.5) + Math.PI*1.999;
 		duck.rotation.x = Math.sin(timer * 100.06) * .008 + Math.PI*1.999;
 	}
 	
