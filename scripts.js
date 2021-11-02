@@ -37,9 +37,9 @@ const params = {
 
 let duckPatch = 'motherduck_anim1k_2.glb';
 if(isMobileDevice()){
-	duckPatch = 'motherduck_anim1k_decimate_3.glb';
+	duckPatch = 'motherduck_anim1k_decimate_2.glb';
 }else {
-	duckPatch = 'motherduck_anim1k_2.glb';
+	duckPatch = 'motherduck_anim1k_3.glb';
 }
 
 
@@ -51,7 +51,7 @@ window.addEventListener("touchstart", barkOpen, false);
 
 
 
-console.log('vertion 0.12.8');
+console.log('vertion 0.12.9');
 
 
 init();
@@ -167,6 +167,8 @@ function init(){
 					texture.repeat.set( 1, 1 );
 					node.material.envMapIntensity = 2.2;
 					node.material.envMap = texture;
+					//node.lightMap = texture;
+					//node.lightMapIntensity = 2.2;
 					node.material.reflectivity = 1;
 					node.material.transparent = false;
 					node.material.normalScale= new THREE.Vector2(1, 1);
