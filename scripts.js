@@ -51,7 +51,7 @@ window.addEventListener("touchstart", barkOpen, false);
 
 
 
-console.log('vertion 0.12.3');
+console.log('vertion 0.12.4');
 
 
 init();
@@ -74,7 +74,11 @@ function init(){
 
 	
 	if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
-		isMobile = true;
+		//isMobile = true;
+		addRec(0,0,0,0);
+		addRec(0,0,-80,Math.PI);
+		addRec(0,-40,-40,Math.PI/2);
+		addRec(0,40,-40,-Math.PI/2);
 	}else{
 		addRec(0,0,0,0);
 		addRec(0,0,-80,Math.PI);
@@ -145,7 +149,7 @@ function init(){
 
 	//FAKE
 	let geo = new THREE.SphereGeometry(20, 55,34);
-	let mat = new THREE.MeshStandardMaterial({color:0x1f1d1f});
+	let mat = new THREE.MeshStandardMaterial({color:0xffffff});
 
 
 	
@@ -159,13 +163,11 @@ function init(){
 			if ( node.material ) {
 				const hdri = new RGBELoader();
 				const cubeloader = new THREE.CubeTextureLoader();
-				hdri.load( './img/global_env.hdr', function ( texture ) { //load hdri for model
+				hdri.load( './img/global_env_s.hdr', function ( texture ) { //load hdri for model
 				//cubeloader.load( ['./img/cubemap/px.jpg', './img/cubemap/nx.jpg', './img/cubemap/py.jpg', './img/cubemap/ny.jpg', './img/cubemap/pz.jpg','./img/cubemap/nz.jpg'], function ( texture ) { //load hdri for model
 					texture.mapping = THREE.EquirectangularRefractionMapping;
 					texture.wrapS = THREE.RepeatWrapping;
 					texture.wrapP = THREE.RepeatWrapping;
-					//texture.format = THREE.RGBFormat;
-					//texture.encoding = THREE.GammaEncoding;
 					texture.repeat.set( 1, 1 );
 					node.material.envMapIntensity = 2.2;
 					node.material.envMap = texture;
@@ -176,13 +178,14 @@ function init(){
 					node.material.needsUpdate = false;
 
 					
-					mat.envMapIntensity = 3.2;
+					mat.envMapIntensity = 1.2;
 					mat.envMap = texture;
 					mat.roughness = 0.14;
 					mat.metalness = 1;
 					let mesh = new THREE.Mesh(geo,mat);
 					mesh.position.set(0,-20,0);
 					scene.add(mesh);
+					
 				});
 			}
 		});
