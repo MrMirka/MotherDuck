@@ -51,7 +51,7 @@ window.addEventListener("touchstart", barkOpen, false);
 
 
 
-console.log('vertion 0.11.8');
+console.log('vertion 0.11.9');
 
 
 init();
@@ -155,7 +155,10 @@ function init(){
 		gltf.scene.traverse( function( node ) {
 			if ( node.material ) {
 				const hdri = new RGBELoader();
-				hdri.load( './img/global_env.hdr', function ( texture ) { //load hdri for model
+				const cubeloader = new THREE.CubeTextureLoader();
+				//hdri.load( './img/global_env.hdr', function ( texture ) { //load hdri for model
+				cubeloader.load( ['./img/cubemap/px.jpg', './img/cubemap/nx.jpg', './img/cubemap/py.jpg', './img/cubemap/ny.jpg', './img/cubemap/pz.jpg','./img/cubemap/nz.jpg'], function ( texture ) { //load hdri for model
+					/*
 					texture.mapping = THREE.EquirectangularRefractionMapping;
 					texture.wrapS = THREE.RepeatWrapping;
 					texture.wrapP = THREE.RepeatWrapping;
@@ -169,6 +172,10 @@ function init(){
 					node.material.normalScale= new THREE.Vector2(1, 1);
 					node.material.roughness = 0.8;	
 					node.material.needsUpdate = false;
+					*/
+					node.material.envMap = texture;
+					node.material,mapping = THREE.CubeRefractionMapping;
+					//scene.background = texture;
 					renderer.render( scene, camera );
 				});
 			}
