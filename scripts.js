@@ -109,6 +109,7 @@ function init(){
 	renderer.toneMappingExposure = 0.3;
 	renderer.setSize( window.innerWidth, window.innerHeight );
 	renderer.logarithmicDepthBuffer = true;
+	renderer.info.autoReset = false;
 	container.appendChild( renderer.domElement );
 
 
@@ -139,7 +140,7 @@ function init(){
 	
 	//Load DUCK 3d model
 	let loader = new GLTFLoader();
-	loader.load('motherduck_anim1k_2.glb', function(gltf) {
+	loader.load('motherduck_anim1k_decimate.glb', function(gltf) {
 		duck = gltf.scene.children[0];
 		duck.scale.set(1.3,1.3,1.3);
 		duck.position.set(0,0,0);
@@ -147,14 +148,13 @@ function init(){
 			if ( node.material ) {
 				const hdri = new RGBELoader();
 				hdri.load( './img/global_env.hdr', function ( texture ) { //load hdri for model
-					tex = texture;
-					tex.mapping = THREE.EquirectangularRefractionMapping;
-					tex.wrapS = THREE.RepeatWrapping;
-					tex.wrapP = THREE.RepeatWrapping;
-					tex.format = THREE.RGBFormat;
-					tex.repeat.set( 1, 1 );
+					texture.mapping = THREE.EquirectangularRefractionMapping;
+					texture.wrapS = THREE.RepeatWrapping;
+					texture.wrapP = THREE.RepeatWrapping;
+					texture.format = THREE.RGBFormat;
+					texture.repeat.set( 1, 1 );
 					node.material.envMapIntensity = 2.2;
-					node.material.envMap = tex;
+					node.material.envMap = texture;
 					node.material.reflectivity = 0.4;
 					node.material.projection = 'normal';
 					node.material.transparent = false;
@@ -206,7 +206,7 @@ function init(){
 			conteiner2.add(pot, pot2);
 		}
 
-		
+		//get material content
 		gltf.scene.traverse( function( node ) {
 			if ( node.material ) {
 				let texture = new THREE.CanvasTexture(new FlakesTexture());
@@ -228,6 +228,7 @@ function init(){
 				node.material.metalness = 0.3;
 				node.material.roughness = 1;
 				node.material.roughnessMap = roughness_map;
+				
 			}
 		});
 		container1.add(ring);
@@ -258,13 +259,12 @@ function init(){
 				node.material.projection = 'normal';
 			}	
 		});
-		scene.add(ring);
 		container1.add(ring);
 	});
 
 	
-	//stats = new Stats();
-	//document.body.appendChild( stats.dom );
+	stats = new Stats();
+	document.body.appendChild( stats.dom );
 
 
 	animate();
@@ -288,7 +288,7 @@ function render(){
 	timer = Date.now() * 0.00003;
 	
 
-	//stats.update();
+	stats.update();
 
 
 	//FORSE
@@ -342,6 +342,9 @@ function render(){
 	
 	composer.render();
 	//renderer.render(scene, camera);
+
+	console.log(renderer.info);
+	renderer.info.reset()
 }
 
 //Add rectangle ligth block side
@@ -349,9 +352,6 @@ function addRec(x,y,z,r){
 	const rectLight = new THREE.RectAreaLight( 0xffffff, 5, 7, 80 );
 	rectLight.position.set(x, y, z );
 	rectLight.rotation.set(r, 0,0 );
-	//const rectLightHelper = new RectAreaLightHelper( rectLight );
-	//rectLight.add( rectLightHelper );
-	//scene.add( rectLight );
 	conteiner3.add(rectLight);
 }
 
