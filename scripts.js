@@ -46,7 +46,7 @@ window.addEventListener("touchstart", barkOpen, false);
 
 
 
-console.log('vertion 0.9.7');
+console.log('vertion 0.9.8');
 
 
 init();
@@ -343,8 +343,10 @@ function render(){
 	composer.render();
 	//renderer.render(scene, camera);
 
+	/*
 	console.log(renderer.info);
 	renderer.info.reset()
+	*/
 }
 
 //Add rectangle ligth block side
