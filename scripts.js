@@ -51,7 +51,7 @@ window.addEventListener("touchstart", barkOpen, false);
 
 
 
-console.log('vertion 0.12.7');
+console.log('vertion 0.12.8');
 
 
 init();
@@ -159,7 +159,7 @@ function init(){
 			if ( node.material ) {
 				const hdri = new RGBELoader();
 				const cubeloader = new THREE.CubeTextureLoader();
-				hdri.load( './img/global_env_s.hdr', function ( texture ) { //load hdri for model
+				hdri.load( './img/global_env_2.hdr', function ( texture ) { //load hdri for model
 				//cubeloader.load( ['./img/cubemap/px.jpg', './img/cubemap/nx.jpg', './img/cubemap/py.jpg', './img/cubemap/ny.jpg', './img/cubemap/pz.jpg','./img/cubemap/nz.jpg'], function ( texture ) { //load hdri for model
 					texture.mapping = THREE.EquirectangularReflectionMapping;
 					texture.wrapS = THREE.RepeatWrapping;
