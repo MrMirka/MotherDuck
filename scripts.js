@@ -51,7 +51,7 @@ window.addEventListener("touchstart", barkOpen, false);
 
 
 
-console.log('vertion 0.10.2');
+console.log('vertion 0.10.3');
 
 
 init();
@@ -183,7 +183,7 @@ function init(){
 		sun = new THREE.DirectionalLight(0xffffff,15.2);
 		sun.position.set(-38,50,19);
 		sun.target = duck;
-		//scene.add(sun);
+		scene.add(sun);
 		
 		conteiner4.add(container1);
 		conteiner4.add(duck);
