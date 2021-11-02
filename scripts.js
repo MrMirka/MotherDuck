@@ -93,7 +93,7 @@ function init(){
 	container1.add(ringDisk);
 
 	
-	camera = new THREE.PerspectiveCamera(35, window.innerWidth / window.innerHeight, 1, 1500 );
+	camera = new THREE.PerspectiveCamera(35, window.innerWidth / window.innerHeight, 100, 1500 );
 	camera.position.set( 115, 120, 180 );
 	camera.lookAt(0,0,0);
 	
@@ -103,13 +103,11 @@ function init(){
 	renderer = new THREE.WebGLRenderer( { alpha:true, antialias: false } );
 	renderer.setPixelRatio( window.devicePixelRatio );
 	renderer.outputEncoding = THREE.GammaEncoding;
-	//renderer.outputEncoding = THREE.sRGBEncoding;
 	renderer.gammaFactor = 1.7;
-	//renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 	renderer.toneMapping = THREE.ACESFilmicToneMapping;
 	renderer.toneMappingExposure = 0.3;
 	renderer.setSize( window.innerWidth, window.innerHeight );
-	//document.body.appendChild( renderer.domElement );
+	renderer.logarithmicDepthBuffer = true;
 	container.appendChild( renderer.domElement );
 
 
