@@ -37,8 +37,7 @@ const params = {
 
 let duckPatch = 'motherduck_anim1k_2.glb';
 if(isMobileDevice()){
-	//duckPatch = 'motherduck_anim1k_decimate_3.glb';
-	duckPatch = 'ball.glb';
+	duckPatch = 'motherduck_anim1k_decimate_3.glb';
 }else {
 	duckPatch = 'motherduck_anim1k_2.glb';
 }
@@ -52,7 +51,7 @@ window.addEventListener("touchstart", barkOpen, false);
 
 
 
-console.log('vertion 0.10.9');
+console.log('vertion 0.11.0');
 
 
 init();
@@ -173,13 +172,13 @@ function init(){
 		});
 
 		
-		/*
+		
 		//ANIMATIONS
 		const animations = gltf.animations;
 		mixer = new THREE.AnimationMixer( gltf.scene );
 		bark = mixer.clipAction(animations[0]);
 		bark.enabled = true;
-		*/
+		
 		
 		
 
