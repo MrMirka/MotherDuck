@@ -174,7 +174,7 @@ function init(){
 		gltf.scene.traverse( function( node ) {
 			if ( node.material ) {
 				const hdri = new RGBELoader();
-				hdri.load( './img/room2.hdr', function ( texture ) {
+				hdri.load( './img/global_env.hdr', function ( texture ) {
 					tex = texture;
 					tex.mapping = THREE.EquirectangularRefractionMapping;
 					tex.wrapS = THREE.RepeatWrapping;
@@ -188,7 +188,6 @@ function init(){
 					node.material.transparent = false;
 					node.material.normalScale= new THREE.Vector2(1, 1);
 					node.material.roughness = 0.8;	
-					
 					renderer.render( scene, camera );
 				});
 			}
@@ -202,8 +201,6 @@ function init(){
 		bark.enabled = true;
 		bark.fadeIn = 1;
 		bark.fadeOut = 0.2;
-		//bark.setEffectiveTimeScale( 1 );
-		//bark.play();
 		
 
 		//LIGTH
@@ -214,14 +211,12 @@ function init(){
 		
 		conteiner4.add(container1);
 		conteiner4.add(duck);
-		conteiner4.position.set(0,-45,0);
-	
-		
+		conteiner4.position.set(0,-45,0);	
 	});
 
 
 	//RING
-	loader.load('ring3.glb', function(gltf){
+	loader.load('ring.glb', function(gltf){
 		ring = gltf.scene.children[0];
 		ring.scale.set(1,1,1);
 		ring.position.set(0,0,0);
@@ -235,16 +230,10 @@ function init(){
 			let pHelper2 = new THREE.PointLightHelper(pot2,hSize);
 			//scene.add(pHelper, pHelper2);
 
-			/*OLD 
-			pot.position.set(-44,-13,-9);
-			pot2.position.set(21,50,16);
-			*/
-
 			pot.position.set(-47,-33,-9);
 			pot2.position.set(47,0,0);
 
 			conteiner2.add(pot, pot2);
-			//ring.add(pot,pot2);
 		}
 
 		
@@ -271,12 +260,11 @@ function init(){
 				node.material.roughnessMap = roughness_map;
 			}
 		});
-		//scene.add(ring);
 		container1.add(ring);
 	});
 
 	//RING LOGO
-	loader.load('ring_logo2.glb', function(gltf){
+	loader.load('ring_logo.glb', function(gltf){
 		ring = gltf.scene.children[0];
 		ring.scale.set(1,1,1);
 		ring.position.set(0,0,0);
@@ -287,7 +275,7 @@ function init(){
 				node.material.metalness = 1;
 				node.material.roughness = 0.12;
 				
-				loader.load('./img/logo_map2.jpg', texture => {
+				loader.load('./img/logo_map.jpg', texture => {
 					node.material.alphaMap = texture;
 					node.material.alphaMap.wrapT = THREE.RepeatWrapping;
 					node.material.alphaMap.wrapS = THREE.RepeatWrapping;
