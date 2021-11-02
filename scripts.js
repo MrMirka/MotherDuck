@@ -356,18 +356,14 @@ function render(){
 		isTouch=false;
 	}
 
-	
-
-	
-	console.log(rotateDelta);
 
 	container1.rotation.x+=0.0002*(CubicInOut(0,touchDelta,1,0.5)*15);
 	container1.rotation.y+=0.0004*(CubicInOut(0,touchDelta,1,0.5)*15);
 	container1.rotation.z += 0.0011;
 
 	if(isMobile){
-		conteiner2.rotation.x = Math.sin(timer) * 8.5  + Math.PI*2;
-		conteiner2.rotation.y = Math.cos(timer) * 13.5  + Math.PI*2;
+		conteiner2.rotation.x = Math.sin(timer) * 8.5  +  Math.PI*2;
+		conteiner2.rotation.y = Math.cos(timer) * 13.5  +  Math.PI*2;
 		conteiner2.rotation.z += 0.0011;
 	}
 
