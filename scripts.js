@@ -156,19 +156,22 @@ function init(){
 		duck.scale.set(1.3,1.3,1.3);
 		duck.position.set(0,0,0);
 		gltf.scene.traverse( function( node ) {
+			if ( node.isMesh ) {
+				node.geometry.attributes.uv2 = node.geometry.attributes.uv;
+			}
 			if ( node.material ) {
 				const hdri = new RGBELoader();
 				const cubeloader = new THREE.CubeTextureLoader();
 				hdri.load( './img/global_env_2.hdr', function ( texture ) { //load hdri for model
 				//cubeloader.load( ['./img/cubemap/px.jpg', './img/cubemap/nx.jpg', './img/cubemap/py.jpg', './img/cubemap/ny.jpg', './img/cubemap/pz.jpg','./img/cubemap/nz.jpg'], function ( texture ) { //load hdri for model
-					texture.mapping = THREE.EquirectangularReflectionMapping;
+					texture.mapping = THREE.EquirectangularRefractionMapping;
 					texture.wrapS = THREE.RepeatWrapping;
 					texture.wrapP = THREE.RepeatWrapping;
 					texture.repeat.set( 1, 1 );
 					node.material.envMapIntensity = 2.2;
 					node.material.envMap = texture;
-					//node.lightMap = texture;
-					//node.lightMapIntensity = 2.2;
+					node.lightMap = texture;
+					node.lightMapIntensity = 2.2;
 					node.material.reflectivity = 1;
 					node.material.transparent = false;
 					node.material.normalScale= new THREE.Vector2(1, 1);
