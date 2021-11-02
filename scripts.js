@@ -37,7 +37,7 @@ const params = {
 
 let duckPatch = 'motherduck_anim1k_2.glb';
 if(isMobileDevice()){
-	duckPatch = 'motherduck_anim1k_decimate_2.glb';
+	duckPatch = 'motherduck_anim1k_decimate.glb';
 }else {
 	duckPatch = 'motherduck_anim1k_2.glb';
 }
@@ -51,7 +51,7 @@ window.addEventListener("touchstart", barkOpen, false);
 
 
 
-console.log('vertion 0.10.4');
+console.log('vertion 0.10.5');
 
 
 init();
