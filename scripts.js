@@ -51,7 +51,7 @@ window.addEventListener("touchstart", barkOpen, false);
 
 
 
-console.log('vertion 0.12.4');
+console.log('vertion 0.12.5');
 
 
 init();
@@ -74,11 +74,8 @@ function init(){
 
 	
 	if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
-		//isMobile = true;
-		addRec(0,0,0,0);
-		addRec(0,0,-80,Math.PI);
-		addRec(0,-40,-40,Math.PI/2);
-		addRec(0,40,-40,-Math.PI/2);
+		isMobile = true;
+	
 	}else{
 		addRec(0,0,0,0);
 		addRec(0,0,-80,Math.PI);
