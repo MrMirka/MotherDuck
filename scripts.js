@@ -51,7 +51,7 @@ window.addEventListener("touchstart", barkOpen, false);
 
 
 
-console.log('vertion 0.11.3');
+console.log('vertion 0.11.4');
 
 
 init();
@@ -155,6 +155,7 @@ function init(){
 		gltf.scene.traverse( function( node ) {
 			if ( node.material ) {
 				const hdri = new RGBELoader();
+
 				hdri.load( './img/global_env.hdr', function ( texture ) { //load hdri for model
 					texture.mapping = THREE.EquirectangularRefractionMapping;
 					texture.wrapS = THREE.RepeatWrapping;
@@ -214,7 +215,7 @@ function init(){
 			pot.position.set(-47,-33,-9);
 			pot2.position.set(47,0,0);
 
-			//conteiner2.add(pot, pot2);
+			conteiner2.add(pot);
 		}
 
 		//get material content
