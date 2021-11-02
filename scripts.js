@@ -36,6 +36,12 @@ const params = {
 	bloomRadius: 0.65
 };
 
+let duckPatch = 'motherduck_anim1k_2.glb';
+if(isMobileDevice()){
+	duckPatch = 'motherduck_anim1k_decimate.glb';
+}else {
+	duckPatch = 'motherduck_anim1k_2.glb';
+}
 
 
 window.addEventListener('mousedown', barkOpen);
@@ -46,7 +52,7 @@ window.addEventListener("touchstart", barkOpen, false);
 
 
 
-console.log('vertion 0.9.9');
+console.log('vertion 0.10.0');
 
 
 init();
@@ -109,7 +115,7 @@ function init(){
 	renderer.toneMappingExposure = 0.3;
 	renderer.setSize( window.innerWidth, window.innerHeight );
 	renderer.logarithmicDepthBuffer = true;
-	renderer.info.autoReset = false;
+	//renderer.info.autoReset = false;
 	container.appendChild( renderer.domElement );
 
 
@@ -140,7 +146,7 @@ function init(){
 	
 	//Load DUCK 3d model
 	let loader = new GLTFLoader();
-	loader.load('motherduck_anim1k_decimate.glb', function(gltf) {
+	loader.load(duckPatch, function(gltf) {
 		duck = gltf.scene.children[0];
 		duck.scale.set(1.3,1.3,1.3);
 		duck.position.set(0,0,0);
@@ -342,9 +348,9 @@ function render(){
 	
 	composer.render();
 	//renderer.render(scene, camera);
-
-	console.log(renderer.info);
-	renderer.info.reset()
+	
+	//console.log(renderer.info);
+	//renderer.info.reset();
 }
 
 //Add rectangle ligth block side
@@ -385,6 +391,14 @@ function CubicInOut(t, b, c, d){
 }
 
 
+function isMobileDevice(){
+
+	if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+		return true;
+	}else{
+		return false;
+	}
+}
 
 
 
