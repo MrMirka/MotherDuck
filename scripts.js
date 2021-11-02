@@ -144,15 +144,6 @@ function init(){
 	composer.addPass( bloomPass );
 
 
-	//FAKE
-	let loader2 = new GLTFLoader();
-	loader2.load('ball.glb', function(gltf) {
-		let ball = gltf.scene.children[0];
-		ball.scale.set(1.3,1.3,1.3);
-		ball.position.set(0,-30,0);
-		
-		scene.add(ball);
-	});
 
 	
 	//Load DUCK 3d model
@@ -200,7 +191,7 @@ function init(){
 		scene.add(sun);
 		
 		conteiner4.add(container1);
-		//conteiner4.add(duck);
+		conteiner4.add(duck);
 		conteiner4.position.set(0,-45,0);	
 	});
 
