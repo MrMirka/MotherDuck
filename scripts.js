@@ -51,7 +51,7 @@ window.addEventListener("touchstart", barkOpen, false);
 
 
 
-console.log('vertion 0.11.6');
+console.log('vertion 0.11.7');
 
 
 init();
@@ -168,6 +168,7 @@ function init(){
 					node.material.transparent = false;
 					node.material.normalScale= new THREE.Vector2(1, 1);
 					node.material.roughness = 0.8;	
+					node.material.needsUpdate = false;
 					renderer.render( scene, camera );
 				});
 			}
