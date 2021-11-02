@@ -51,7 +51,7 @@ window.addEventListener("touchstart", barkOpen, false);
 
 
 
-console.log('vertion 0.11.7');
+console.log('vertion 0.11.8');
 
 
 init();
@@ -215,7 +215,7 @@ function init(){
 			pot.position.set(-47,-33,-9);
 			pot2.position.set(47,0,0);
 
-			conteiner2.add(pot);
+			//conteiner2.add(pot);
 		}
 
 		//get material content
