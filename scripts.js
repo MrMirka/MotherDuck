@@ -51,7 +51,7 @@ window.addEventListener("touchstart", barkOpen, false);
 
 
 
-console.log('vertion 0.12.2');
+console.log('vertion 0.12.3');
 
 
 init();
@@ -115,7 +115,6 @@ function init(){
 	renderer.toneMappingExposure = 0.3;
 	renderer.setSize( window.innerWidth, window.innerHeight );
 	renderer.logarithmicDepthBuffer = true;
-	//renderer.info.autoReset = false;
 	container.appendChild( renderer.domElement );
 
 
@@ -144,6 +143,10 @@ function init(){
 	composer.addPass( bloomPass );
 
 
+	//FAKE
+	let geo = new THREE.SphereGeometry(20, 55,34);
+	let mat = new THREE.MeshStandardMaterial({color:0x1f1d1f});
+
 
 	
 	//Load DUCK 3d model
@@ -156,27 +159,34 @@ function init(){
 			if ( node.material ) {
 				const hdri = new RGBELoader();
 				const cubeloader = new THREE.CubeTextureLoader();
-				hdri.load( './img/global_env_s.hdr', function ( texture ) { //load hdri for model
+				hdri.load( './img/global_env.hdr', function ( texture ) { //load hdri for model
 				//cubeloader.load( ['./img/cubemap/px.jpg', './img/cubemap/nx.jpg', './img/cubemap/py.jpg', './img/cubemap/ny.jpg', './img/cubemap/pz.jpg','./img/cubemap/nz.jpg'], function ( texture ) { //load hdri for model
 					texture.mapping = THREE.EquirectangularRefractionMapping;
 					texture.wrapS = THREE.RepeatWrapping;
 					texture.wrapP = THREE.RepeatWrapping;
-					texture.format = THREE.RGBFormat;
+					//texture.format = THREE.RGBFormat;
+					//texture.encoding = THREE.GammaEncoding;
 					texture.repeat.set( 1, 1 );
 					node.material.envMapIntensity = 2.2;
 					node.material.envMap = texture;
 					node.material.reflectivity = 1;
-					node.material.projection = 'normal';
 					node.material.transparent = false;
 					node.material.normalScale= new THREE.Vector2(1, 1);
 					node.material.roughness = 0.8;	
 					node.material.needsUpdate = false;
-					//scene.background = texture;
-					renderer.render( scene, camera );
+
+					
+					mat.envMapIntensity = 3.2;
+					mat.envMap = texture;
+					mat.roughness = 0.14;
+					mat.metalness = 1;
+					let mesh = new THREE.Mesh(geo,mat);
+					mesh.position.set(0,-20,0);
+					scene.add(mesh);
 				});
 			}
 		});
-
+		
 		
 		
 		//ANIMATIONS
@@ -195,7 +205,7 @@ function init(){
 		scene.add(sun);
 		
 		conteiner4.add(container1);
-		conteiner4.add(duck);
+		//conteiner4.add(duck);
 		conteiner4.position.set(0,-45,0);	
 	});
 
@@ -358,8 +368,6 @@ function render(){
 	composer.render();
 	//renderer.render(scene, camera);
 	
-	//console.log(renderer.info);
-	//renderer.info.reset();
 }
 
 //Add rectangle ligth block side
