@@ -21,7 +21,6 @@ let mixer,bark;
 let ring, ringDisk ;
 let stats;
 let fog;
-let tex;
 let isMobile = false;
 let clock = new THREE.Clock();
 let touchDelta = 1;
@@ -52,7 +51,7 @@ window.addEventListener("touchstart", barkOpen, false);
 
 
 
-console.log('vertion 0.10.0');
+console.log('vertion 0.10.1');
 
 
 init();
@@ -71,7 +70,7 @@ function init(){
 	scene.add(container1, conteiner3, conteiner4,conteiner2);
 
 
-	RectAreaLightUniformsLib.init(); //Rectangle area ligth init
+	
 
 	
 	if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
@@ -83,6 +82,7 @@ function init(){
 		addRec(0,40,-40,-Math.PI/2);
 	}
 	
+	if (!isMobile) RectAreaLightUniformsLib.init(); //Rectangle area ligth init
 
 	conteiner3.rotation.set(0,-Math.PI/2,0);
 	conteiner3.position.set(-40,0,0);
