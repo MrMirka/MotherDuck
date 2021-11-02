@@ -183,7 +183,7 @@ function init(){
 		sun = new THREE.DirectionalLight(0xffffff,15.2);
 		sun.position.set(-38,50,19);
 		sun.target = duck;
-		scene.add(sun);
+		//scene.add(sun);
 		
 		conteiner4.add(container1);
 		conteiner4.add(duck);
@@ -209,7 +209,7 @@ function init(){
 			pot.position.set(-47,-33,-9);
 			pot2.position.set(47,0,0);
 
-			conteiner2.add(pot, pot2);
+			//conteiner2.add(pot, pot2);
 		}
 
 		//get material content
