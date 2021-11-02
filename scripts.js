@@ -30,7 +30,7 @@ let composer;
 
 const params = {
 	exposure: 0.8,
-	bloomStrength: 1.9,
+	bloomStrength: 1.3,
 	bloomThreshold: 0,
 	bloomRadius: 0.65
 };
@@ -51,7 +51,7 @@ window.addEventListener("touchstart", barkOpen, false);
 
 
 
-console.log('vertion 0.11.5');
+console.log('vertion 0.11.6');
 
 
 init();
@@ -155,15 +155,13 @@ function init(){
 		gltf.scene.traverse( function( node ) {
 			if ( node.material ) {
 				const hdri = new RGBELoader();
-				const tLoader = new THREE.TextureLoader();
-
-				tLoader.load( './img/global_env.jpg', function ( texture ) { //load hdri for model
+				hdri.load( './img/global_env.hdr', function ( texture ) { //load hdri for model
 					texture.mapping = THREE.EquirectangularRefractionMapping;
 					texture.wrapS = THREE.RepeatWrapping;
 					texture.wrapP = THREE.RepeatWrapping;
 					texture.format = THREE.RGBFormat;
 					texture.repeat.set( 1, 1 );
-					node.material.envMapIntensity = 1;
+					node.material.envMapIntensity = 2.2;
 					node.material.envMap = texture;
 					node.material.reflectivity = 1;
 					node.material.projection = 'normal';
