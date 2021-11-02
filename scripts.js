@@ -58,10 +58,10 @@ function init(){
 	scene.fog = fog;
 	
 	
-	container1 = new THREE.Object3D();
-	conteiner2 = new THREE.Object3D();
-	conteiner3 = new THREE.Object3D();
-	conteiner4 = new THREE.Object3D();
+	container1 = new THREE.Object3D();  //Block for visible rings
+	conteiner2 = new THREE.Object3D();  //Ligtht block fot mobile vertion
+	conteiner3 = new THREE.Object3D();	//Block for rectangle ligth
+	conteiner4 = new THREE.Object3D();	//Global block
 	scene.add(container1, conteiner3, conteiner4,conteiner2);
 
 
@@ -97,6 +97,7 @@ function init(){
 	camera.position.set( 115, 120, 180 );
 	camera.lookAt(0,0,0);
 	
+
 	const container = document.getElementById( 'canvas' );
 
 
@@ -135,37 +136,8 @@ function init(){
 	composer.addPass( renderScene );
 	composer.addPass( bloomPass );
 
-	/*
-	const gui = new GUI();
-
-				gui.add( params, 'exposure', 0.1, 2 ).onChange( function ( value ) {
-
-					renderer.toneMappingExposure = Math.pow( value, 4.0 );
-
-				} );
-
-				gui.add( params, 'bloomThreshold', 0.0, 1.0 ).onChange( function ( value ) {
-
-					bloomPass.threshold = Number( value );
-
-				} );
-
-				gui.add( params, 'bloomStrength', 0.0, 3.0 ).onChange( function ( value ) {
-
-					bloomPass.strength = Number( value );
-
-				} );
-
-				gui.add( params, 'bloomRadius', 0.0, 1.0 ).step( 0.01 ).onChange( function ( value ) {
-
-					bloomPass.radius = Number( value );
-
-				} );
-	*/			
-
-
-
 	
+	//Load DUCK 3d model
 	let loader = new GLTFLoader();
 	loader.load('motherduck_anim1k_2.glb', function(gltf) {
 		duck = gltf.scene.children[0];
@@ -174,7 +146,7 @@ function init(){
 		gltf.scene.traverse( function( node ) {
 			if ( node.material ) {
 				const hdri = new RGBELoader();
-				hdri.load( './img/global_env.hdr', function ( texture ) {
+				hdri.load( './img/global_env.hdr', function ( texture ) { //load hdri for model
 					tex = texture;
 					tex.mapping = THREE.EquirectangularRefractionMapping;
 					tex.wrapS = THREE.RepeatWrapping;
@@ -199,8 +171,6 @@ function init(){
 		mixer = new THREE.AnimationMixer( gltf.scene );
 		bark = mixer.clipAction(animations[0]);
 		bark.enabled = true;
-		bark.fadeIn = 1;
-		bark.fadeOut = 0.2;
 		
 
 		//LIGTH
@@ -215,7 +185,7 @@ function init(){
 	});
 
 
-	//RING
+	//Load RING model
 	loader.load('ring.glb', function(gltf){
 		ring = gltf.scene.children[0];
 		ring.scale.set(1,1,1);
@@ -263,7 +233,7 @@ function init(){
 		container1.add(ring);
 	});
 
-	//RING LOGO
+	//Load RING TEXT
 	loader.load('ring_logo.glb', function(gltf){
 		ring = gltf.scene.children[0];
 		ring.scale.set(1,1,1);
@@ -275,7 +245,7 @@ function init(){
 				node.material.metalness = 1;
 				node.material.roughness = 0.12;
 				
-				loader.load('./img/logo_map.jpg', texture => {
+				loader.load('./img/logo_map.jpg', texture => { //Load alpha
 					node.material.alphaMap = texture;
 					node.material.alphaMap.wrapT = THREE.RepeatWrapping;
 					node.material.alphaMap.wrapS = THREE.RepeatWrapping;
@@ -374,7 +344,7 @@ function render(){
 	//renderer.render(scene, camera);
 }
 
-
+//Add rectangle ligth block side
 function addRec(x,y,z,r){
 	const rectLight = new THREE.RectAreaLight( 0xffffff, 5, 7, 80 );
 	rectLight.position.set(x, y, z );
@@ -385,38 +355,30 @@ function addRec(x,y,z,r){
 	conteiner3.add(rectLight);
 }
 
-
+//Start animation bark
 function barkOpen(){
 	isTouch = true;
 	if(bark!=undefined && !bark.isRunning()) {
 		bark.play();
-		//bark.timeScale = 1;
-	//	bark.paused = false;
-		
-		//isTouch = true;
 		bark.reset();
 		bark.loop = THREE.LoopRepeat;
 	}
 }
 
-
+//StopAnimation bark
 function barkClose(){
 	if(bark!=undefined){ 
 		isTouch = false;
-		//bark.loop = THREE.LoopOnce;
 		window.setTimeout(stopBark, 500);
-		
 	}
 }
 
 
 function stopBark(){
-	//bark.timeScale = 0.4;
-	//bark.paused = true;
 	bark.loop = THREE.LoopOnce;	
 }
 
-
+//Easing function
 function CubicInOut(t, b, c, d){
 	if ((t /= d / 2) < 1) return c / 2 * t * t * t + b;
 	return c / 2 * ((t -= 2) * t * t + 2) + b;
