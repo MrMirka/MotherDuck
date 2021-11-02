@@ -51,7 +51,7 @@ window.addEventListener("touchstart", barkOpen, false);
 
 
 
-console.log('vertion 0.11.9');
+console.log('vertion 0.12.0');
 
 
 init();
@@ -174,7 +174,7 @@ function init(){
 					node.material.needsUpdate = false;
 					*/
 					node.material.envMap = texture;
-					node.material,mapping = THREE.CubeRefractionMapping;
+					node.material.mapping = THREE.CubeRefractionMapping;
 					//scene.background = texture;
 					renderer.render( scene, camera );
 				});
