@@ -51,7 +51,7 @@ window.addEventListener("touchstart", barkOpen, false);
 
 
 
-console.log('vertion 0.11.2');
+console.log('vertion 0.11.3');
 
 
 init();
