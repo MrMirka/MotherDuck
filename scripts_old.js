@@ -64,7 +64,7 @@ window.addEventListener("touchstart", barkOpen, false);
 
 
 
-console.log('vertion 0.12.68');
+console.log('vertion 0.12.67');
 
 
 init();
@@ -74,6 +74,7 @@ function init(){
 	scene = new THREE.Scene();
 	fog = new THREE.Fog(0x000000,235,325);
 	scene.fog = fog;
+	scene.environment = new THREE.Color(0xffffff); 
 	
 	
 	container1 = new THREE.Object3D();  //Block for visible rings
@@ -128,10 +129,12 @@ function init(){
 	renderer.setPixelRatio( window.devicePixelRatio );
 	renderer.outputEncoding = THREE.GammaEncoding;
 	renderer.gammaFactor = 1.7;
-	renderer.toneMapping = THREE.ACESFilmicToneMapping;
-	renderer.toneMappingExposure = 0.4;
+	renderer.toneMapping = THREE.ReinhardToneMapping;
+	//renderer.toneMapping = THREE.ACESFilmicToneMapping;
+	renderer.toneMappingExposure = 1;
 	renderer.setSize( window.innerWidth, window.innerHeight );
 	renderer.logarithmicDepthBuffer = true;
+	renderer.physicallyCorrectLights = true;
 	container.appendChild( renderer.domElement );
 
 
@@ -187,33 +190,9 @@ function init(){
 				node.geometry.attributes.uv2 = node.geometry.attributes.uv;
 			}
 			if ( node.material ) {
-				const hdri = new RGBELoader();
-				const cubeloader = new THREE.CubeTextureLoader();
-				hdri.load( './img/global_env_2.hdr', function ( texture ) { //load hdri for model
-				//cubeloader.load( ['./img/cubemap/px.jpg', './img/cubemap/nx.jpg', './img/cubemap/py.jpg', './img/cubemap/ny.jpg', './img/cubemap/pz.jpg','./img/cubemap/nz.jpg'], function ( texture ) { //load hdri for model
-					texture.mapping = THREE.EquirectangularRefractionMapping;
-					texture.wrapS = THREE.RepeatWrapping;
-					texture.wrapP = THREE.RepeatWrapping;
-					texture.repeat.set( 1, 1 );
-					node.material.envMapIntensity = 1.3;
-					node.material.envMap = texture;
-					node.material.reflectivity = 1;
-					node.material.transparent = false;
-					node.material.normalScale= new THREE.Vector2(1, 1);
-					node.material.roughness = 0.8;	
-					node.material.needsUpdate = false;
-
-					/*
-					mat.envMapIntensity = 1.2;
-					mat.envMap = texture;
-					mat.roughness = 0.14;
-					mat.metalness = 1;
-					let mesh = new THREE.Mesh(geo,mat);
-					mesh.position.set(0,-20,0);
-					scene.add(mesh);
-					*/
-					
-				});
+				node.material.metalness = 0.9;
+				node.material.roughness = 0.8;
+				
 			}
 		});
 		
@@ -232,19 +211,42 @@ function init(){
 		sun = new THREE.DirectionalLight(0xffffff,20);
 		sun.position.set(-38,50,19);
 		sun.target = duck;
-		scene.add(sun);
+		//scene.add(sun);
 
 		let moon = new THREE.DirectionalLight(0xffffff,25);
 		moon.position.set(-190,-190,-5);
 		moon.target = duck;
-		scene.add(moon);
+		//scene.add(moon);
 
-		/*
+		let ambientLigth = new THREE.AmbientLightProbe(0xdd252d, 5);
+		//scene.add(ambientLigth);
+
+		let direct1 = new THREE.DirectionalLight(0xffffff, 10);
+		direct1.target = duck;
+		direct1.position.set(-275, 500, 320);
+		//scene.add(direct1);
+
+		let light1 = new THREE.PointLight( 0xffffff, 700, 500);
+		light1.position.set(32.2, -26.4,-40.4);
+		//scene.add(light1);
+
+		const sphereSize = 10;
+		const pointLightHelper = new THREE.PointLightHelper( light1, sphereSize );
+		//scene.add( pointLightHelper );
+
+		const light = new THREE.HemisphereLight( 0xfcca03, 0x84ba32, 30 );
+		scene.add( light );
+
+		
 		const gui = new GUI();
-		gui.add(moon.position, 'x', -500, 500,5);
-		gui.add(moon.position, 'y', -500, 500,5);
-		gui.add(moon.position, 'z', -500, 500,5);
-		*/
+		gui.add(direct1.position, 'x', -80, 80,1.2);
+		gui.add(direct1.position, 'y', -80, 80,1.2);
+		gui.add(direct1.position, 'z', -80, 80,1.2);
+		//gui.add(light1, 'intensity', 0,10,1);
+		//gui.add(light1, 'distance', 0,10,1);
+		//gui.add(light1, 'decay', 0,10,1);
+		
+		
 		
 		conteiner4.add(container1);
 		conteiner4.add(duck);
@@ -449,14 +451,14 @@ function render(){
 	if(sun!=undefined)
 	sun.position.z = Math.sin(timer*6.1) / Math.PI + Math.cos(timer);
 	
-	composer.render();
-	//renderer.render(scene, camera);
+	//composer.render();
+	renderer.render(scene, camera);
 	
 }
 
 //Add rectangle ligth block side
 function addRec(x,y,z,r){
-	const rectLight = new THREE.RectAreaLight( 0xffffff, 2, 2, 80 );
+	const rectLight = new THREE.RectAreaLight( 0xffffff, 5, 7, 80 );
 	rectLight.position.set(x, y, z );
 	rectLight.rotation.set(r, 0,0 );
 	conteiner3.add(rectLight);
