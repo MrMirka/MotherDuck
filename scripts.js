@@ -63,7 +63,7 @@ window.addEventListener("touchstart", barkOpen, false);
 
 
 
-console.log('vertion 0.12.44');
+console.log('vertion 0.12.45');
 
 
 init();
@@ -164,8 +164,8 @@ function init(){
 	window.addEventListener("touchmove",  env => {
 		positions.push(env.changedTouches[0].pageX / window.innerWidth);
 		checkTurn();
-		deltas.x = 0.0004;
-		deltas.y = 0.0008;
+		//deltas.x = 0.0004;
+		//deltas.y = 0.0008;
 		
 	}, false);
 
@@ -369,6 +369,21 @@ function render(){
 	container1.rotation.y+= deltas.y *(CubicInOut(0,touchDelta,1,0.5)*15);
 	*/
 
+	if(deltas.x == 0.0224) {
+		deltas.x-=0.0002;
+	}else if(deltas.x < 0.0004) {
+		deltas.x = 0.0004;
+	}
+
+	if(deltas.y == 0.0228) {
+		deltas.x-=0.0002;
+	}else if(deltas.x < 0.0008) {
+		deltas.y = 0.0008;
+	}
+
+
+
+
 	if(revertDuck){
 		container1.rotation.x+= deltas.x * 15;
 		container1.rotation.y+= deltas.y * 15;
@@ -465,9 +480,13 @@ function checkTurn(){
 		let preLast = positions[positions.length-3];
 		if(last > preLast){
 			revertDuck = true;
+			deltas.x = 0.0224;
+			deltas.y = 0.0228;
 			
 		} else if (last < preLast) {
 			revertDuck = false;
+			deltas.x = 0.0224;
+			deltas.y = 0.0228;
 			
 		} 
 	} 
