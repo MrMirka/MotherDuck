@@ -29,8 +29,8 @@ let isTouch = false;
 let composer;
 
 const deltas = {
-	x: 0.0012,
-	y: 0.0014
+	x: 0.0002,
+	y: 0.0004
 };
 
 let revertDuck = true;
@@ -63,7 +63,7 @@ window.addEventListener("touchstart", barkOpen, false);
 
 
 
-console.log('vertion 0.12.41');
+console.log('vertion 0.12.42');
 
 
 init();
@@ -164,8 +164,8 @@ function init(){
 	window.addEventListener("touchmove",  env => {
 		positions.push(env.changedTouches[0].pageX / window.innerWidth);
 		checkTurn();
-		deltas.x = 0.0012;
-		deltas.y = 0.0014;
+		deltas.x = 0.0002;
+		deltas.y = 0.0004;
 		
 	}, false);
 
@@ -430,8 +430,8 @@ function barkOpen(evt){
 
 //StopAnimation bark
 function barkClose(){
-	deltas.x = 0.0012;
-	deltas.y = 0.0014;
+	deltas.x = 0.0002;
+	deltas.y = 0.0004;
 	if(bark!=undefined){ 
 		isTouch = false;
 		window.setTimeout(stopBark, 500);
