@@ -33,7 +33,7 @@ const deltas = {
 	y: 0.0004
 };
 
-
+let mm;
 
 
 const params = {
@@ -63,10 +63,13 @@ function toMove(evt){
 	deltas.x *= touches.length;
 	deltas.y *= touches.length;
 	console.log(touches.length);
+	if(mm!=undefined){
+		mm.scale.x = touches.length;
+	}
 }
 
 
-console.log('vertion 0.12.18');
+console.log('vertion 0.12.19');
 
 
 init();
@@ -161,6 +164,8 @@ function init(){
 	//FAKE
 	let geo = new THREE.SphereGeometry(20, 55,34);
 	let mat = new THREE.MeshStandardMaterial({color:0xffffff});
+	mm = new THREE.Mesh(geo, mat);
+	scene.add(mm);
 
 
 	
