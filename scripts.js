@@ -53,7 +53,7 @@ window.addEventListener("touchstart", barkOpen, false);
 
 
 
-console.log('vertion 0.12.11');
+console.log('vertion 0.12.13');
 
 
 init();
@@ -325,10 +325,10 @@ function render(){
 
 	//FORSE
 	if(isTouch && touchDelta >= 1){
-		touchDelta+=8.535;
-		if(touchDelta>27) {touchDelta=27;}
+		touchDelta+=12;
+		if(touchDelta>13) {touchDelta=13;}
 	}else if(!isTouch && touchDelta >1 ){
-		touchDelta-=0.535;
+		touchDelta-=0.135;
 	}else if(touchDelta<1){
 		touchDelta=1;
 		isTouch=false;
@@ -336,7 +336,7 @@ function render(){
 
 	if(isTouch && rotateDelta >= 1){
 		rotateDelta+=1.535;
-		if(rotateDelta>27) {rotateDelta=27;}
+		if(rotateDelta>17) {rotateDelta=17;}
 	}else if(!isTouch && rotateDelta >1 ){
 		rotateDelta-=0.235;
 	}else if(rotateDelta<1){
@@ -366,6 +366,7 @@ function render(){
 	}
 	
 	
+
 	camera.updateProjectionMatrix();
 
 
