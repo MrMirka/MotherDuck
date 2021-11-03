@@ -31,7 +31,7 @@ let composer;
 
 
 const params = {
-	exposure: 0.8,
+	exposure: 0.9,
 	bloomStrength: 0.8,
 	bloomThreshold: 0,
 	bloomRadius: 0.65
