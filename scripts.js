@@ -63,7 +63,7 @@ window.addEventListener("touchstart", barkOpen, false);
 
 
 
-console.log('vertion 0.12.46');
+console.log('vertion 0.12.47');
 
 
 init();
@@ -369,14 +369,14 @@ function render(){
 	container1.rotation.y+= deltas.y *(CubicInOut(0,touchDelta,1,0.5)*15);
 	*/
 
-	if(deltas.x == 0.0224) {
-		deltas.x-=0.0012;
+	if(deltas.x == 0.0024) {
+		deltas.x-=0.0002;
 	}else if(deltas.x < 0.0004) {
 		deltas.x = 0.0004;
 	}
 
-	if(deltas.y == 0.0228) {
-		deltas.y-=0.0018;
+	if(deltas.y == 0.0028) {
+		deltas.y-=0.0008;
 	}else if(deltas.x < 0.0008) {
 		deltas.y = 0.0008;
 	}
@@ -480,13 +480,13 @@ function checkTurn(){
 		let preLast = positions[positions.length-3];
 		if(last > preLast){
 			revertDuck = true;
-			deltas.x = 0.0224;
-			deltas.y = 0.0228;
+			deltas.x = 0.0024;
+			deltas.y = 0.0028;
 			
 		} else if (last < preLast) {
 			revertDuck = false;
-			deltas.x = 0.0224;
-			deltas.y = 0.0228;
+			deltas.x = 0.0024;
+			deltas.y = 0.0028;
 			
 		} 
 	} 
