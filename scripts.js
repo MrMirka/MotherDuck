@@ -60,7 +60,7 @@ window.addEventListener("touchstart", barkOpen, false);
 
 
 
-console.log('vertion 0.12.26');
+console.log('vertion 0.12.27');
 
 
 init();
@@ -159,8 +159,12 @@ function init(){
 	//scene.add(mm);
 
 	window.addEventListener("touchmove",  env => {
-		
-			alert(env.changedTouches[0].pageX / window.innerWidth);
+			if(env.changedTouches[0].pageX / window.innerWidth > 0.5){
+				alert('toRigth');
+			} else {
+				alert('toLeft');
+			}
+			
 		
 	}, false);
 
@@ -403,8 +407,6 @@ function addRec(x,y,z,r){
 
 //Start animation bark
 function barkOpen(evt){
-	let touches = evt.changedTouches;
-	if(touches != undefined) console.log(touches.length);
 	deltas.x = 0;
 	deltas.y = 0;
 	isTouch = true;
