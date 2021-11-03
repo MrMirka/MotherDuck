@@ -64,7 +64,7 @@ window.addEventListener("touchstart", barkOpen, false);
 
 
 
-console.log('vertion 0.12.54');
+console.log('vertion 0.12.55');
 
 
 init();
@@ -373,8 +373,8 @@ function render(){
 	//SPEEd RING
 
 	if (ringToSpeed) {
-		deltas.x+=0.008;
-		deltas.y+=0.008;
+		deltas.x+=0.001;
+		deltas.y+=0.001;
 	}
 
 	if(deltas.x < 0.0002) {
@@ -382,7 +382,7 @@ function render(){
 	}else if(deltas.x <= deltas.speed){
 		deltas.x-=0.0002;
 	}else if(deltas.x > deltas.speed){
-		deltas.y = deltas.speed;
+		deltas.x = deltas.speed;
 		ringToSpeed = false;
 	}
 
