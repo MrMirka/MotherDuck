@@ -64,7 +64,7 @@ window.addEventListener("touchstart", barkOpen, false);
 
 
 
-console.log('vertion 0.12.59');
+console.log('vertion 0.12.60');
 
 
 init();
@@ -256,7 +256,7 @@ function init(){
 			pot.position.set(-47,-33,-9);
 			pot2.position.set(47,0,0);
 
-			//conteiner2.add(pot);
+			conteiner2.add(pot, pot2);
 		}
 
 		//get material content
@@ -344,7 +344,7 @@ function render(){
 	stats.update();
 
 
-	//FORSE
+	//FORSE RING
 	if(isTouch && touchDelta >= 1){
 		touchDelta+=12;
 		if(touchDelta>13) {touchDelta=13;}
@@ -370,7 +370,7 @@ function render(){
 	container1.rotation.y+= deltas.y *(CubicInOut(0,touchDelta,1,0.5)*15);
 	*/
 
-	//SPEEd RING
+	//SPEED TOUCH RING
 
 	if (ringToSpeed) {
 		deltas.x+=0.001;
