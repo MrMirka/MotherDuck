@@ -36,7 +36,7 @@ const deltas = {
 
 let revertDuck = true;
 let positions = [];
-
+let ringToSpeed = false;
 
 const params = {
 	exposure: 1,
@@ -64,7 +64,7 @@ window.addEventListener("touchstart", barkOpen, false);
 
 
 
-console.log('vertion 0.12.53');
+console.log('vertion 0.12.54');
 
 
 init();
@@ -370,16 +370,29 @@ function render(){
 	container1.rotation.y+= deltas.y *(CubicInOut(0,touchDelta,1,0.5)*15);
 	*/
 
+	//SPEEd RING
+
+	if (ringToSpeed) {
+		deltas.x+=0.008;
+		deltas.y+=0.008;
+	}
+
 	if(deltas.x < 0.0002) {
 		deltas.x = 0.0002;
 	}else if(deltas.x <= deltas.speed){
 		deltas.x-=0.0002;
+	}else if(deltas.x > deltas.speed){
+		deltas.y = deltas.speed;
+		ringToSpeed = false;
 	}
 
 	if(deltas.y < 0.0004) {
 		deltas.y = 0.0004;
 	}else if(deltas.y <= deltas.speed){
 		deltas.y-=0.0002;
+	}else if(deltas.y > deltas.speed){
+		deltas.y = deltas.speed;
+		ringToSpeed = false;
 	}
 
 	
@@ -484,13 +497,15 @@ function checkTurn(){
 		let preLast = positions[positions.length-3];
 		if(last > preLast){
 			revertDuck = true;
-			deltas.x = deltas.speed;
-			deltas.y = deltas.speed;
+			ringToSpeed = true;
+			//deltas.x = deltas.speed;
+			//deltas.y = deltas.speed;
 			
 		} else if (last < preLast) {
 			revertDuck = false;
-			deltas.x = deltas.speed;
-			deltas.y = deltas.speed;
+			ringToSpeed = true;
+			//deltas.x = deltas.speed;
+			//deltas.y = deltas.speed;
 			
 		} 
 	} 
