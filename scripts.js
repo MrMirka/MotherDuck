@@ -63,7 +63,7 @@ window.addEventListener("touchstart", barkOpen, false);
 
 
 
-console.log('vertion 0.12.34');
+console.log('vertion 0.12.35');
 
 
 init();
@@ -430,8 +430,8 @@ function barkOpen(evt){
 
 //StopAnimation bark
 function barkClose(){
-	deltas.x = 0.0002;
-	deltas.y = 0.0004;
+	deltas.x = 0.0012;
+	deltas.y = 0.0014;
 	if(bark!=undefined){ 
 		isTouch = false;
 		window.setTimeout(stopBark, 500);
