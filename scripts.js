@@ -64,7 +64,7 @@ window.addEventListener("touchstart", barkOpen, false);
 
 
 
-console.log('vertion 0.12.61');
+console.log('vertion 0.12.63');
 
 
 init();
@@ -237,10 +237,12 @@ function init(){
 		moon.target = duck;
 		scene.add(moon);
 
+		/*
 		const gui = new GUI();
 		gui.add(moon.position, 'x', -500, 500,5);
 		gui.add(moon.position, 'y', -500, 500,5);
 		gui.add(moon.position, 'z', -500, 500,5);
+		*/
 		
 		conteiner4.add(container1);
 		conteiner4.add(duck);
