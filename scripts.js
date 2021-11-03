@@ -62,7 +62,7 @@ window.addEventListener("touchstart", barkOpen, false);
 
 
 
-console.log('vertion 0.12.28');
+console.log('vertion 0.12.29');
 
 
 init();
@@ -166,7 +166,9 @@ function init(){
 			} else {
 				revertDuck = false;
 			}
-			
+
+			deltas.x = 0.0002;
+			deltas.y = 0.0004;
 		
 	}, false);
 
@@ -426,8 +428,8 @@ function barkOpen(evt){
 
 //StopAnimation bark
 function barkClose(){
-	deltas.x = 0.0002;
-	deltas.y = 0.0004;
+	//deltas.x = 0.0002;
+	//deltas.y = 0.0004;
 	if(bark!=undefined){ 
 		isTouch = false;
 		window.setTimeout(stopBark, 500);
