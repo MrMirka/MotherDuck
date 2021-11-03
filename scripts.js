@@ -456,7 +456,7 @@ function render(){
 
 //Add rectangle ligth block side
 function addRec(x,y,z,r){
-	const rectLight = new THREE.RectAreaLight( 0xffffff, 2, 2, 80 );
+	const rectLight = new THREE.RectAreaLight( 0xffffff, 5, 7, 80 );
 	rectLight.position.set(x, y, z );
 	rectLight.rotation.set(r, 0,0 );
 	conteiner3.add(rectLight);
