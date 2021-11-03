@@ -33,8 +33,6 @@ const deltas = {
 	y: 0.0004
 };
 
-let mm;
-
 
 const params = {
 	exposure: 1,
@@ -58,19 +56,17 @@ window.addEventListener("touchend", barkClose, false);
 window.addEventListener("touchstart", barkOpen, false);
 window.addEventListener("touchmove", toMove, false);
 
+/*
 function toMove(evt){
 	let touches = evt.changedTouches;
 	deltas.x *= touches.length;
 	deltas.y *= touches.length;
 	console.log(touches.length);
-	if(mm!=undefined){
-		mm.scale.x = touches.length;
-		mm.position.y = touches.length;
-	}
 }
+*/
 
 
-console.log('vertion 0.12.20');
+console.log('vertion 0.12.21');
 
 
 init();
@@ -165,8 +161,8 @@ function init(){
 	//FAKE
 	let geo = new THREE.SphereGeometry(20, 55,34);
 	let mat = new THREE.MeshStandardMaterial({color:0xffffff});
-	mm = new THREE.Mesh(geo, mat);
-	scene.add(mm);
+	//mm = new THREE.Mesh(geo, mat);
+	//scene.add(mm);
 
 
 	
@@ -406,7 +402,11 @@ function addRec(x,y,z,r){
 }
 
 //Start animation bark
-function barkOpen(){
+function barkOpen(evt){
+	let touches = evt.changedTouches;
+	deltas.x *= touches.length;
+	deltas.y *= touches.length;
+	console.log(touches.length);
 	//deltas.x = 0;
 	//deltas.y = 0;
 	isTouch = true;
