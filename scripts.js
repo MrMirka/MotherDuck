@@ -63,7 +63,7 @@ window.addEventListener("touchstart", barkOpen, false);
 
 
 
-console.log('vertion 0.12.36');
+console.log('vertion 0.12.37');
 
 
 init();
@@ -164,8 +164,8 @@ function init(){
 	window.addEventListener("touchmove",  env => {
 		positions.push(env.changedTouches[0].pageX / window.innerWidth);
 		checkTurn();
-		deltas.x = 0.0002;
-		deltas.y = 0.0004;
+		deltas.x = 0.0012;
+		deltas.y = 0.0014;
 		
 	}, false);
 
@@ -461,7 +461,7 @@ function isMobileDevice(){
 
 function checkTurn(){
 	if(positions.length > 1){
-		alert('TRUE');
+		alert(positions.length);
 		let last = positions[positions.lingth-1];
 		let preLast = positions[positions.lingth-2];
 		if(last > preLast){
