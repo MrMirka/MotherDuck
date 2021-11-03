@@ -34,6 +34,7 @@ const deltas = {
 };
 
 let revertDuck = true;
+let positions = [];
 
 
 const params = {
@@ -62,7 +63,7 @@ window.addEventListener("touchstart", barkOpen, false);
 
 
 
-console.log('vertion 0.12.30');
+console.log('vertion 0.12.31');
 
 
 init();
@@ -161,14 +162,10 @@ function init(){
 	//scene.add(mm);
 
 	window.addEventListener("touchmove",  env => {
-			if(env.changedTouches[0].pageX / window.innerWidth > 0.5){
-				revertDuck = true;
-			} else {
-				revertDuck = false;
-			}
-
-			deltas.x = 0.0002;
-			deltas.y = 0.0004;
+		positions.push(env.changedTouches[0].pageX / window.innerWidth);
+		checkTurn();
+		deltas.x = 0.0002;
+		deltas.y = 0.0004;
 		
 	}, false);
 
@@ -462,5 +459,16 @@ function isMobileDevice(){
 	}
 }
 
-
+function checkTurn(){
+	if(positions > 1){
+		let last = positions[positions.lingth-1];
+		let preLast = positions[positions.lingth-2];
+		if(last > preLast){
+			revertDuck = true;
+		} else {
+			revertDuck = false;
+		}
+	} 
+	
+}
 
