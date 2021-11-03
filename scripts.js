@@ -28,6 +28,8 @@ let rotateDelta = 1;
 let isTouch = false;
 let composer; 
 
+
+
 const params = {
 	exposure: 0.8,
 	bloomStrength: 1.3,
@@ -37,9 +39,9 @@ const params = {
 
 let duckPatch = 'motherduck_anim1k_2.glb';
 if(isMobileDevice()){
-	duckPatch = 'motherduck_anim1k_decimate_2.glb';
+	duckPatch = 'motherduck_anim_mobile.glb';
 }else {
-	duckPatch = 'motherduck_anim1k_3.glb';
+	duckPatch = 'motherduck_anim1k_2.glb';
 }
 
 
