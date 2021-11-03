@@ -63,7 +63,7 @@ window.addEventListener("touchstart", barkOpen, false);
 
 
 
-console.log('vertion 0.12.48');
+console.log('vertion 0.12.49');
 
 
 init();
@@ -369,18 +369,21 @@ function render(){
 	container1.rotation.y+= deltas.y *(CubicInOut(0,touchDelta,1,0.5)*15);
 	*/
 
-	if(deltas.x == 0.0024) {
-		deltas.x-=0.0002;
-	}else if(deltas.x < 0.0004) {
+	if(deltas.x < 0.0004) {
 		deltas.x = 0.0004;
+	}else if(deltas.x <= 0.0024){
+		deltas.x-=0.0002;
 	}
 
-	if(deltas.y == 0.0028) {
-		deltas.y-=0.0008;
-	}else if(deltas.y < 0.0008) {
+	if(deltas.y < 0.0008) {
 		deltas.y = 0.0008;
+	}else if(deltas.y <= 0.0024){
+		deltas.y-=0.0002;
 	}
 
+	
+
+	
 
 
 
