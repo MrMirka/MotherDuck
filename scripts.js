@@ -63,7 +63,7 @@ window.addEventListener("touchstart", barkOpen, false);
 
 
 
-console.log('vertion 0.12.43');
+console.log('vertion 0.12.44');
 
 
 init();
@@ -418,8 +418,8 @@ function addRec(x,y,z,r){
 
 //Start animation bark
 function barkOpen(evt){
-	deltas.x = 0;
-	deltas.y = 0;
+	//deltas.x = 0;
+	//deltas.y = 0;
 	isTouch = true;
 	if(bark!=undefined && !bark.isRunning()) {
 		bark.play();
@@ -430,8 +430,8 @@ function barkOpen(evt){
 
 //StopAnimation bark
 function barkClose(){
-	deltas.x = 0.0004;
-	deltas.y = 0.0008;
+	//deltas.x = 0.0004;
+	//deltas.y = 0.0008;
 	if(bark!=undefined){ 
 		isTouch = false;
 		window.setTimeout(stopBark, 500);
