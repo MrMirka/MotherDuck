@@ -54,7 +54,7 @@ window.addEventListener('mouseup', barkClose);
 
 window.addEventListener("touchend", barkClose, false);
 window.addEventListener("touchstart", barkOpen, false);
-window.addEventListener("touchmove", toMove, false);
+//window.addEventListener("touchmove", toMove, false);
 
 /*
 function toMove(evt){
