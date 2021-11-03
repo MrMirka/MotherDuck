@@ -63,7 +63,7 @@ window.addEventListener("touchstart", barkOpen, false);
 
 
 
-console.log('vertion 0.12.47');
+console.log('vertion 0.12.48');
 
 
 init();
@@ -377,7 +377,7 @@ function render(){
 
 	if(deltas.y == 0.0028) {
 		deltas.y-=0.0008;
-	}else if(deltas.x < 0.0008) {
+	}else if(deltas.y < 0.0008) {
 		deltas.y = 0.0008;
 	}
 
