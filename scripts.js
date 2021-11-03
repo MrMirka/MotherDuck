@@ -60,7 +60,7 @@ window.addEventListener("touchstart", barkOpen, false);
 
 
 
-console.log('vertion 0.12.25');
+console.log('vertion 0.12.26');
 
 
 init();
@@ -160,7 +160,7 @@ function init(){
 
 	window.addEventListener("touchmove",  env => {
 		
-			alert(env.changedTouches[0].pageX);
+			alert(env.changedTouches[0].pageX / window.innerWidth);
 		
 	}, false);
 
