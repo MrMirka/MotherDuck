@@ -63,7 +63,7 @@ window.addEventListener("touchstart", barkOpen, false);
 
 
 
-console.log('vertion 0.12.37');
+console.log('vertion 0.12.38');
 
 
 init();
@@ -461,13 +461,16 @@ function isMobileDevice(){
 
 function checkTurn(){
 	if(positions.length > 1){
-		alert(positions.length);
 		let last = positions[positions.lingth-1];
 		let preLast = positions[positions.lingth-2];
 		if(last > preLast){
 			revertDuck = true;
-		} else {
+			alert('toLeft');
+		} else if (last < preLast) {
 			revertDuck = false;
+			alert('toRigth');
+		} else {
+			alert('error');
 		}
 	} 
 	
