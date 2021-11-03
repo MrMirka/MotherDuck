@@ -56,10 +56,15 @@ window.addEventListener('mouseup', barkClose);
 
 window.addEventListener("touchend", barkClose, false);
 window.addEventListener("touchstart", barkOpen, false);
+window.addEventListener("touchmove", toMove, false);
+
+function toMove(evt){
+	let touches = evt.changedTouches;
+	alert(touches.length);
+}
 
 
-
-console.log('vertion 0.12.15');
+console.log('vertion 0.12.16');
 
 
 init();
