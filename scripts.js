@@ -32,7 +32,7 @@ let composer;
 
 const params = {
 	exposure: 0.8,
-	bloomStrength: 1.3,
+	bloomStrength: 0.8,
 	bloomThreshold: 0,
 	bloomRadius: 0.65
 };
@@ -53,7 +53,7 @@ window.addEventListener("touchstart", barkOpen, false);
 
 
 
-console.log('vertion 0.12.13');
+console.log('vertion 0.12.14');
 
 
 init();
