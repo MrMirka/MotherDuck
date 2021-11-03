@@ -60,11 +60,13 @@ window.addEventListener("touchmove", toMove, false);
 
 function toMove(evt){
 	let touches = evt.changedTouches;
+	deltas.x *= touches.length;
+	deltas.y *= touches.length;
 	console.log(touches.length);
 }
 
 
-console.log('vertion 0.12.17');
+console.log('vertion 0.12.18');
 
 
 init();
@@ -399,8 +401,8 @@ function addRec(x,y,z,r){
 
 //Start animation bark
 function barkOpen(){
-	deltas.x = 0;
-	deltas.y = 0;
+	//deltas.x = 0;
+	//deltas.y = 0;
 	isTouch = true;
 	if(bark!=undefined && !bark.isRunning()) {
 		bark.play();
@@ -411,8 +413,8 @@ function barkOpen(){
 
 //StopAnimation bark
 function barkClose(){
-	deltas.x = 0.0002;
-	deltas.y = 0.0004;
+	//deltas.x = 0.0002;
+	//deltas.y = 0.0004;
 	if(bark!=undefined){ 
 		isTouch = false;
 		window.setTimeout(stopBark, 500);
