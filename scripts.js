@@ -26,12 +26,18 @@ let clock = new THREE.Clock();
 let touchDelta = 1;
 let rotateDelta = 1;
 let isTouch = false;
-let composer; 
+let composer;
+
+const deltas = {
+	x: 0.0002,
+	y: 0.0004
+};
+
 
 
 
 const params = {
-	exposure: 0.9,
+	exposure: 1,
 	bloomStrength: 0.8,
 	bloomThreshold: 0,
 	bloomRadius: 0.65
@@ -53,7 +59,7 @@ window.addEventListener("touchstart", barkOpen, false);
 
 
 
-console.log('vertion 0.12.14');
+console.log('vertion 0.12.15');
 
 
 init();
@@ -345,8 +351,8 @@ function render(){
 	}
 
 
-	container1.rotation.x+=0.0002*(CubicInOut(0,touchDelta,1,0.5)*15);
-	container1.rotation.y+=0.0004*(CubicInOut(0,touchDelta,1,0.5)*15);
+	container1.rotation.x+= deltas.x * (CubicInOut(0,touchDelta,1,0.5)*15);
+	container1.rotation.y+= deltas.y *(CubicInOut(0,touchDelta,1,0.5)*15);
 	container1.rotation.z += 0.0011;
 
 	if(isMobile){
@@ -388,6 +394,8 @@ function addRec(x,y,z,r){
 
 //Start animation bark
 function barkOpen(){
+	deltas.x = 0;
+	deltas.y = 0;
 	isTouch = true;
 	if(bark!=undefined && !bark.isRunning()) {
 		bark.play();
@@ -398,6 +406,8 @@ function barkOpen(){
 
 //StopAnimation bark
 function barkClose(){
+	deltas.x = 0.0002;
+	deltas.y = 0.0004;
 	if(bark!=undefined){ 
 		isTouch = false;
 		window.setTimeout(stopBark, 500);
