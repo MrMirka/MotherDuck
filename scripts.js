@@ -65,11 +65,12 @@ function toMove(evt){
 	console.log(touches.length);
 	if(mm!=undefined){
 		mm.scale.x = touches.length;
+		mm.position.y = touches.length;
 	}
 }
 
 
-console.log('vertion 0.12.19');
+console.log('vertion 0.12.20');
 
 
 init();
