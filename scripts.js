@@ -30,7 +30,8 @@ let composer;
 
 const deltas = {
 	x: 0.0002,
-	y: 0.0004
+	y: 0.0004,
+	speed: 0.0128
 };
 
 let revertDuck = true;
@@ -63,7 +64,7 @@ window.addEventListener("touchstart", barkOpen, false);
 
 
 
-console.log('vertion 0.12.51');
+console.log('vertion 0.12.52');
 
 
 init();
@@ -371,13 +372,13 @@ function render(){
 
 	if(deltas.x < 0.0002) {
 		deltas.x = 0.0002;
-	}else if(deltas.x <= 0.0024){
+	}else if(deltas.x <= deltas.speed){
 		deltas.x-=0.0002;
 	}
 
 	if(deltas.y < 0.0004) {
 		deltas.y = 0.0004;
-	}else if(deltas.y <= 0.0028){
+	}else if(deltas.y <= deltas.speed){
 		deltas.y-=0.0002;
 	}
 
@@ -483,13 +484,13 @@ function checkTurn(){
 		let preLast = positions[positions.length-3];
 		if(last > preLast){
 			revertDuck = true;
-			deltas.x = 0.0024;
-			deltas.y = 0.0028;
+			deltas.x = deltas.speed;
+			deltas.y = deltas.speed;
 			
 		} else if (last < preLast) {
 			revertDuck = false;
-			deltas.x = 0.0024;
-			deltas.y = 0.0028;
+			deltas.x = deltas.speed;
+			deltas.y = deltas.speed;
 			
 		} 
 	} 
