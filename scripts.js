@@ -31,7 +31,7 @@ let composer;
 const deltas = {
 	x: 0.0002,
 	y: 0.0004,
-	speed: 0.0288
+	speed: 0.0120
 };
 
 let revertDuck = true;
@@ -64,7 +64,7 @@ window.addEventListener("touchstart", barkOpen, false);
 
 
 
-console.log('vertion 0.12.56');
+console.log('vertion 0.12.57');
 
 
 init();
