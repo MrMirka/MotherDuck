@@ -33,6 +33,8 @@ const deltas = {
 	y: 0.0004
 };
 
+let revertDuck = true;
+
 
 const params = {
 	exposure: 1,
@@ -60,7 +62,7 @@ window.addEventListener("touchstart", barkOpen, false);
 
 
 
-console.log('vertion 0.12.27');
+console.log('vertion 0.12.28');
 
 
 init();
@@ -160,9 +162,9 @@ function init(){
 
 	window.addEventListener("touchmove",  env => {
 			if(env.changedTouches[0].pageX / window.innerWidth > 0.5){
-				alert('toRigth');
+				revertDuck = true;
 			} else {
-				alert('toLeft');
+				revertDuck = false;
 			}
 			
 		
@@ -363,9 +365,14 @@ function render(){
 		isTouch=false;
 	}
 
+	if(revertDuck){
+		container1.rotation.x+= deltas.x * (CubicInOut(0,touchDelta,1,0.5)*15);
+		container1.rotation.y+= deltas.y *(CubicInOut(0,touchDelta,1,0.5)*15);
+	} else {
+		container1.rotation.x-= deltas.x * (CubicInOut(0,touchDelta,1,0.5)*15);
+		container1.rotation.y-= deltas.y *(CubicInOut(0,touchDelta,1,0.5)*15);
+	}
 
-	container1.rotation.x+= deltas.x * (CubicInOut(0,touchDelta,1,0.5)*15);
-	container1.rotation.y+= deltas.y *(CubicInOut(0,touchDelta,1,0.5)*15);
 	container1.rotation.z += 0.0011;
 
 	if(isMobile){
