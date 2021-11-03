@@ -60,7 +60,7 @@ window.addEventListener("touchstart", barkOpen, false);
 
 
 
-console.log('vertion 0.12.24');
+console.log('vertion 0.12.25');
 
 
 init();
@@ -159,9 +159,9 @@ function init(){
 	//scene.add(mm);
 
 	window.addEventListener("touchmove",  env => {
-		if (duck != undefined) {
+		
 			alert(env.changedTouches[0].pageX);
-		}
+		
 	}, false);
 
 
