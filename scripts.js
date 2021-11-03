@@ -64,7 +64,7 @@ window.addEventListener("touchstart", barkOpen, false);
 
 
 
-console.log('vertion 0.12.63');
+console.log('vertion 0.12.64');
 
 
 init();
@@ -125,7 +125,7 @@ function init(){
 	renderer.outputEncoding = THREE.GammaEncoding;
 	renderer.gammaFactor = 1.7;
 	renderer.toneMapping = THREE.ACESFilmicToneMapping;
-	renderer.toneMappingExposure = 0.3;
+	renderer.toneMappingExposure = 0.4;
 	renderer.setSize( window.innerWidth, window.innerHeight );
 	renderer.logarithmicDepthBuffer = true;
 	container.appendChild( renderer.domElement );
@@ -191,10 +191,8 @@ function init(){
 					texture.wrapS = THREE.RepeatWrapping;
 					texture.wrapP = THREE.RepeatWrapping;
 					texture.repeat.set( 1, 1 );
-					node.material.envMapIntensity = 2.2;
+					node.material.envMapIntensity = 1.3;
 					node.material.envMap = texture;
-					node.lightMap = texture;
-					node.lightMapIntensity = 2.2;
 					node.material.reflectivity = 1;
 					node.material.transparent = false;
 					node.material.normalScale= new THREE.Vector2(1, 1);
