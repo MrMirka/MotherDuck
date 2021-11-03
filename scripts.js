@@ -64,7 +64,7 @@ window.addEventListener("touchstart", barkOpen, false);
 
 
 
-console.log('vertion 0.12.60');
+console.log('vertion 0.12.61');
 
 
 init();
@@ -227,10 +227,20 @@ function init(){
 		
 
 		//LIGTH
-		sun = new THREE.DirectionalLight(0xffffff,15.2);
+		sun = new THREE.DirectionalLight(0xffffff,20);
 		sun.position.set(-38,50,19);
 		sun.target = duck;
 		scene.add(sun);
+
+		let moon = new THREE.DirectionalLight(0xffffff,25);
+		moon.position.set(-190,-190,-5);
+		moon.target = duck;
+		scene.add(moon);
+
+		const gui = new GUI();
+		gui.add(moon.position, 'x', -500, 500,5);
+		gui.add(moon.position, 'y', -500, 500,5);
+		gui.add(moon.position, 'z', -500, 500,5);
 		
 		conteiner4.add(container1);
 		conteiner4.add(duck);
@@ -256,7 +266,7 @@ function init(){
 			pot.position.set(-47,-33,-9);
 			pot2.position.set(47,0,0);
 
-			conteiner2.add(pot, pot2);
+			//conteiner2.add(pot, pot2);
 		}
 
 		//get material content
