@@ -54,19 +54,13 @@ window.addEventListener('mouseup', barkClose);
 
 window.addEventListener("touchend", barkClose, false);
 window.addEventListener("touchstart", barkOpen, false);
-//window.addEventListener("touchmove", toMove, false);
-
-/*
-function toMove(evt){
-	let touches = evt.changedTouches;
-	deltas.x *= touches.length;
-	deltas.y *= touches.length;
-	console.log(touches.length);
-}
-*/
 
 
-console.log('vertion 0.12.22');
+
+
+
+
+console.log('vertion 0.12.23');
 
 
 init();
@@ -163,6 +157,12 @@ function init(){
 	let mat = new THREE.MeshStandardMaterial({color:0xffffff});
 	//mm = new THREE.Mesh(geo, mat);
 	//scene.add(mm);
+
+	window.addEventListener("touchmove",  env => {
+		if (duck != undefined) {
+			duck.position.y += env.changedTouches.length;
+		}
+	}, false);
 
 
 	
