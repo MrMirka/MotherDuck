@@ -64,7 +64,7 @@ window.addEventListener("touchstart", barkOpen, false);
 
 
 
-console.log('vertion 0.12.66');
+console.log('vertion 0.12.67');
 
 
 init();
@@ -124,7 +124,7 @@ function init(){
 	const container = document.getElementById( 'canvas' );
 
 
-	renderer = new THREE.WebGLRenderer( { alpha:false, antialias: false } );
+	renderer = new THREE.WebGLRenderer( { alpha:true, antialias: false } );
 	renderer.setPixelRatio( window.devicePixelRatio );
 	renderer.outputEncoding = THREE.GammaEncoding;
 	renderer.gammaFactor = 1.7;
