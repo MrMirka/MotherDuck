@@ -66,7 +66,7 @@ function toMove(evt){
 */
 
 
-console.log('vertion 0.12.21');
+console.log('vertion 0.12.22');
 
 
 init();
@@ -404,11 +404,9 @@ function addRec(x,y,z,r){
 //Start animation bark
 function barkOpen(evt){
 	let touches = evt.changedTouches;
-	deltas.x *= touches.length;
-	deltas.y *= touches.length;
-	console.log(touches.length);
-	//deltas.x = 0;
-	//deltas.y = 0;
+	if(touches != undefined) console.log(touches.length);
+	deltas.x = 0;
+	deltas.y = 0;
 	isTouch = true;
 	if(bark!=undefined && !bark.isRunning()) {
 		bark.play();
@@ -419,8 +417,8 @@ function barkOpen(evt){
 
 //StopAnimation bark
 function barkClose(){
-	//deltas.x = 0.0002;
-	//deltas.y = 0.0004;
+	deltas.x = 0.0002;
+	deltas.y = 0.0004;
 	if(bark!=undefined){ 
 		isTouch = false;
 		window.setTimeout(stopBark, 500);
