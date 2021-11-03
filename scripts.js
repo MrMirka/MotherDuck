@@ -63,7 +63,7 @@ window.addEventListener("touchstart", barkOpen, false);
 
 
 
-console.log('vertion 0.12.39');
+console.log('vertion 0.12.40');
 
 
 init();
@@ -465,13 +465,11 @@ function checkTurn(){
 		let preLast = positions[positions.length-2];
 		if(last > preLast){
 			revertDuck = true;
-			alert('toLeft');
+			
 		} else if (last < preLast) {
 			revertDuck = false;
-			alert('toRigth');
-		} else {
-			alert('error');
-		}
+			
+		} 
 	} 
 	
 }
