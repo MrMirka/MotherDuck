@@ -503,9 +503,9 @@ function isMobileDevice(){
 function checkTurn(){
 	if(positions.length > 10){
 		let last = positions[positions.length-1];
-		let preLast = positions[positions.length-3];
+		let preLast = positions[positions.length-9];
 
-		let moveY = ( panYTouch[panYTouch.length-1] - panYTouch[panYTouch.length-9]) / (window.innerHeight / window.innerWidth); 
+		let moveY = ( panYTouch[panYTouch.length-1] - panYTouch[panYTouch.length-9]); 
 		let moveX = positions[positions.length-1] - positions[positions.length-9];
 
 
@@ -519,10 +519,11 @@ function checkTurn(){
 				ringToSpeed = true;
 				
 			} 
-			panYTouch = [];
-			positions = [];
+			//panYTouch = [];
+			//positions = [];
 
 		}
+	
 }	
 	
 }
