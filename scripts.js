@@ -505,7 +505,7 @@ function checkTurn(){
 		let last = positions[positions.length-1];
 		let preLast = positions[positions.length-3];
 
-		let moveY = ( panYTouch[panYTouch.length-1] - panYTouch[panYTouch.length-30]) / 1.6; 
+		let moveY = ( panYTouch[panYTouch.length-1] - panYTouch[panYTouch.length-30]) / (window.innerHeight / window.innerWidth); 
 		let moveX = positions[positions.length-1] - positions[positions.length-30];
 
 
