@@ -175,6 +175,7 @@ function init(){
 	window.addEventListener("touchmove",  env => {
 		positions.push(env.changedTouches[0].pageX / window.innerWidth);
 		panYTouch.push(env.changedTouches[0].pageY / window.innerHeight);
+		alert(env.changedTouches[0].pageX + " "+ env.changedTouches[0].pageY);
 		checkTurn();
 		
 		
