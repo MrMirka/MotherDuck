@@ -70,7 +70,7 @@ window.addEventListener("touchstart", barkOpen, false);
 
 
 
-console.log('vertion 0.12.74');
+console.log('vertion 0.12.75');
 
 
 init();
@@ -336,8 +336,8 @@ function init(){
 	});
 
 	
-	stats = new Stats();
-	document.body.appendChild( stats.dom );
+	//stats = new Stats();
+	//document.body.appendChild( stats.dom );
 
 
 	animate();
@@ -361,7 +361,7 @@ function render(){
 	timer = Date.now() * 0.00003;
 	
 
-	stats.update();
+	//stats.update();
 
 
 	//FORSE RING
