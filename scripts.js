@@ -28,6 +28,7 @@ let rotateDelta = 1;
 let isTouch = false;
 let composer;
 
+//Ring speed parametras
 const deltas = {
 	x: 0.0002,
 	y: 0.0004,
@@ -35,9 +36,10 @@ const deltas = {
 };
 
 let revertDuck = true;
-let positions = [];
+let positions = []; //Tap coordinate
 let ringToSpeed = false;
 
+//Compose
 const params = {
 	exposure: 1,
 	bloomStrength: 0.8,
@@ -64,7 +66,7 @@ window.addEventListener("touchstart", barkOpen, false);
 
 
 
-console.log('vertion 0.12.68');
+console.log('vertion 0.12.69');
 
 
 init();
@@ -87,11 +89,8 @@ function init(){
 
 	
 	if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
-		//isMobile = true;
-		addRec(0,0,0,0);
-		addRec(0,0,-80,Math.PI);
-		addRec(0,-40,-40,Math.PI/2);
-		addRec(0,40,-40,-Math.PI/2);
+		isMobile = true;
+	
 	}else{
 		addRec(0,0,0,0);
 		addRec(0,0,-80,Math.PI);
@@ -426,7 +425,7 @@ function render(){
 	container1.rotation.z += 0.0011;
 
 	if(isMobile){
-		conteiner2.rotation.x = Math.sin(timer) * 8.5  +  Math.PI*2;
+		åconteiner2.rotation.x = Math.sin(timer) * 8.5  +  Math.PI*2;
 		conteiner2.rotation.y = Math.cos(timer) * 13.5  +  Math.PI*2;
 		conteiner2.rotation.z += 0.0011;
 	}
@@ -464,8 +463,6 @@ function addRec(x,y,z,r){
 
 //Start animation bark
 function barkOpen(evt){
-	//deltas.x = 0;
-	//deltas.y = 0;
 	isTouch = true;
 	if(bark!=undefined && !bark.isRunning()) {
 		bark.play();
@@ -476,8 +473,6 @@ function barkOpen(evt){
 
 //StopAnimation bark
 function barkClose(){
-	//deltas.x = 0.0004;
-	//deltas.y = 0.0008;
 	if(bark!=undefined){ 
 		isTouch = false;
 		window.setTimeout(stopBark, 500);
@@ -505,6 +500,7 @@ function isMobileDevice(){
 	}
 }
 
+//Check tup interaction
 function checkTurn(){
 	if(positions.length > 2){
 		let last = positions[positions.length-1];
@@ -512,14 +508,10 @@ function checkTurn(){
 		if(last > preLast){
 			revertDuck = true;
 			ringToSpeed = true;
-			//deltas.x = deltas.speed;
-			//deltas.y = deltas.speed;
 			
 		} else if (last < preLast) {
 			revertDuck = false;
 			ringToSpeed = true;
-			//deltas.x = deltas.speed;
-			//deltas.y = deltas.speed;
 			
 		} 
 	} 
