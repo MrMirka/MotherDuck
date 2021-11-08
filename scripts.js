@@ -67,7 +67,7 @@ window.addEventListener("touchend", barkClose, false);
 window.addEventListener("touchstart", barkOpen, false);
  
 
-console.log('vertion 0.12.97');
+console.log('vertion 0.12.98');
 
 
 init();
@@ -500,7 +500,7 @@ function isMobileDevice(){
 
 //Check tup interaction
 function checkTurn(){
-	if(positions.length < 2){
+	if(positions.length < 1.2){
 		let last = positions[positions.length-1];
 		let preLast = positions[positions.length-3];
 
