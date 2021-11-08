@@ -36,7 +36,8 @@ const deltas = {
 };
 
 let revertDuck = true; //Left or right
-let positions = []; //Tap coordinate
+let positions = []; //Tap X coordinate
+let panYTouch = []; //Tap Y coordinate
 let ringToSpeed = false;
 
 //Compose
@@ -66,7 +67,7 @@ window.addEventListener("touchend", barkClose, false);
 window.addEventListener("touchstart", barkOpen, false);
  
 
-console.log('vertion 0.12.95');
+console.log('vertion 0.12.96');
 
 
 init();
@@ -172,6 +173,7 @@ function init(){
 	
 	window.addEventListener("touchmove",  env => {
 		positions.push(env.changedTouches[0].pageX / window.innerWidth);
+		panYTouch.push(env.changedTouches[0].pageY / window.innerHeight);
 		checkTurn();
 		
 		
@@ -206,17 +208,6 @@ function init(){
 					node.material.normalScale= new THREE.Vector2(1, 1);
 					node.material.roughness = 0.8;	
 					node.material.needsUpdate = false;
-
-					/*
-					mat.envMapIntensity = 1.2;
-					mat.envMap = texture;
-					mat.roughness = 0.14;
-					mat.metalness = 1;
-					let mesh = new THREE.Mesh(geo,mat);
-					mesh.position.set(0,-20,0);
-					scene.add(mesh);
-					*/
-					
 				});
 			}
 		});
@@ -512,15 +503,22 @@ function checkTurn(){
 	if(positions.length > 2){
 		let last = positions[positions.length-1];
 		let preLast = positions[positions.length-3];
-		if(last > preLast){
-			revertDuck = true;
-			ringToSpeed = true;
-			
-		} else if (last < preLast) {
-			revertDuck = false;
-			ringToSpeed = true;
-			
-		} 
+
+		let lastY = panYTouch[panYTouch.length-1];
+		let preLastY = panYTouch[panYTouch.length-5];
+		
+		if(lastY/preLastY <2) {
+
+			if(last > preLast){
+				revertDuck = true;
+				ringToSpeed = true;
+				
+			} else if (last < preLast) {
+				revertDuck = false;
+				ringToSpeed = true;
+				
+			} 
+		}
 	} 
 	
 }
