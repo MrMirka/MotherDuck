@@ -67,7 +67,7 @@ window.addEventListener("touchend", barkClose, false);
 window.addEventListener("touchstart", barkOpen, false);
  
 
-console.log('vertion 0.13.06');
+console.log('vertion 0.13.08');
 
 
 init();
@@ -504,8 +504,8 @@ function checkTurn(){
 		let last = positions[positions.length-1];
 		let preLast = positions[positions.length-3];
 
-		let moveY = panYTouch[panYTouch.length-1] - panYTouch[panYTouch.length-3];
-		let moveX = positions[positions.length-1] - positions[positions.length-3];
+		let moveY = panYTouch[panYTouch.length-1] - panYTouch[panYTouch.length-2];
+		let moveX = positions[positions.length-1] - positions[positions.length-2];
 
 
 		if(Math.abs(moveX) > Math.abs(moveY)) {
