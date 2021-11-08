@@ -133,7 +133,7 @@ function init(){
 	renderer.setSize( window.innerWidth, window.innerHeight );
 	renderer.logarithmicDepthBuffer = true;
 	container.appendChild( renderer.domElement );
-	container.style.touchAction = 'pan-x'
+	
 
 	
 	control = new OrbitControls(camera, renderer.domElement);
