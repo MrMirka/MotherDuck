@@ -70,7 +70,7 @@ if(isMobileDevice()){
 
 
 
-console.log('vertion 0.12.84');
+console.log('vertion 0.12.85');
 
 
 init();
@@ -138,7 +138,7 @@ function init(){
 	renderer.logarithmicDepthBuffer = true;
 	container.appendChild( renderer.domElement );
 
-	/*
+	
 	control = new OrbitControls(camera, renderer.domElement);
 	control.enableDamping = true;
 	control.enablePan = false;
@@ -149,7 +149,7 @@ function init(){
 	control.minPolarAngle = 1.1936065021656286;
 	
 	control.update();
-	*/
+	
 
 
 	//COMPOSER
@@ -348,7 +348,7 @@ function init(){
 
 function animate(){
 	render();
-	//control.update();
+	control.update();
 	requestAnimationFrame(animate);	
 }
 
