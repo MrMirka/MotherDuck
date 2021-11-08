@@ -70,7 +70,7 @@ window.addEventListener("touchstart", barkOpen, false);
 
 
 
-console.log('vertion 0.12.86');
+console.log('vertion 0.12.87');
 
 
 init();
@@ -138,8 +138,8 @@ function init(){
 	renderer.logarithmicDepthBuffer = true;
 	container.appendChild( renderer.domElement );
 
-	/*
-	control = new OrbitControls(camera, renderer.domElement);
+	
+	control = new OrbitControls(camera, container);
 	control.enableDamping = true;
 	control.enablePan = false;
 	control.enableZoom = false;
@@ -149,7 +149,7 @@ function init(){
 	control.minPolarAngle = 1.1936065021656286;
 	
 	control.update();
-	*/
+	
 	
 
 
@@ -349,7 +349,7 @@ function init(){
 
 function animate(){
 	render();
-	//control.update();
+	control.update();
 	requestAnimationFrame(animate);	
 }
 
