@@ -66,7 +66,7 @@ window.addEventListener("touchend", barkClose, false);
 window.addEventListener("touchstart", barkOpen, false);
  
 
-console.log('vertion 0.12.92');
+console.log('vertion 0.12.93');
 
 
 init();
@@ -133,6 +133,7 @@ function init(){
 	renderer.setSize( window.innerWidth, window.innerHeight );
 	renderer.logarithmicDepthBuffer = true;
 	container.appendChild( renderer.domElement );
+	container.style.touchAction = 'pan-x'
 
 	
 	control = new OrbitControls(camera, renderer.domElement);
