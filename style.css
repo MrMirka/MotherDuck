@@ -1,6 +1,6 @@
 body {
     width: 100%;
-    height: 3000px;
+    height: 100%;
     margin: 0;
     background-image: url('./img/background_moba_x2.png');
     background-size: cover;
@@ -8,7 +8,7 @@ body {
     background: rgb(31,31,31);
     background: radial-gradient(circle, rgba(31,31,31,1) 0%, rgba(13,13,13,1) 77%);
     */
-    
+   
     background-repeat: no-repeat;
 
   }
@@ -19,6 +19,11 @@ body {
     overflow: hidden;
     position: absolute;
     overflow: hidden;
+  }
+
+  .ipsum {
+    color: white;
+    font-size:30px;
   }
 
   
