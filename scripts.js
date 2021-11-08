@@ -35,7 +35,7 @@ const deltas = {
 	speed: 0.0080
 };
 
-let revertDuck = true;
+let revertDuck = true; //Left or right
 let positions = []; //Tap coordinate
 let ringToSpeed = false;
 
@@ -47,6 +47,7 @@ const params = {
 	bloomRadius: 0.65
 };
 
+//LOD's
 let duckPatch = 'motherduck_anim1k_2.glb';
 if(isMobileDevice()){
 	duckPatch = 'motherduck_anim_mobile.glb';
@@ -66,7 +67,7 @@ window.addEventListener("touchstart", barkOpen, false);
 
 
 
-console.log('vertion 0.12.71');
+console.log('vertion 0.12.72');
 
 
 init();
@@ -229,22 +230,24 @@ function init(){
 		
 
 		//LIGTH
-		sun = new THREE.DirectionalLight(0xffffff,20);
-		sun.position.set(-38,50,19);
+		sun = new THREE.DirectionalLight(0xffffff,30);
+		sun.position.set(-360,20,-210);
 		sun.target = duck;
 		scene.add(sun);
 
 		let moon = new THREE.DirectionalLight(0xffffff,25);
-		moon.position.set(-190,-190,-5);
+		moon.position.set(125,-100,-5);
 		moon.target = duck;
 		scene.add(moon);
 
 		/*
 		const gui = new GUI();
-		gui.add(moon.position, 'x', -500, 500,5);
-		gui.add(moon.position, 'y', -500, 500,5);
-		gui.add(moon.position, 'z', -500, 500,5);
+		gui.add(sun.position, 'x', -500, 500,5);
+		gui.add(sun.position, 'y', -500, 500,5);
+		gui.add(sun.position, 'z', -500, 500,5);
 		*/
+		
+		
 		
 		conteiner4.add(container1);
 		conteiner4.add(duck);
@@ -447,7 +450,7 @@ function render(){
 
 
 	if(sun!=undefined)
-	sun.position.z = Math.sin(timer*6.1) / Math.PI + Math.cos(timer);
+	//sun.position.z = Math.sin(timer*6.1) / Math.PI + Math.cos(timer);
 	
 	composer.render();
 	//renderer.render(scene, camera);
