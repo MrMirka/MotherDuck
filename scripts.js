@@ -69,7 +69,7 @@ window.addEventListener("touchstart", barkOpen, false);
 window.addEventListener("touchmove", barkOpen, false);
  
 
-console.log('vertion 0.13.12');
+console.log('vertion 0.13.13');
 
 
 init();
