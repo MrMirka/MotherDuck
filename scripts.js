@@ -66,7 +66,7 @@ window.addEventListener("touchstart", barkOpen, false);
 
 
 
-console.log('vertion 0.12.69');
+console.log('vertion 0.12.70');
 
 
 init();
@@ -425,7 +425,7 @@ function render(){
 	container1.rotation.z += 0.0011;
 
 	if(isMobile){
-		åconteiner2.rotation.x = Math.sin(timer) * 8.5  +  Math.PI*2;
+		conteiner2.rotation.x = Math.sin(timer) * 8.5  +  Math.PI*2;
 		conteiner2.rotation.y = Math.cos(timer) * 13.5  +  Math.PI*2;
 		conteiner2.rotation.z += 0.0011;
 	}
