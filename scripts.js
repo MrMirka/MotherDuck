@@ -67,7 +67,7 @@ window.addEventListener("touchend", barkClose, false);
 window.addEventListener("touchstart", barkOpen, false);
  
 
-console.log('vertion 0.13.09');
+console.log('vertion 0.13.10');
 
 
 init();
@@ -518,6 +518,9 @@ function checkTurn(){
 				ringToSpeed = true;
 				
 			} 
+			panYTouch = [];
+			positions = [];
+
 		}
 }	
 	
