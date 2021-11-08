@@ -62,15 +62,15 @@ if(isMobileDevice()){
 //window.addEventListener('mousedown', barkOpen);
 //window.addEventListener('mouseup', barkClose);
 
-//window.addEventListener("touchend", barkClose, false);
-//window.addEventListener("touchstart", barkOpen, false);
+window.addEventListener("touchend", barkClose, false);
+window.addEventListener("touchstart", barkOpen, false);
 
 
 
 
 
 
-console.log('vertion 0.12.85');
+console.log('vertion 0.12.86');
 
 
 init();
@@ -138,7 +138,7 @@ function init(){
 	renderer.logarithmicDepthBuffer = true;
 	container.appendChild( renderer.domElement );
 
-	
+	/*
 	control = new OrbitControls(camera, renderer.domElement);
 	control.enableDamping = true;
 	control.enablePan = false;
@@ -149,6 +149,7 @@ function init(){
 	control.minPolarAngle = 1.1936065021656286;
 	
 	control.update();
+	*/
 	
 
 
@@ -171,14 +172,14 @@ function init(){
 	//mm = new THREE.Mesh(geo, mat);
 	//scene.add(mm);
 
-	/*
+	
 	window.addEventListener("touchmove",  env => {
 		positions.push(env.changedTouches[0].pageX / window.innerWidth);
 		checkTurn();
 		
 		
 	}, false);
-	*/
+	
 
 
 	
@@ -348,7 +349,7 @@ function init(){
 
 function animate(){
 	render();
-	control.update();
+	//control.update();
 	requestAnimationFrame(animate);	
 }
 
