@@ -172,14 +172,14 @@ function init(){
 	//scene.add(mm);
 
 	window.addEventListener("touchstart",  env => {
-		positions.push(env.changedTouches[0].pageX / window.innerWidth);
-		panYTouch.push(env.changedTouches[0].pageY / window.innerHeight);
+		positions.push(env.changedTouches[0].clientX / window.innerWidth);
+		panYTouch.push(env.changedTouches[0].clientY / window.innerHeight);
 	}, false);
 
 	
 	window.addEventListener("touchmove",  env => {
-		positions.push(env.changedTouches[0].pageX / window.innerWidth);
-		panYTouch.push(env.changedTouches[0].pageY / window.innerHeight);
+		positions.push(env.changedTouches[0].clientX / window.innerWidth);
+		panYTouch.push(env.changedTouches[0].clientY / window.innerHeight);
 		checkTurn();
 	}, false);
 	
