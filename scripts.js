@@ -175,7 +175,6 @@ function init(){
 	window.addEventListener("touchmove",  env => {
 		positions.push(env.changedTouches[0].pageX / window.innerWidth);
 		panYTouch.push(env.changedTouches[0].pageY / window.innerHeight);
-		alert(env.changedTouches[0].pageX + " "+ env.changedTouches[0].pageY);
 		checkTurn();
 		
 		
@@ -509,7 +508,7 @@ function checkTurn(){
 		let moveY = ( panYTouch[panYTouch.length-1] - panYTouch[panYTouch.length-3] ) / (window.innerHeight / window.innerWidth); 
 		let moveX = positions[positions.length-1] - positions[positions.length-3];
 
-
+		alert(Math.abs(moveX) +" "+ Math.abs(moveY));
 		if(Math.abs(moveX) > Math.abs(moveY)) {
 			if(last > preLast){
 				revertDuck = true;
