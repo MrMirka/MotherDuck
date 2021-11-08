@@ -59,18 +59,18 @@ if(isMobileDevice()){
 */
 
 
-window.addEventListener('mousedown', barkOpen);
-window.addEventListener('mouseup', barkClose);
+//window.addEventListener('mousedown', barkOpen);
+//window.addEventListener('mouseup', barkClose);
 
-window.addEventListener("touchend", barkClose, false);
-window.addEventListener("touchstart", barkOpen, false);
-
-
+//window.addEventListener("touchend", barkClose, false);
+//window.addEventListener("touchstart", barkOpen, false);
 
 
 
 
-console.log('vertion 0.12.81');
+
+
+console.log('vertion 0.12.82');
 
 
 init();
