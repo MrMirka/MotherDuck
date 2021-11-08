@@ -67,7 +67,7 @@ window.addEventListener("touchend", barkClose, false);
 window.addEventListener("touchstart", barkOpen, false);
  
 
-console.log('vertion 0.13.01');
+console.log('vertion 0.13.02');
 
 
 init();
@@ -500,14 +500,14 @@ function isMobileDevice(){
 
 //Check tup interaction
 function checkTurn(){
-	if(positions.length < 2){
+	if(positions.length > 2){
 		let last = positions[positions.length-1];
 		let preLast = positions[positions.length-3];
 
 		let lastY = panYTouch[panYTouch.length-1];
 		let preLastY = panYTouch[panYTouch.length-3];
 		
-	//	if(lastY/preLastY <1.2) {
+		if(lastY/preLastY <1.2) {
 
 			if(last > preLast){
 				revertDuck = true;
@@ -519,7 +519,7 @@ function checkTurn(){
 				
 			} 
 		}
-	//} 
+	} 
 	
 }
 
