@@ -68,7 +68,7 @@ window.addEventListener("touchstart", barkOpen, false);
 window.addEventListener("touchmove", barkOpen, false);
  
 
-console.log('vertion 0.13.25');
+console.log('vertion 0.13.26');
 
 
 init();
@@ -511,7 +511,7 @@ function checkTurn(){
 		let moveY = panYTouch[panYTouch.length-1] - panYTouch[panYTouch.length-3]; 
 		let moveX = positions[positions.length-1] - positions[positions.length-3];
 
-		alert(Math.abs(moveX) +" "+ Math.abs(moveY));
+		//alert(Math.abs(moveX) +" "+ Math.abs(moveY));
 		if(Math.abs(moveX) > Math.abs(moveY)) {
 			if(last > preLast){
 				revertDuck = true;
