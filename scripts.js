@@ -63,7 +63,7 @@ if(isMobileDevice()){
 //window.addEventListener('mousedown', barkOpen);
 //window.addEventListener('mouseup', barkClose);
 
-//window.addEventListener("touchend", barkClose, false);
+window.addEventListener("touchend", barkClose, false);
 window.addEventListener("touchstart", barkOpen, false);
 window.addEventListener("touchmove", barkOpen, false);
  
