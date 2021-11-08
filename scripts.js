@@ -66,11 +66,7 @@ window.addEventListener("touchend", barkClose, false);
 window.addEventListener("touchstart", barkOpen, false);
 
 
-
-
-
-
-console.log('vertion 0.12.90');
+console.log('vertion 0.12.91');
 
 
 init();

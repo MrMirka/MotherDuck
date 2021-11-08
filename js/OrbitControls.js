@@ -325,7 +325,7 @@ class OrbitControls extends EventDispatcher {
 			ROTATE: 0,
 			DOLLY: 1,
 			PAN: 2,
-			TOUCH_ROTATE: 3,
+			TOUCH_ROTATE: 30,
 			TOUCH_PAN: 4,
 			TOUCH_DOLLY_PAN: 5,
 			TOUCH_DOLLY_ROTATE: 6
