@@ -70,7 +70,7 @@ window.addEventListener("touchstart", barkOpen, false);
 
 
 
-console.log('vertion 0.12.87');
+console.log('vertion 0.12.88');
 
 
 init();
@@ -139,7 +139,8 @@ function init(){
 	container.appendChild( renderer.domElement );
 
 	
-	control = new OrbitControls(camera, container);
+	control = new OrbitControls(camera, renderer.domElement);
+	/*
 	control.enableDamping = true;
 	control.enablePan = false;
 	control.enableZoom = false;
@@ -147,6 +148,7 @@ function init(){
 	control.maxAzimuthAngle = 0.9530985059023817;
 	control.maxPolarAngle = 1.1936065021656286;
 	control.minPolarAngle = 1.1936065021656286;
+	*/
 	
 	control.update();
 	
