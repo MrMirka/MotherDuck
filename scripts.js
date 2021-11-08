@@ -504,12 +504,12 @@ function isMobileDevice(){
 
 //Check tup interaction
 function checkTurn(){
-	if(positions.length > 8){
-		let last = positions[positions.length-1];
-		let preLast = positions[positions.length-8];
+	if(positions.length > 2){
+		let last = positions[positions.length - 1];
+		let preLast = positions[positions.length - 2];
 
-		let moveY = (panYTouch[panYTouch.length-1] - panYTouch[panYTouch.length-8]) / 2; 
-		let moveX = positions[positions.length-1] - positions[positions.length-8];
+		let moveY = (panYTouch[panYTouch.length - 1] - panYTouch[panYTouch.length - 2]) / 2; 
+		let moveX = positions[positions.length - 1] - positions[positions.length - 2];
 
 		//alert(Math.abs(moveX) +" "+ Math.abs(moveY));
 		if(Math.abs(moveX) > Math.abs(moveY)) {
