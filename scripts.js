@@ -501,7 +501,7 @@ function isMobileDevice(){
 
 //Check tup interaction
 function checkTurn(){
-	if(positions.length > 150){
+	if(positions.length > 90){
 		let last = positions[positions.length-1];
 		let preLast = positions[positions.length-3];
 
