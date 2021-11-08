@@ -48,7 +48,7 @@ const params = {
 };
 
 //LOD's
-let duckPatch = 'motherduck_anim1k_2.glb';
+let duckPatch = 'motherduck_anim1k_4.glb';
 
 /*
 if(isMobileDevice()){
@@ -70,7 +70,7 @@ window.addEventListener("touchstart", barkOpen, false);
 
 
 
-console.log('vertion 0.12.75');
+console.log('vertion 0.12.76');
 
 
 init();
