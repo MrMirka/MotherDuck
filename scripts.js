@@ -68,7 +68,7 @@ window.addEventListener("touchstart", barkOpen, false);
 window.addEventListener("touchmove", barkOpen, false);
  
 
-console.log('vertion 0.13.23');
+console.log('vertion 0.13.24');
 
 
 init();
@@ -171,13 +171,16 @@ function init(){
 	//mm = new THREE.Mesh(geo, mat);
 	//scene.add(mm);
 
+	window.addEventListener("touchstart",  env => {
+		positions.push(env.changedTouches[0].pageX / window.innerWidth);
+		panYTouch.push(env.changedTouches[0].pageY / window.innerHeight);
+	}, false);
+
 	
 	window.addEventListener("touchmove",  env => {
 		positions.push(env.changedTouches[0].pageX / window.innerWidth);
 		panYTouch.push(env.changedTouches[0].pageY / window.innerHeight);
 		checkTurn();
-		
-		
 	}, false);
 	
 
