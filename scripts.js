@@ -68,7 +68,7 @@ window.addEventListener("touchstart", barkOpen, false);
 window.addEventListener("touchmove", barkOpen, false);
  
 
-console.log('vertion 0.13.14');
+console.log('vertion 0.13.15');
 
 
 init();
@@ -501,12 +501,12 @@ function isMobileDevice(){
 
 //Check tup interaction
 function checkTurn(){
-	if(positions.length > 2){
+	if(positions.length > 4){
 		let last = positions[positions.length-1];
 		let preLast = positions[positions.length-3];
 
-		let moveY = ( panYTouch[panYTouch.length-1] - panYTouch[panYTouch.length-2] ) / 2 ;
-		let moveX = positions[positions.length-1] - positions[positions.length-2];
+		let moveY = ( panYTouch[panYTouch.length-1] - panYTouch[panYTouch.length-4] ) / 2 ;
+		let moveX = positions[positions.length-1] - positions[positions.length-4];
 
 
 		if(Math.abs(moveX) > Math.abs(moveY)) {
